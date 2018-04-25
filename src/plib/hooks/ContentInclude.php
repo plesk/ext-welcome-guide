@@ -35,9 +35,14 @@ class Modules_welcomeGeneric_ContentInclude extends pm_Hook_ContentInclude
         $page_loaded = $_SERVER['REQUEST_URI'];
         $white_list = $this->getWhiteListPages();
         if(in_array($page_loaded, $white_list)){
-        return 'require(["/modules/welcomeGeneric/bundle.js"], function (render) {
-            render(document.getElementById("ext-welcomeGeneric-app"),"");
-    });
+        return '
+        require(["'.pm_Context::getBaseUrl().'bundle.js"], function (render) {
+            render(document.getElementById("ext-'.pm_Context::getModuleId().'-app"), '. json_encode([
+                'locale' => \pm_Locale::getCode(),
+            ]) .');
+        });
+            
+
     var extbox = document.getElementById("ext-welcomeGeneric-app");
         var body = document.getElementById("content-body");
         body.insertBefore(extbox, body.firstChild);';
