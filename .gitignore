@@ -1,0 +1,14 @@
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# production
+/dist
+
+# misc
+yarn-debug.log*
+yarn-error.log*
+.idea
+*.zip

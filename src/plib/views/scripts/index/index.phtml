@@ -1,0 +1,8 @@
+<div id="ext-<?= \pm_Context::getModuleId() ?>-app"></div>
+<script>
+require(['<?= \pm_Context::getBaseUrl() ?>bundle.js'], function (render) {
+    render(document.getElementById('ext-<?= \pm_Context::getModuleId() ?>-app'), <?= json_encode([
+        'locale' => \pm_Locale::getCode(),
+    ]) ?>);
+});
+</script>

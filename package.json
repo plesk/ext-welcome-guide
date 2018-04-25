@@ -1,0 +1,27 @@
+{
+  "name": "my-app",
+  "description": "Extension Plesk App",
+  "version": "1.0.0",
+  "dependencies": {
+    "create-plesk-app": "^1.0.2"
+  },
+  "devDependencies": {
+    "webpack": "^4.6.0"
+  },
+  "scripts": {
+    "build": "create-plesk-app build",
+    "start": "create-plesk-app start",
+    "lint": "create-plesk-app lint",
+    "zip": "create-plesk-app extension zip",
+    "predeploy": "create-plesk-app build && create-plesk-app extension zip",
+    "deploy": "create-plesk-app extension deploy",
+    "test": "create-plesk-app test"
+  },
+  "jest": {
+    "rootDir": "src",
+    "moduleNameMapper": {
+      "\\.(jpg|png)$": "<rootDir>/test/fileMock.js"
+    }
+  },
+  "license": "MIT"
+}
