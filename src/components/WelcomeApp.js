@@ -10,13 +10,6 @@ const WelcomeApp = () => (
         
         <Card
             title={<Translate content="WelcomeApp.title" />}
-            menu={
-                <Menu>
-                    <MenuItem>{'Skip'}</MenuItem>
-                    <MenuItem>{'Start Again'}</MenuItem>
-                   
-                </Menu>
-            }
             sideHeader={
                 <PreviewPanel image="https://github.com/plesk/ext-welcome-business/blob/master/htdocs/images/plesk_octopus_generic.png?raw=true">
                     <h1 style={{ color: '#fff' }}></h1>
@@ -34,12 +27,12 @@ const WelcomeApp = () => (
                     </SectionItem>
                 </Section>
             }
-            rowContent={'Row content'}
+            rowContent={<Translate content="WelcomeApp.subtitle" />}
         >
         
             <Tabs active={1}>
                 <Tab key={1} title="Information and tools">
-                   <Translate content="WelcomeApp.lead" />
+                   <h4><Translate content="WelcomeApp.lead" /></h4>
                 </Tab>
                 <Tab key={2} title="Security">
                     <SecurityInformation />
