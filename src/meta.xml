@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
-  <id>welcomeGeneric</id>
+  <id>welcome</id>
   <name>Plesk Welcome Extension</name>
-  <category>Lucas</category>
-  <version>2.0</version>
+  <description>This extension helps you to get started with your new Plesk Server!</description>
+  <category>help</category>
+  <version>1.0.0</version>
+  <release>1</release>
+  <vendor>Plesk</vendor>
   <plesk_min_version>17.8</plesk_min_version>
 </module>
