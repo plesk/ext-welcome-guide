@@ -1,0 +1,42 @@
+{
+    "title": "Welcome to your new Plesk WordPress Server<script>alert('xss');</script>",
+    "description": "Hello %%name%%,\ngreat to meet you! My name is Elvis Plesky, I will assist you in the beginning of your journey with Plesk.\nYou made the right decision with the WordPress Server if you want to use the best Open-Source CMS WordPress for your projects!\nLet me help you to get started. Don't worry, it's easy with Plesk - and my help!",
+    "image": "https://raw.githubusercontent.com/plesk/ext-welcome-business/master/htdocs/images/plesk_octopus_generic.png",
+    "groups": [
+        {
+            "title": "Welcome",
+            "steps": [
+                {
+                    "title": "Create a >Joomla& website",
+                    "description": "%%install|joomla-toolkit|Install a new {{name}} website|Open your {{Joomla}} website%%.",
+                    "image": ""
+                },
+                {
+                    "title": "Add an SSL certificate and secure your website",
+                    "description": "Let's secure your WordPress website with the help of the %%extlink|advisor%%.\nThe %%extname|advisor%% allows you to secure all your websites with SSL at one single click. Additionally, this extension lets you activate HTTP/2 for more performance on all your sites.",
+                    "image": ""
+                },
+                {
+                    "title": "Optimize your website with PageSpeed",
+                    "description": "Check your WordPress website with %%extlink|pagespeed%% and boost your website performance with Google PageSpeed for Apache.",
+                    "image": ""
+                }
+            ]
+        },
+        {
+            "title": "Test group 2",
+            "steps": [
+                {
+                    "title": "Test step %%format|underline|2.1%%",
+                    "description": "Description for test step 2.1. %%link|New|http://www.google.de|true%% %%link|Same|http://www.google.lv|false%%",
+                    "image": ""
+                },
+                {
+                    "title": "Test step %%format|italic|2.2%%",
+                    "description": "Description for test step 2.2 %%image|https://www.plesk.com/wp-content/uploads/2018/02/screens_plesk4-1-1024x408.png%%",
+                    "image": ""
+                }
+            ]
+        }
+    ]
+}
