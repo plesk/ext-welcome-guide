@@ -11,8 +11,7 @@ class IndexController extends pm_Controller_Action
     {
         $form = new \PleskExt\Welcome\Form\Config;
 
-        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost()))
-        {
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             $form->process();
 
             $this->_status->addInfo($this->lmsg('index.config.message.success'));

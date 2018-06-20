@@ -20,68 +20,57 @@ class Config
     {
         $arr = json_decode($json, true);
 
-        if (json_last_error() !== JSON_ERROR_NONE)
-        {
+        if (json_last_error() !== JSON_ERROR_NONE) {
             $error = 'Invalid or malformed JSON';
 
             return false;
         }
 
-        if (!isset($arr['title']))
-        {
+        if (!isset($arr['title'])) {
             $error = 'Missing required parameter: title';
 
             return false;
         }
 
-        if (!isset($arr['description']))
-        {
+        if (!isset($arr['description'])) {
             $error = 'Missing required parameter: description';
 
             return false;
         }
 
-        if (!isset($arr['groups']))
-        {
+        if (!isset($arr['groups'])) {
             $error = 'Missing required parameter: groups';
 
             return false;
         }
 
-        if (!is_array($arr['groups']) || empty($arr['groups']))
-        {
+        if (!is_array($arr['groups']) || empty($arr['groups'])) {
             $error = 'At least one group must be defined';
 
             return false;
         }
 
-        foreach ($arr['groups'] as $groupIdx => $group)
-        {
-            if (!isset($group['title']))
-            {
+        foreach ($arr['groups'] as $groupIdx => $group) {
+            if (!isset($group['title'])) {
                 $error = "Group #{$groupIdx} is missing required attribute: title";
 
                 return false;
             }
 
-            if (!isset($group['steps']))
-            {
+            if (!isset($group['steps'])) {
                 $error = "Group '{$group['title']}' is missing required attribute: steps";
 
                 return false;
             }
 
-            if (!is_array($group['steps']) || empty($group['steps']))
-            {
+            if (!is_array($group['steps']) || empty($group['steps'])) {
                 $error = "Group '{$group['title']}' must define at least one step";
 
                 return false;
             }
 
-            foreach ($group['steps'] as $stepIdx => $step)
-            {
-                if (!isset($step['title']))
-                {
+            foreach ($group['steps'] as $stepIdx => $step) {
+                if (!isset($step['title'])) {
                     $error = "Step #{$stepIdx} in group '{$group['title']}' is missing required attribute: title";
 
                     return false;
@@ -102,25 +91,19 @@ class Config
 
         preg_match_all('/%%+(.*?)%%/', $text, $matches, PREG_SET_ORDER);
 
-        foreach ($matches as $match)
-        {
+        foreach ($matches as $match) {
             $placeholder = $match[0];
             $contents = $match[1];
 
-            if ($placeholder === '%%name%%')
-            {
+            if ($placeholder === '%%name%%') {
                 $userName = '[Current user name]'; // TODO: Get current user name
                 $text = str_replace($placeholder, $userName, $text);
-            }
-            else
-            {
+            } else {
                 $segments = explode('|', $contents);
                 $action = $segments[0];
 
-                if ($action === 'install')
-                {
-                    if (count($segments) !== 4)
-                    {
+                if ($action === 'install') {
+                    if (count($segments) !== 4) {
                         throw new \Exception('Invalid number of parameters for action: ' . $action);
                     }
 
@@ -132,27 +115,20 @@ class Config
 
                     preg_match_all('/{{+(.*?)}}/', $replacement, $matches2, PREG_SET_ORDER);
 
-                    foreach ($matches2 as $match2)
-                    {
+                    foreach ($matches2 as $match2) {
                         $extLink = $isInstalled ? '/open' : '/install'; // TODO: Get extension install / open link
 
-                        if ($match2[1] === 'name')
-                        {
+                        if ($match2[1] === 'name') {
                             $extName = '[extname]'; // TODO: Get extension name by ID
                             $replacement = str_replace($match2[0], '<a href="' . $extLink . '">' . $extName . '</a>', $replacement);
-                        }
-                        else
-                        {
+                        } else {
                             $replacement = str_replace($match2[0], '<a href="' . $extLink . '">' . $match2[1] . '</a>', $replacement);
                         }
                     }
 
                     $text = str_replace($placeholder, $replacement, $text);
-                }
-                elseif ($action === 'extlink')
-                {
-                    if (count($segments) !== 2)
-                    {
+                } elseif ($action === 'extlink') {
+                    if (count($segments) !== 2) {
                         throw new \Exception('Invalid number of parameters for action: ' . $action);
                     }
 
@@ -161,11 +137,8 @@ class Config
                     $extLink = '/open-local'; // TODO: Get extension open link
 
                     $text = str_replace($placeholder, '<a href="' . $extLink . '">' . $extName . '</a>', $text);
-                }
-                elseif ($action === 'extname')
-                {
-                    if (count($segments) !== 2)
-                    {
+                } elseif ($action === 'extname') {
+                    if (count($segments) !== 2) {
                         throw new \Exception('Invalid number of parameters for action: ' . $action);
                     }
 
@@ -173,11 +146,8 @@ class Config
                     $extName = '[extname]'; // TODO: Get extension name by ID
 
                     $text = str_replace($placeholder, $extName, $text);
-                }
-                elseif ($action === 'link')
-                {
-                    if (count($segments) !== 4)
-                    {
+                } elseif ($action === 'link') {
+                    if (count($segments) !== 4) {
                         throw new \Exception('Invalid number of parameters for action: ' . $action);
                     }
 
@@ -187,28 +157,21 @@ class Config
                     $linkParams = $openInNewWindow ? ' target="_blank"' : '';
 
                     $text = str_replace($placeholder, '<a href="' . $linkUrl . '"' . $linkParams . '>' . $linkTitle . '</a>', $text);
-                }
-                elseif ($action === 'image')
-                {
-                    if (count($segments) < 2)
-                    {
+                } elseif ($action === 'image') {
+                    if (count($segments) < 2) {
                         throw new \Exception('Invalid number of parameters for action: ' . $action);
                     }
 
                     $url = $segments[1];
                     $style = '';
 
-                    if (isset($segments[2]) && in_array($segments[2], ['left', 'right']))
-                    {
+                    if (isset($segments[2]) && in_array($segments[2], ['left', 'right'])) {
                         $style = 'style="float: ' . $segments[2] . ';" ';
                     }
 
                     $text = str_replace($placeholder, '<img src="' . $url . '" ' . $style . '/>', $text);
-                }
-                elseif ($action === 'format')
-                {
-                    if (count($segments) !== 3)
-                    {
+                } elseif ($action === 'format') {
+                    if (count($segments) !== 3) {
                         throw new \Exception('Invalid number of parameters for action: ' . $action);
                     }
 
@@ -230,15 +193,12 @@ class Config
                         ],
                     ];
 
-                    if (!isset($formats[$type]))
-                    {
+                    if (!isset($formats[$type])) {
                         throw new \Exception('Unknown format type: ' . $type);
                     }
 
                     $text = str_replace($placeholder, $formats[$type]['before'] . $str . $formats[$type]['after'], $text);
-                }
-                else
-                {
+                } else {
                     throw new \Exception('Invalid action: ' . $action);
                 }
             }
@@ -273,12 +233,10 @@ class Config
         $arr['title'] = $this->replace($arr['title']);
         $arr['description'] = $this->replace($arr['description']);
 
-        foreach ($arr['groups'] as $groupIdx => $group)
-        {
+        foreach ($arr['groups'] as $groupIdx => $group) {
             $arr['groups'][$groupIdx]['title'] = $this->replace($group['title']);
 
-            foreach ($group['steps'] as $stepIdx => $step)
-            {
+            foreach ($group['steps'] as $stepIdx => $step) {
                 $arr['groups'][$groupIdx]['steps'][$stepIdx]['title'] = $this->replace($step['title']);
                 $arr['groups'][$groupIdx]['steps'][$stepIdx]['description'] = $this->replace($step['description']);
             }
@@ -293,8 +251,7 @@ class Config
      */
     public function save($json)
     {
-        if (!$this->validate($json, $error))
-        {
+        if (!$this->validate($json, $error)) {
             throw new \InvalidArgumentException('JSON validation failed: ' . $error);
         }
 
@@ -307,15 +264,13 @@ class Config
      */
     public function createConfigFromPreset($name)
     {
-        if ($this->serverFileManager->fileExists(self::CONFIG_FILE))
-        {
+        if ($this->serverFileManager->fileExists(self::CONFIG_FILE)) {
             return;
         }
 
         $presetFile = '/usr/local/psa/var/modules/welcome/presets/' . $name . '.json';
 
-        if (!$this->serverFileManager->fileExists($presetFile))
-        {
+        if (!$this->serverFileManager->fileExists($presetFile)) {
             throw new \InvalidArgumentException('Unknown configuration preset: ' . $name);
         }
 
