@@ -262,18 +262,31 @@ class Config
      * @param string $name
      * @throws \InvalidArgumentException if preset does not exist
      */
-    public function createConfigFromPreset($name)
+    public function updateDefaultConfigFromPreset($name)
     {
-        if ($this->serverFileManager->fileExists(self::CONFIG_FILE)) {
-            return;
-        }
-
         $presetFile = '/usr/local/psa/var/modules/welcome/presets/' . $name . '.json';
 
         if (!$this->serverFileManager->fileExists($presetFile)) {
             throw new \InvalidArgumentException('Unknown configuration preset: ' . $name);
         }
 
+        if ($this->serverFileManager->fileExists(self::CONFIG_FILE)) {
+            $this->serverFileManager->removeFile(self::CONFIG_FILE);
+        }
+
         $this->serverFileManager->copyFile($presetFile, self::CONFIG_FILE);
+    }
+
+    /**
+     * @param string $name
+     * @throws \InvalidArgumentException if preset does not exist
+     */
+    public function createDefaultConfigFromPreset($name)
+    {
+        if ($this->serverFileManager->fileExists(self::CONFIG_FILE)) {
+            return;
+        }
+
+        $this->updateDefaultConfigFromPreset($name);
     }
 }
