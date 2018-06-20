@@ -270,6 +270,10 @@ class Config
             throw new \InvalidArgumentException('Unknown configuration preset: ' . $name);
         }
 
+        if ($this->serverFileManager->fileExists(self::CONFIG_FILE)) {
+            $this->serverFileManager->removeFile(self::CONFIG_FILE);
+        }
+
         $this->serverFileManager->copyFile($presetFile, self::CONFIG_FILE);
     }
 
