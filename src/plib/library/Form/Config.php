@@ -2,13 +2,15 @@
 
 namespace PleskExt\Welcome\Form;
 
+use \PleskExt\Welcome\Config as ConfigClass;
+
 class Config extends \pm_Form_Simple
 {
     public function init()
     {
         parent::init();
 
-        $config = new \PleskExt\Welcome\Config;
+        $config = new ConfigClass;
 
         $this->addElement('textarea', 'json', [
             'label' => $this->lmsg('index.config.label.json'),
@@ -23,7 +25,7 @@ class Config extends \pm_Form_Simple
 
     public function process()
     {
-        $config = new \PleskExt\Welcome\Config;
+        $config = new ConfigClass;
         $json = $this->getValue('json');
 
         $config->save($json);

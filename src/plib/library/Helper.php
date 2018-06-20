@@ -4,7 +4,7 @@
 /**x
  * Class Modules_WelcomeWpo_Helper
  */
-class Modules_welcomeGeneric_Helper
+class Modules_welcome_Helper
 {
     /**
      * Creates return URL from the global HTTP_REFERER variable but with validity check

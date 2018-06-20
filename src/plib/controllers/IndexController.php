@@ -1,5 +1,7 @@
 <?php
 
+use \PleskExt\Welcome\Form\Config;
+
 class IndexController extends pm_Controller_Action
 {
     public function indexAction()
@@ -9,10 +11,9 @@ class IndexController extends pm_Controller_Action
 
     public function configAction()
     {
-        $form = new \PleskExt\Welcome\Form\Config;
+        $form = new Config;
 
-        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost()))
-        {
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             $form->process();
 
             $this->_status->addInfo($this->lmsg('index.config.message.success'));
