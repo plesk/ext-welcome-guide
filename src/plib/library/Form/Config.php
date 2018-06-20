@@ -14,7 +14,8 @@ class Config extends \pm_Form_Simple
             'label' => $this->lmsg('index.config.label.json'),
             'value' => $config->load(),
             'required' => true,
-            'style' => 'width: 40%;',
+            'style' => 'width: 90%;',
+            'rows' => 35,
         ]);
 
         $this->addControlButtons(['cancelLink' => \pm_Context::getModulesListUrl()]);
