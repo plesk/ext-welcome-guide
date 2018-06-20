@@ -17,7 +17,7 @@ abstract class Installer
      */
     public static function createDefaultConfig($presetName = 'default')
     {
-        (new Config())->createConfigFromPreset($presetName);
+        (new Config())->createDefaultConfigFromPreset($presetName);
     }
 
     /**
