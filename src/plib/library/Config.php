@@ -5,6 +5,7 @@ namespace PleskExt\Welcome;
 class Config
 {
     const CONFIG_FILE = '/usr/local/psa/var/modules/welcome/config.json';
+    const PRESET_DIR = '/usr/local/psa/var/modules/welcome/presets';
 
     /**
      * @var \pm_ServerFileManager
@@ -264,7 +265,7 @@ class Config
      */
     public function updateDefaultConfigFromPreset($name)
     {
-        $presetFile = '/usr/local/psa/var/modules/welcome/presets/' . $name . '.json';
+        $presetFile = self::PRESET_DIR . '/' . $name . '.json';
 
         if (!$this->serverFileManager->fileExists($presetFile)) {
             throw new \InvalidArgumentException('Unknown configuration preset: ' . $name);
@@ -288,5 +289,26 @@ class Config
         }
 
         $this->updateDefaultConfigFromPreset($name);
+    }
+
+    /**
+     * @return array
+     */
+    public function getPresets()
+    {
+        $paths = glob(self::PRESET_DIR . '/*.json');
+        $presets = [];
+
+        foreach ($paths as $path)
+        {
+            if (!$this->serverFileManager->fileExists($path))
+            {
+                continue;
+            }
+
+            $presets[] = pathinfo($path, PATHINFO_FILENAME);
+        }
+
+        return $presets;
     }
 }
