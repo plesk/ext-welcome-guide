@@ -4,11 +4,19 @@ use \PleskExt\Welcome\Form\Config;
 
 class IndexController extends pm_Controller_Action
 {
+    protected $_accessLevel = 'admin';
+
+    /**
+     * Entry point of the extension which redirects all request to the config action
+     */
     public function indexAction()
     {
-
+        $this->_forward('config');
     }
 
+    /**
+     * Configuration page only accessible by administrators of the server
+     */
     public function configAction()
     {
         $form = new Config;
