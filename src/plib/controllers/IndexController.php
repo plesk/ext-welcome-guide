@@ -1,6 +1,8 @@
 <?php
 
-use \PleskExt\Welcome\Form\Config;
+use PleskExt\Welcome\Form\Config;
+use PleskExt\Welcome\Extension;
+use PleskExt\Welcome\Helper;
 
 class IndexController extends pm_Controller_Action
 {
@@ -30,5 +32,24 @@ class IndexController extends pm_Controller_Action
         }
 
         $this->view->form = $form;
+    }
+
+    /**
+     * Trigger action for installation of a transmitted extension
+     */
+    public function installAction()
+    {
+        if (!empty($_GET['extensionId'])) {
+            $extension = htmlspecialchars($_GET['extensionId']);
+            $result = (new Extension())->installExtension($extension);
+
+            if (is_string($result)) {
+                $this->_status->addMessage('warning', $this->lmsg('message_error_install', [
+                    'error' => $result
+                ]));
+            }
+        }
+
+        $this->redirect(Helper::getReturnUrl());
     }
 }
