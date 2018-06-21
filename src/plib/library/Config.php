@@ -19,9 +19,16 @@ class Config
      */
     private $currentLocale;
 
+    public function __construct()
+    {
+        $this->serverFileManager = new \pm_ServerFileManager;
+        $this->currentLocale = \pm_Locale::getCode();
+    }
+
     /**
-     * @param array $arr
+     * @param array  $arr
      * @param string $error
+     *
      * @return bool
      */
     private function validateLanguage(array $arr, &$error = '')
@@ -84,6 +91,7 @@ class Config
     /**
      * @param string $json
      * @param string $error
+     *
      * @return bool
      */
     private function validate($json, &$error = '')
@@ -102,12 +110,10 @@ class Config
             return false;
         }
 
-        foreach ($arr as $langCode => $langData)
-        {
+        foreach ($arr as $langCode => $langData) {
             $isValidLangData = $this->validateLanguage($langData, $langError);
 
-            if (!$isValidLangData)
-            {
+            if (!$isValidLangData) {
                 $error = $langError . " (language: {$langCode})";
 
                 return false;
@@ -119,6 +125,7 @@ class Config
 
     /**
      * @param string $text
+     *
      * @return string
      */
     private function replace($text)
@@ -215,17 +222,17 @@ class Config
                     $str = $segments[2];
 
                     $formats = [
-                        'bold' => [
+                        'bold'      => [
                             'before' => '<strong>',
-                            'after' => '</strong>',
+                            'after'  => '</strong>',
                         ],
-                        'italic' => [
+                        'italic'    => [
                             'before' => '<em>',
-                            'after' => '</em>',
+                            'after'  => '</em>',
                         ],
                         'underline' => [
                             'before' => '<u>',
-                            'after' => '</u>',
+                            'after'  => '</u>',
                         ],
                     ];
 
@@ -245,17 +252,17 @@ class Config
         return $text;
     }
 
-    public function __construct()
-    {
-        $this->serverFileManager = new \pm_ServerFileManager;
-        $this->currentLocale = \pm_Locale::getCode();
-    }
-
     /**
      * @return string
      */
     public function load()
     {
+        $configPresetFilePath = \pm_Settings::get('configPresetFilePath');
+
+        if (!empty($configPresetFilePath) && $this->serverFileManager->fileExists($configPresetFilePath)) {
+            return $this->serverFileManager->fileGetContents($configPresetFilePath);
+        }
+
         return $this->serverFileManager->fileGetContents(self::CONFIG_FILE);
     }
 
@@ -285,6 +292,7 @@ class Config
 
     /**
      * @param string $json
+     *
      * @throws \InvalidArgumentException if the JSON is not valid
      */
     public function save($json)
@@ -294,10 +302,12 @@ class Config
         }
 
         $this->serverFileManager->filePutContents(self::CONFIG_FILE, $json);
+        \pm_Settings::set('configPresetFilePath', self::CONFIG_FILE);
     }
 
     /**
      * @param string $name
+     *
      * @throws \InvalidArgumentException if preset does not exist
      */
     public function updateDefaultConfigFromPreset($name)
@@ -313,10 +323,12 @@ class Config
         }
 
         $this->serverFileManager->copyFile($presetFile, self::CONFIG_FILE);
+        \pm_Settings::set('configPresetFilePath', $presetFile);
     }
 
     /**
      * @param string $name
+     *
      * @throws \InvalidArgumentException if preset does not exist
      */
     public function createDefaultConfigFromPreset($name)
@@ -336,10 +348,8 @@ class Config
         $paths = glob(self::PRESET_DIR . '/*.json');
         $presets = [];
 
-        foreach ($paths as $path)
-        {
-            if (!$this->serverFileManager->fileExists($path))
-            {
+        foreach ($paths as $path) {
+            if (!$this->serverFileManager->fileExists($path)) {
                 continue;
             }
 
