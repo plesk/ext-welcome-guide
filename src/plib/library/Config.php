@@ -272,9 +272,11 @@ class Config
     }
 
     /**
-     * @return string
+     * @param bool $jsonEncode
+     *
+     * @return string|array
      */
-    public function preprocess()
+    public function preprocess($jsonEncode = false)
     {
         $json = $this->load();
         $arr = json_decode($json, true);
@@ -292,7 +294,12 @@ class Config
             }
         }
 
-        return json_encode($arr[$locale]);
+        if ($jsonEncode)
+        {
+            return json_encode($arr[$locale]);
+        }
+
+        return $arr[$locale];
     }
 
     /**
