@@ -79,4 +79,59 @@ class Extension
 
         return $extenionsData;
     }
+
+    /**
+     * Checks whether extension is installed
+     *
+     * @param $extensionId
+     *
+     * @return bool
+     */
+    public static function isInstalled($extensionId)
+    {
+        return file_exists(dirname(\pm_Context::getPlibDir()) . '/' . $extensionId);
+    }
+
+    /**
+     * Installs an extension from the catalog whitelist
+     *
+     * @param $extensionId
+     *
+     * @return bool|string
+     */
+    public function installExtension($extensionId)
+    {
+        $extensionUuid = $this->getUuid($extensionId);
+
+        if (!empty($extensionUuid)) {
+            $extensionDownloadUrl = 'https://ext.plesk.com/packages/' . $extensionUuid . '-' . $extensionId . '/download';
+
+            try {
+                $this->installExtensionApi($extensionDownloadUrl);
+            }
+            catch (\pm_Exception $e) {
+                return $e->getMessage();
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Executes the API-RPC call to install the selected extension
+     *
+     * @param $url
+     *
+     * @throws \pm_Exception
+     */
+    private function installExtensionApi($url)
+    {
+        $request = "<server><install-module><url>{$url}</url></install-module></server>";
+        $response = \pm_ApiRpc::getService('1.6.7.0')->call($request);
+        $result = $response->server->{'install-module'}->result;
+
+        if ($result->status != 'ok') {
+            throw new \pm_Exception($result->errtext);
+        }
+    }
 }
