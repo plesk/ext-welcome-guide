@@ -1,7 +1,7 @@
 <?php
 // Copyright 1999-2017. Plesk International GmbH. All rights reserved.
 
-class Modules_welcome_ContentInclude extends pm_Hook_ContentInclude
+class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
 {
 
     public static function getWhiteListPages()
