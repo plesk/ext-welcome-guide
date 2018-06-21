@@ -158,16 +158,16 @@ class Config
                     $extId = $segments[1];
                     $installText = $segments[2];
                     $openText = $segments[3];
-                    $isInstalled = (new Extension())->isInstalled($extId);
+                    $isInstalled = (new Extension($extId))->isInstalled();
                     $replacement = $isInstalled ? $openText : $installText;
 
                     preg_match_all('/{{+(.*?)}}/', $replacement, $matches2, PREG_SET_ORDER);
 
                     foreach ($matches2 as $match2) {
-                        $extLink = $isInstalled ? (new Extension())->createOpenLink($extId) : (new Extension())->createInstallLink($extId);
+                        $extLink = $isInstalled ? (new Extension($extId))->createOpenLink() : (new Extension($extId))->createInstallLink();
 
                         if ($match2[1] === 'name') {
-                            $extName = (new Extension())->getName($extId);
+                            $extName = (new Extension($extId))->getName();
                             $replacement = str_replace($match2[0], '<a href="' . $extLink . '">' . $extName . '</a>', $replacement);
                         } else {
                             $replacement = str_replace($match2[0], '<a href="' . $extLink . '">' . $match2[1] . '</a>', $replacement);
@@ -181,8 +181,8 @@ class Config
                     }
 
                     $extId = $segments[1];
-                    $extName = (new Extension())->getName($extId);
-                    $extLink = (new Extension())->createOpenLink($extId);
+                    $extName = (new Extension($extId))->getName();
+                    $extLink = (new Extension($extId))->createOpenLink();
 
                     $text = str_replace($placeholder, '<a href="' . $extLink . '">' . $extName . '</a>', $text);
                 } elseif ($action === 'extname') {
@@ -191,7 +191,7 @@ class Config
                     }
 
                     $extId = $segments[1];
-                    $extName = (new Extension())->getName($extId);
+                    $extName = (new Extension($extId))->getName();
 
                     $text = str_replace($placeholder, $extName, $text);
                 } elseif ($action === 'link') {

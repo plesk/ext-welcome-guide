@@ -46,7 +46,7 @@ class IndexController extends pm_Controller_Action
     {
         if (!empty($_GET['extensionId'])) {
             $extension = htmlspecialchars($_GET['extensionId']);
-            $result = (new Extension())->installExtension($extension);
+            $result = (new Extension($extension))->installExtension();
 
             if (is_string($result)) {
                 $this->_status->addMessage('warning', $this->lmsg('message_error_install', [
