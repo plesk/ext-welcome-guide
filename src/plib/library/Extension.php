@@ -12,33 +12,35 @@ class Extension
      */
     private $fileManager;
 
-    public function __construct()
+    /**
+     * @var $extensionId
+     */
+    private $extensionId;
+
+    public function __construct($extensionId)
     {
         $this->fileManager = new \pm_ServerFileManager();
+        $this->extensionId = $extensionId;
     }
 
     /**
      * Gets the name of the extension ID
      *
-     * @param $extensionId
-     *
      * @return bool|string
      */
-    public function getName($extensionId)
+    public function getName()
     {
-        return $this->getExtensionProperty($extensionId, 'name');
+        return $this->getExtensionProperty($this->extensionId, 'name');
     }
 
     /**
      * Gets the UUID of the extension ID
      *
-     * @param $extensionId
-     *
      * @return bool|string
      */
-    public function getUuid($extensionId)
+    public function getUuid()
     {
-        return $this->getExtensionProperty($extensionId, 'uuid');
+        return $this->getExtensionProperty($this->extensionId, 'uuid');
     }
 
     /**
@@ -83,52 +85,44 @@ class Extension
     /**
      * Checks whether extension is installed
      *
-     * @param $extensionId
-     *
      * @return bool
      */
-    public function isInstalled($extensionId)
+    public function isInstalled()
     {
-        return file_exists(dirname(\pm_Context::getPlibDir()) . '/' . $extensionId);
+        return file_exists(dirname(\pm_Context::getPlibDir()) . '/' . $this->extensionId);
     }
 
     /**
      * Creates open link for selected extension
      *
-     * @param $extensionId
-     *
      * @return string
      */
-    public function createOpenLink($extensionId)
+    public function createOpenLink()
     {
-        return '/modules/' . $extensionId;
+        return '/modules/' . $this->extensionId;
     }
 
     /**
      * Creates install link for selected extension
      *
-     * @param $extensionId
-     *
      * @return string
      */
-    public function createInstallLink($extensionId)
+    public function createInstallLink()
     {
-        return \pm_Context::getActionUrl('index', 'install') . '?extensionId=' . $extensionId;
+        return \pm_Context::getActionUrl('index', 'install') . '?extensionId=' . $this->extensionId;
     }
 
     /**
      * Installs an extension from the catalog whitelist
      *
-     * @param $extensionId
-     *
      * @return bool|string
      */
-    public function installExtension($extensionId)
+    public function installExtension()
     {
-        $extensionUuid = $this->getUuid($extensionId);
+        $extensionUuid = $this->getUuid($this->extensionId);
 
         if (!empty($extensionUuid)) {
-            $extensionDownloadUrl = 'https://ext.plesk.com/packages/' . $extensionUuid . '-' . $extensionId . '/download';
+            $extensionDownloadUrl = 'https://ext.plesk.com/packages/' . $extensionUuid . '-' . $this->extensionId . '/download';
 
             try {
                 $this->installExtensionApi($extensionDownloadUrl);
