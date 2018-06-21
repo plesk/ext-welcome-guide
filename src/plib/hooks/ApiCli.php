@@ -1,5 +1,7 @@
 <?php
 
+use \PleskExt\Welcome\Config;
+
 class Modules_Welcome_ApiCli extends \pm_Hook_ApiCli
 {
     /**
@@ -14,7 +16,7 @@ class Modules_Welcome_ApiCli extends \pm_Hook_ApiCli
 
     public function __construct()
     {
-        $this->config = new \PleskExt\Welcome\Config;
+        $this->config = new Config;
         $this->serverFileManager = new \pm_ServerFileManager;
     }
 
