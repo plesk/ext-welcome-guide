@@ -38,6 +38,23 @@ class Modules_Welcome_ApiCli extends \pm_Hook_ApiCli
         exit(1);
     }
 
+    public function helpCommand()
+    {
+        $this->writeLine('Available commands:');
+        $this->writeLine('    --help      Display this help page');
+        $this->writeLine('    --list      Show a list of available preset names');
+        $this->writeLine('    --show      Display current or preset configuration');
+        $this->writeLine('    --select    Overwrite current configuration with preset configuration');
+        $this->writeLine('    --input     Overwrite current configuration with JSON from an external URL');
+        $this->writeLine('');
+        $this->writeLine('Examples:');
+        $this->writeLine('    Get a list of available presets             plesk ext welcome --list');
+        $this->writeLine('    Show current configuration                  plesk ext welcome --show');
+        $this->writeLine('    Show preset configuration                   plesk ext welcome --show -preset wordpress');
+        $this->writeLine('    Update current configuration from preset    plesk ext welcome --select -preset business');
+        $this->writeLine('    Update current configuration from URL       plesk ext welcome --input -url http://example.com/config.json');
+    }
+
     public function listCommand()
     {
         foreach ($this->config->getPresets() as $preset)
