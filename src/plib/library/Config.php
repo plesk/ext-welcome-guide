@@ -20,8 +20,9 @@ class Config
     private $currentLocale;
 
     /**
-     * @param array $arr
+     * @param array  $arr
      * @param string $error
+     *
      * @return bool
      */
     private function validateLanguage(array $arr, &$error = '')
@@ -84,6 +85,7 @@ class Config
     /**
      * @param string $json
      * @param string $error
+     *
      * @return bool
      */
     private function validate($json, &$error = '')
@@ -102,12 +104,10 @@ class Config
             return false;
         }
 
-        foreach ($arr as $langCode => $langData)
-        {
+        foreach ($arr as $langCode => $langData) {
             $isValidLangData = $this->validateLanguage($langData, $langError);
 
-            if (!$isValidLangData)
-            {
+            if (!$isValidLangData) {
                 $error = $langError . " (language: {$langCode})";
 
                 return false;
@@ -119,6 +119,7 @@ class Config
 
     /**
      * @param string $text
+     *
      * @return string
      */
     private function replace($text)
@@ -132,7 +133,12 @@ class Config
             $contents = $match[1];
 
             if ($placeholder === '%%name%%') {
-                $userName = '[Current user name]'; // TODO: Get current user name
+                $userName = \pm_Session::getClient()->getProperty('pname');
+
+                if (empty($userName)) {
+                    $userName = \pm_Session::getClient()->getProperty('login');
+                }
+
                 $text = str_replace($placeholder, $userName, $text);
             } else {
                 $segments = explode('|', $contents);
@@ -146,16 +152,16 @@ class Config
                     $extId = $segments[1];
                     $installText = $segments[2];
                     $openText = $segments[3];
-                    $isInstalled = false; // TODO: Determine if extension is installed
+                    $isInstalled = (new Extension())->isInstalled($extId);
                     $replacement = $isInstalled ? $openText : $installText;
 
                     preg_match_all('/{{+(.*?)}}/', $replacement, $matches2, PREG_SET_ORDER);
 
                     foreach ($matches2 as $match2) {
-                        $extLink = $isInstalled ? '/open' : '/install'; // TODO: Get extension install / open link
+                        $extLink = $isInstalled ? (new Extension())->createOpenLink($extId) : (new Extension())->createInstallLink($extId);
 
                         if ($match2[1] === 'name') {
-                            $extName = '[extname]'; // TODO: Get extension name by ID
+                            $extName = (new Extension())->getName($extId);
                             $replacement = str_replace($match2[0], '<a href="' . $extLink . '">' . $extName . '</a>', $replacement);
                         } else {
                             $replacement = str_replace($match2[0], '<a href="' . $extLink . '">' . $match2[1] . '</a>', $replacement);
@@ -169,8 +175,8 @@ class Config
                     }
 
                     $extId = $segments[1];
-                    $extName = '[extname]'; // TODO: Get extension name by ID
-                    $extLink = '/open-local'; // TODO: Get extension open link
+                    $extName = (new Extension())->getName($extId);
+                    $extLink = (new Extension())->createOpenLink($extId);
 
                     $text = str_replace($placeholder, '<a href="' . $extLink . '">' . $extName . '</a>', $text);
                 } elseif ($action === 'extname') {
@@ -179,7 +185,7 @@ class Config
                     }
 
                     $extId = $segments[1];
-                    $extName = '[extname]'; // TODO: Get extension name by ID
+                    $extName = (new Extension())->getName($extId);
 
                     $text = str_replace($placeholder, $extName, $text);
                 } elseif ($action === 'link') {
@@ -215,17 +221,17 @@ class Config
                     $str = $segments[2];
 
                     $formats = [
-                        'bold' => [
+                        'bold'      => [
                             'before' => '<strong>',
-                            'after' => '</strong>',
+                            'after'  => '</strong>',
                         ],
-                        'italic' => [
+                        'italic'    => [
                             'before' => '<em>',
-                            'after' => '</em>',
+                            'after'  => '</em>',
                         ],
                         'underline' => [
                             'before' => '<u>',
-                            'after' => '</u>',
+                            'after'  => '</u>',
                         ],
                     ];
 
@@ -285,6 +291,7 @@ class Config
 
     /**
      * @param string $json
+     *
      * @throws \InvalidArgumentException if the JSON is not valid
      */
     public function save($json)
@@ -298,6 +305,7 @@ class Config
 
     /**
      * @param string $name
+     *
      * @throws \InvalidArgumentException if preset does not exist
      */
     public function updateDefaultConfigFromPreset($name)
@@ -317,6 +325,7 @@ class Config
 
     /**
      * @param string $name
+     *
      * @throws \InvalidArgumentException if preset does not exist
      */
     public function createDefaultConfigFromPreset($name)
@@ -336,10 +345,8 @@ class Config
         $paths = glob(self::PRESET_DIR . '/*.json');
         $presets = [];
 
-        foreach ($paths as $path)
-        {
-            if (!$this->serverFileManager->fileExists($path))
-            {
+        foreach ($paths as $path) {
+            if (!$this->serverFileManager->fileExists($path)) {
                 continue;
             }
 
