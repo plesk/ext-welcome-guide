@@ -87,9 +87,33 @@ class Extension
      *
      * @return bool
      */
-    public static function isInstalled($extensionId)
+    public function isInstalled($extensionId)
     {
         return file_exists(dirname(\pm_Context::getPlibDir()) . '/' . $extensionId);
+    }
+
+    /**
+     * Creates open link for selected extension
+     *
+     * @param $extensionId
+     *
+     * @return string
+     */
+    public function createOpenLink($extensionId)
+    {
+        return '/modules/' . $extensionId;
+    }
+
+    /**
+     * Creates install link for selected extension
+     *
+     * @param $extensionId
+     *
+     * @return string
+     */
+    public function createInstallLink($extensionId)
+    {
+        return \pm_Context::getActionUrl('index', 'install') . '?extensionId=' . $extensionId;
     }
 
     /**
