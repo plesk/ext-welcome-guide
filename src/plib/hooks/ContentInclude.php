@@ -1,54 +1,58 @@
 <?php
-// Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+// Copyright 1999-2018. Plesk International GmbH. All rights reserved.
+
+use PleskExt\Welcome\Helper;
 
 class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
 {
-
-    public static function getWhiteListPages()
+    /**
+     * Adds the ID for the Welcome box
+     *
+     * @return string
+     */
+    public function getBodyContent()
     {
-        $white_list = array(
-            '/admin/',
-            '/admin/home?context=home',
-            '/smb/',
-            '/smb/web/view',
-        );
-
-        return $white_list;
+        if ($this->loadContentCode()) {
+            return '<div id="ext-welcome-app"></div>';
+        }
     }
-    public function getBodyContent(){
+
+    /**
+     * Loads the required JavaScript code to the head section after the DOMReady event was fired
+     *
+     * @return string
+     */
+    public function getJsOnReadyContent()
+    {
+        if ($this->loadContentCode()) {
+            return 'require(["' . pm_Context::getBaseUrl() . 'bundle.js"], function (render) {
+                        render(document.getElementById("ext-welcome-app"), ' . json_encode([
+                    'locale' => \pm_Locale::getCode(),
+                ]) . ');
+                });
+    
+                var extensionBox = document.getElementById("ext-welcome-app");
+                var body = document.getElementById("content-body");
+                body.insertBefore(extensionBox, body.firstChild);';
+        }
+    }
+
+    /**
+     * Checks whether the content code should be loaded at all in this hook
+     *
+     * @return bool
+     */
+    private function loadContentCode()
+    {
         if (pm_Session::getClient()->isAdmin()) {
-            $status = pm_Settings::get('active', 1);
-        $isHomePage = true;
-        $page_loaded = $_SERVER['REQUEST_URI'];
-        $white_list = $this->getWhiteListPages();
-        if(in_array($page_loaded, $white_list)){
-            $body = '<div> <div id="ext-welcome-app"></div>
-            </div>';
-            return $body;
-        }else{
-            return "";
+            $pageLoaded = $_SERVER['REQUEST_URI'];
+            $whiteList = Helper::getWhiteListPages();
+
+            if (in_array($pageLoaded, $whiteList)) {
+                return true;
+            }
         }
 
+        return false;
     }
-}
-    public function getJsOnReadyContent(){
-        $page_loaded = $_SERVER['REQUEST_URI'];
-        $white_list = $this->getWhiteListPages();
-        if(in_array($page_loaded, $white_list)){
-        return '
-        require(["'.pm_Context::getBaseUrl().'bundle.js"], function (render) {
-            render(document.getElementById("ext-'.pm_Context::getModuleId().'-app"), '. json_encode([
-                'locale' => \pm_Locale::getCode(),
-            ]) .');
-        });
-
-
-    var extbox = document.getElementById("ext-welcome-app");
-        var body = document.getElementById("content-body");
-        body.insertBefore(extbox, body.firstChild);';
-    }
-    return "";}
-
-
-
 }
