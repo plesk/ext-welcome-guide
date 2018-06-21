@@ -40,8 +40,6 @@ class Modules_Welcome_ApiCli extends \pm_Hook_ApiCli
 
     public function listCommand()
     {
-        $this->writeLine('Available presets:');
-
         foreach ($this->config->getPresets() as $preset)
         {
             $this->writeLine('  ' . $preset);
