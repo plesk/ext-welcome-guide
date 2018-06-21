@@ -11,7 +11,7 @@ class IndexController extends pm_Controller_Action
      */
     public function indexAction()
     {
-        $this->_forward('config');
+        $this->forward('config');
     }
 
     /**
