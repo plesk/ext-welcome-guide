@@ -19,6 +19,12 @@ class Config
      */
     private $currentLocale;
 
+    public function __construct()
+    {
+        $this->serverFileManager = new \pm_ServerFileManager;
+        $this->currentLocale = \pm_Locale::getCode();
+    }
+
     /**
      * @param array  $arr
      * @param string $error
@@ -251,17 +257,17 @@ class Config
         return $text;
     }
 
-    public function __construct()
-    {
-        $this->serverFileManager = new \pm_ServerFileManager;
-        $this->currentLocale = \pm_Locale::getCode();
-    }
-
     /**
      * @return string
      */
     public function load()
     {
+        $configPresetFilePath = \pm_Settings::get('configPresetFilePath');
+
+        if (!empty($configPresetFilePath) && $this->serverFileManager->fileExists($configPresetFilePath)) {
+            return $this->serverFileManager->fileGetContents($configPresetFilePath);
+        }
+
         return $this->serverFileManager->fileGetContents(self::CONFIG_FILE);
     }
 
@@ -301,6 +307,7 @@ class Config
         }
 
         $this->serverFileManager->filePutContents(self::CONFIG_FILE, $json);
+        \pm_Settings::set('configPresetFilePath', self::CONFIG_FILE);
     }
 
     /**
@@ -321,6 +328,7 @@ class Config
         }
 
         $this->serverFileManager->copyFile($presetFile, self::CONFIG_FILE);
+        \pm_Settings::set('configPresetFilePath', $presetFile);
     }
 
     /**
