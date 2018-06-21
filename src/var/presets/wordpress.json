@@ -1,3 +1,5 @@
 {
-    "wordpress": "incomplete"
+    "default": {
+        "wordpress": "incomplete"
+    }
 }

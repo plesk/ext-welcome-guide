@@ -24,11 +24,16 @@ class IndexController extends pm_Controller_Action
         $form = new Config;
 
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
-            $form->process();
+            try {
+                $form->process();
 
-            $this->_status->addInfo($this->lmsg('index.config.message.success'));
+                $this->_status->addInfo($this->lmsg('index.config.message.success'));
+            }
+            catch (\Exception $e) {
+                $this->_status->addError($e->getMessage());
+            }
 
-            $this->_helper->json(array('redirect' => pm_Context::getBaseUrl()));
+            $this->_helper->json(array('redirect' => \pm_Context::getBaseUrl()));
         }
 
         $this->view->form = $form;

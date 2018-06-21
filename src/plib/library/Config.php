@@ -6,6 +6,8 @@ class Config
 {
     const CONFIG_FILE = '/usr/local/psa/var/modules/welcome/config.json';
     const PRESET_DIR = '/usr/local/psa/var/modules/welcome/presets';
+    const DEFAULT_LOCALE = 'en-US';
+    const DEFAULT_LOCALE_KEY = 'default';
 
     /**
      * @var \pm_ServerFileManager
@@ -13,20 +15,17 @@ class Config
     private $serverFileManager;
 
     /**
-     * @param string $json
+     * @var string
+     */
+    private $currentLocale;
+
+    /**
+     * @param array $arr
      * @param string $error
      * @return bool
      */
-    private function validate($json, &$error = '')
+    private function validateLanguage(array $arr, &$error = '')
     {
-        $arr = json_decode($json, true);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            $error = 'Invalid or malformed JSON';
-
-            return false;
-        }
-
         if (!isset($arr['title'])) {
             $error = 'Missing required parameter: title';
 
@@ -76,6 +75,42 @@ class Config
 
                     return false;
                 }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $json
+     * @param string $error
+     * @return bool
+     */
+    private function validate($json, &$error = '')
+    {
+        $arr = json_decode($json, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $error = 'Invalid or malformed JSON';
+
+            return false;
+        }
+
+        if (!isset($arr[self::DEFAULT_LOCALE_KEY])) {
+            $error = 'Missing "default" language';
+
+            return false;
+        }
+
+        foreach ($arr as $langCode => $langData)
+        {
+            $isValidLangData = $this->validateLanguage($langData, $langError);
+
+            if (!$isValidLangData)
+            {
+                $error = $langError . " (language: {$langCode})";
+
+                return false;
             }
         }
 
@@ -213,6 +248,7 @@ class Config
     public function __construct()
     {
         $this->serverFileManager = new \pm_ServerFileManager;
+        $this->currentLocale = \pm_Locale::getCode();
     }
 
     /**
@@ -230,20 +266,21 @@ class Config
     {
         $json = $this->load();
         $arr = json_decode($json, true);
+        $locale = isset($arr[$this->currentLocale]) ? $this->currentLocale : self::DEFAULT_LOCALE_KEY;
 
-        $arr['title'] = $this->replace($arr['title']);
-        $arr['description'] = $this->replace($arr['description']);
+        $arr[$locale]['title'] = $this->replace($arr[$locale]['title']);
+        $arr[$locale]['description'] = $this->replace($arr[$locale]['description']);
 
-        foreach ($arr['groups'] as $groupIdx => $group) {
-            $arr['groups'][$groupIdx]['title'] = $this->replace($group['title']);
+        foreach ($arr[$locale]['groups'] as $groupIdx => $group) {
+            $arr[$locale]['groups'][$groupIdx]['title'] = $this->replace($group['title']);
 
             foreach ($group['steps'] as $stepIdx => $step) {
-                $arr['groups'][$groupIdx]['steps'][$stepIdx]['title'] = $this->replace($step['title']);
-                $arr['groups'][$groupIdx]['steps'][$stepIdx]['description'] = $this->replace($step['description']);
+                $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['title'] = $this->replace($step['title']);
+                $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['description'] = $this->replace($step['description']);
             }
         }
 
-        return json_encode($arr);
+        return json_encode($arr[$locale]);
     }
 
     /**

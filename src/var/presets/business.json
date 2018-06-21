@@ -1,3 +1,5 @@
 {
-    "business": "incomplete"
+    "default": {
+        "business": "incomplete"
+    }
 }
