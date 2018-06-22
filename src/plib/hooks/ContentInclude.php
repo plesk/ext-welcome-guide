@@ -25,7 +25,7 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
     public function getJsOnReadyContent()
     {
         if ($this->loadContentCode()) {
-            return 'require(["' . pm_Context::getBaseUrl() . 'bundle.js"], function (render) {
+            return 'require(["' . pm_Context::getBaseUrl() . 'js/main.js"], function (render) {
                         render(document.getElementById("ext-welcome-app"), ' . json_encode([
                     'locale' => \pm_Locale::getCode(),
                 ]) . ');
