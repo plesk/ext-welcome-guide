@@ -1,1 +1,27 @@
-<?php echo $this->form; ?>
+<?php
+
+echo $this->lmsg('index.config.label.preset');
+echo $this->renderSmallTools($this->presetSelector);
+echo $this->form;
+
+?>
+
+<script>
+function welcomeLoadPreset(preset)
+{
+    new Ajax.Request('/modules/welcome/index.php/index/preset', {
+        method:'get',
+        parameters: {
+            'preset': preset
+        },
+        onSuccess: function (transport) {
+            var ta = document.getElementById('json');
+
+            ta.value = transport.responseText;
+        },
+        onFailure: function () {
+            alert('ERROR: Unable to get configuration preset contents');
+        }
+    });
+}
+</script>
