@@ -168,6 +168,12 @@ class Config
 
                         if ($match2[1] === 'name') {
                             $extName = (new Extension($extId))->getName();
+
+                            if ($extName === false)
+                            {
+                                $extName = '[Extension "' . $extId . '" does not exist]';
+                            }
+
                             $replacement = str_replace($match2[0], '<a href="' . $extLink . '">' . $extName . '</a>', $replacement);
                         } else {
                             $replacement = str_replace($match2[0], '<a href="' . $extLink . '">' . $match2[1] . '</a>', $replacement);
@@ -184,6 +190,11 @@ class Config
                     $extName = (new Extension($extId))->getName();
                     $extLink = (new Extension($extId))->createOpenLink();
 
+                    if ($extName === false)
+                    {
+                        $extName = '[Extension "' . $extId . '" does not exist]';
+                    }
+
                     $text = str_replace($placeholder, '<a href="' . $extLink . '">' . $extName . '</a>', $text);
                 } elseif ($action === 'extname') {
                     if (count($segments) !== 2) {
@@ -192,6 +203,11 @@ class Config
 
                     $extId = $segments[1];
                     $extName = (new Extension($extId))->getName();
+
+                    if ($extName === false)
+                    {
+                        $extName = '[Extension "' . $extId . '" does not exist]';
+                    }
 
                     $text = str_replace($placeholder, $extName, $text);
                 } elseif ($action === 'link') {
