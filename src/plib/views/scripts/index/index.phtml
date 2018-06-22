@@ -1,7 +1,8 @@
-<div id="ext-<?= \pm_Context::getModuleId() ?>-app"></div>
+<!-- TODO This is just for testing, should be emptied once ready for release! -->
+<div id="ext-welcome-app"></div>
 <script>
-require(['<?= \pm_Context::getBaseUrl() ?>bundle.js'], function (render) {
-    render(document.getElementById('ext-<?= \pm_Context::getModuleId() ?>-app'), <?= json_encode([
+require(['<?= \pm_Context::getBaseUrl() ?>js/main.js'], function (render) {
+    render(document.getElementById('ext-welcome-app'), <?= json_encode([
         'locale' => \pm_Locale::getCode(),
     ]) ?>);
 });
