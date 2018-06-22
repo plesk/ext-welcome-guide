@@ -61,15 +61,13 @@ class IndexController extends pm_Controller_Action
     public function presetAction()
     {
         $preset = $this->getParam('preset');
-        $file = ConfigClass::PRESET_DIR . '/' . $preset . '.json';
-        $serverFileManager = new \pm_ServerFileManager;
-        $json = '';
+        $config = new ConfigClass;
+        $json = $config->getPresetConfig($preset);
 
-        if ($serverFileManager->fileExists($file)) {
-            $json = $serverFileManager->fileGetContents($file);
-        }
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
 
-        $this->_helper->json(json_decode($json, true));
+        $this->getResponse()->setBody($json);
     }
 
     /**

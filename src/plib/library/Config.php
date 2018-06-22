@@ -363,4 +363,20 @@ class Config
 
         return $presets;
     }
+
+    /**
+     * @param string $preset
+     *
+     * @return string
+     */
+    public function getPresetConfig($preset)
+    {
+        $file = self::PRESET_DIR . '/' . $preset . '.json';
+
+        if ($this->serverFileManager->fileExists($file)) {
+            return $this->serverFileManager->fileGetContents($file);
+        }
+
+        return '';
+    }
 }
