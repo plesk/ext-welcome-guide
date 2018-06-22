@@ -51,8 +51,9 @@ class IndexController extends pm_Controller_Action
         }
 
         $this->view->presetSelector = $presetSelector;
-
         $this->view->form = $form;
+
+        $this->view->headLink()->appendStylesheet(pm_Context::getBaseUrl() . 'css/ext-welcome.css');
     }
 
     /**

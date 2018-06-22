@@ -1,27 +1,31 @@
 <?php
-
-echo $this->lmsg('index.config.label.preset');
-echo $this->renderSmallTools($this->presetSelector);
-echo $this->form;
-
+// Copyright 1999-2018. Plesk International GmbH. All rights reserved.
 ?>
 
-<script>
-function welcomeLoadPreset(preset)
-{
-    new Ajax.Request('/modules/welcome/index.php/index/preset', {
-        method:'get',
-        parameters: {
-            'preset': preset
-        },
-        onSuccess: function (transport) {
-            var ta = document.getElementById('json');
+<div id="welcome">
+    <?php echo $this->lmsg('index.config.label.preset'); ?>
+    <div class="welcome-preset-buttons">
+        <?php echo $this->renderSmallTools($this->presetSelector); ?>
+    </div>
+    <?php echo $this->form; ?>
+</div>
 
-            ta.value = transport.responseText;
-        },
-        onFailure: function () {
-            alert('ERROR: Unable to get configuration preset contents');
-        }
-    });
-}
+<script>
+    function welcomeLoadPreset(preset)
+    {
+        new Ajax.Request('/modules/welcome/index.php/index/preset', {
+            method: 'get',
+            parameters: {
+                'preset': preset
+            },
+            onSuccess: function(transport) {
+                var ta = document.getElementById('json');
+
+                ta.value = transport.responseText;
+            },
+            onFailure: function() {
+                alert('ERROR: Unable to get configuration preset contents');
+            }
+        });
+    }
 </script>
