@@ -1,5 +1,39 @@
 {
     "default": {
-        "business": "incomplete"
+        "title": "Welcome to your new Plesk Business Server",
+        "description": "Hello %%name%%,\n\ngreat to meet you! My name is Elvis Plesky, I will assist you in the beginning of your journey with Plesk.\n\nYou made the right decision with the Business Server if you want to a pre-configured All-In-One solution for your projects!\n\nLet me help you to get started. Don't worry, it's easy with Plesk - and my help!",
+        "image": "https://raw.githubusercontent.com/plesk/ext-welcome-business/master/htdocs/images/plesk_octopus_generic.png",
+        "groups": [
+            {
+                "title": "Welcome",
+                "steps": [
+                    {
+                        "title": "Create a WordPress website",
+                        "description": "%%install|wp-toolkit|Install a new WordPress website|Open your WordPress website%% or import your %%link|existing WordPress instance|/modules/site-import/index.php/site-migration/new-migration|false%%.\n\nWith the WordPress Toolkit you create your WordPress website easily within minutes. The toolkit allows enabling a variety of development workflows for WordPress admins and developers of all skill levels, from beginners to pros. Install or import your first WordPress website now!",
+                        "image": "https://github.com/plesk/ext-welcome-business/blob/master/htdocs/images/wptk-icon.png"
+                    },
+                    {
+                        "title": "Create mailboxes and folders with Plesk Premium Email",
+                        "description": "Let's activate advanced email and collaboration services with %%extlink|kolab%%.\n\nPlesk Premium Email is powered by Kolab, the most popular fully-featured Open Source secure mail and collaboration server. It provides all the features associated with top tier collaboration servers, such as email, calendar, contacts, tasks, notes and files.",
+                        "image": "https://github.com/plesk/ext-welcome-business/blob/master/htdocs/images/kolab-icon.png"
+                    },
+                    {
+                        "title": "Add an SSL certificate and secure your website",
+                        "description": "Create an SSL certificate with the help of the %%extlink|advisor%%.",
+                        "image": "https://github.com/plesk/ext-welcome-business/blob/master/htdocs/images/security-advisor-icon.png"
+                    },
+                    {
+                        "title": "Optimize your website with %%extname|pagespeed-insights%%",
+                        "description": "Check your business website with %%extlink|pagespeed-insights%% and boost your website performance with Google PageSpeed for Apache.",
+                        "image": "https://github.com/plesk/ext-welcome-business/blob/master/htdocs/images/pagespeed-insights-icon.png"
+                    },
+                    {
+                        "title": "Maximize your search engine traffic with %%extname|xovi%%",
+                        "description": "Let the %%extlink|xovi%% guide you towards maximizing your search engine traffic.",
+                        "image": ""
+                    }
+                ]
+            }
+        ]
     }
 }
