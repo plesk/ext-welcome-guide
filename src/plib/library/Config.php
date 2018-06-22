@@ -276,7 +276,7 @@ class Config
      *
      * @return string|array
      */
-    public function preprocess($jsonEncode = false)
+    public function getProcessedConfigData($jsonEncode = false)
     {
         $json = $this->load();
         $arr = json_decode($json, true);
