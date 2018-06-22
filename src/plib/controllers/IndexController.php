@@ -1,5 +1,6 @@
 <?php
 
+use PleskExt\Welcome\Config as ConfigClass;
 use PleskExt\Welcome\Form\Config;
 use PleskExt\Welcome\Extension;
 use PleskExt\Welcome\Helper;
@@ -22,6 +23,7 @@ class IndexController extends pm_Controller_Action
     public function configAction()
     {
         $form = new Config;
+        $config = new ConfigClass;
 
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             try {
@@ -36,7 +38,38 @@ class IndexController extends pm_Controller_Action
             $this->_helper->json(array('redirect' => \pm_Context::getBaseUrl()));
         }
 
+        $presetSelector = [];
+
+        foreach ($config->getPresets() as $preset)
+        {
+            $presetSelector[] = [
+                'title' => $preset,
+                'description' => $preset,
+                'class' => 'sb-preset-select',
+                'link' => "javascript:welcomeLoadPreset('{$preset}')",
+            ];
+        }
+
+        $this->view->presetSelector = $presetSelector;
+
         $this->view->form = $form;
+    }
+
+    /**
+     * Used for Ajax calls to get preset JSON configuration
+     */
+    public function presetAction()
+    {
+        $preset = $this->getParam('preset');
+        $file = ConfigClass::PRESET_DIR . '/' . $preset . '.json';
+        $serverFileManager = new \pm_ServerFileManager;
+        $json = '';
+
+        if ($serverFileManager->fileExists($file)) {
+            $json = $serverFileManager->fileGetContents($file);
+        }
+
+        $this->_helper->json(json_decode($json, true));
     }
 
     /**
