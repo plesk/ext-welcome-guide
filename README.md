@@ -24,10 +24,10 @@ It is possible to make JSON configuration dynamic by using placeholders in JSON 
 
 ### Predefined variables
 
-Currently there is only one predefined variable **name**, which resolves to the current Plesk user name.
+Currently there is only one predefined variable **current-user-name**, which resolves to the current Plesk user name.
 
 ```
-Hallo, %%name%%!" -> "Hallo, Max Mustermann!
+Hallo, %%current-user-name%%!" -> "Hallo, Max Mustermann!
 ```
 
 ### Actions

@@ -1,34 +1,72 @@
 {
     "default": {
         "title": "Welcome to your new Plesk WordPress Server",
-        "description": "Hello %%name%%,\n\ngreat to meet you! My name is Elvis Plesky, I will assist you in the beginning of your journey with Plesk.\n\nYou made the right decision with the WordPress Server if you want to use the best Open-Source CMS WordPress for your projects!\n\nLet me help you to get started. Don't worry, it's easy with Plesk - and my help!",
-        "image": "https://raw.githubusercontent.com/plesk/ext-welcome-wordpress/master/htdocs/images/plesk_octopus_generic.png",
+        "description": "Hello %%current-user-name%%,\n\ngreat to meet you! My name is Elvis Plesky, I will assist you in the beginning of your journey with Plesk.\n\nYou made the right decision with the WordPress Server if you want to use the best Open-Source CMS WordPress for your projects!\n\nLet me help you to get started. Don't worry, it's easy with Plesk - and my help!",
+        "image": "/modules/welcome/images/plesk_octopus_generic.png",
         "groups": [
             {
                 "title": "Welcome",
                 "steps": [
                     {
                         "title": "Create a WordPress website",
-                        "description": "%%install|wp-toolkit|Install a new WordPress website|Open your WordPress website%% or import your %%link|existing WordPress instance|/modules/site-import/index.php/site-migration/new-migration|false%%.\n\nWith the WordPress Toolkit you create your WordPress website easily within minutes. The toolkit allows enabling a variety of development workflows for WordPress admins and developers of all skill levels, from beginners to pros. Install or import your first WordPress website now!",
-                        "image": "https://github.com/plesk/ext-welcome-wordpress/blob/master/htdocs/images/wptk-icon.png"
+                        "description": "With the WordPress Toolkit you create your WordPress website easily within minutes. The toolkit allows enabling a variety of development workflows for WordPress admins and developers of all skill levels, from beginners to pros. Install or import your first WordPress website now!",
+                        "image": "/modules/welcome/images/presets/wptk-icon.png",
+                        "buttons": [
+                            {
+                                "actionId": "install-wordpress"
+                            }
+                        ]
                     },
                     {
                         "title": "Add an SSL certificate and secure your website",
-                        "description": "Let's secure your WordPress website with the help of the %%extlink|advisor%%.\n\nThe %%extname|advisor%% allows you to secure all your websites with SSL at one single click. Additionally, this extension lets you activate HTTP/2 for more performance on all your sites.",
-                        "image": "https://github.com/plesk/ext-welcome-wordpress/blob/master/htdocs/images/security-advisor-icon.png"
+                        "description": "Create an SSL certificate with the help of the Security Advisor.",
+                        "image": "/modules/welcome/images/presets/security-advisor-icon.png",
+                        "buttons": [
+                            {
+                                "actionId": "open-advisor"
+                            }
+                        ]
                     },
                     {
-                        "title": "Optimize your website with %%extname|pagespeed-insights%%",
-                        "description": "Check your WordPress website with %%extlink|pagespeed-insights%% and boost your website performance with Google PageSpeed for Apache.",
-                        "image": "https://github.com/plesk/ext-welcome-wordpress/blob/master/htdocs/images/pagespeed-insights-icon.png"
+                        "title": "Optimize your website with Google PageSpeed Insights",
+                        "description": "Check your business website with Google PageSpeed Insights and boost your website performance with Google PageSpeed for Apache.",
+                        "image": "/modules/welcome/images/presets/pagespeed-insights-icon.png",
+                        "buttons": [
+                            {
+                                "actionId": "open-pagespeed"
+                            }
+                        ]
                     },
                     {
-                        "title": "Maximize your search engine traffic with %%extname|xovi%%",
-                        "description": "Let the %%extlink|xovi%% guide you towards maximizing your search engine traffic.",
-                        "image": ""
+                        "title": "Maximize your search engine traffic with SEO Toolkit",
+                        "description": "Let the SEO Toolkit guide you towards maximizing your search engine traffic.",
+                        "image": "",
+                        "buttons": [
+                            {
+                                "actionId": "open-xovi"
+                            }
+                        ]
                     }
                 ]
             }
-        ]
+        ],
+        "actions": {
+            "install-wordpress": {
+                "taskId": "install",
+                "extensionId": "wp-toolkit"
+            },
+            "open-advisor": {
+                "taskId": "extlink",
+                "extensionId": "advisor"
+            },
+            "open-pagespeed": {
+                "taskId": "extlink",
+                "extensionId": "pagespeed-insights"
+            },
+            "open-xovi": {
+                "taskId": "extlink",
+                "extensionId": "xovi"
+            }
+        }
     }
 }
