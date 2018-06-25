@@ -19,10 +19,16 @@ class Config
      */
     private $currentLocale;
 
+    /**
+     * @var Progress
+     */
+    private $progress;
+
     public function __construct()
     {
         $this->serverFileManager = new \pm_ServerFileManager;
         $this->currentLocale = \pm_Locale::getCode();
+        $this->progress = new Progress;
     }
 
     /**
@@ -57,6 +63,8 @@ class Config
             return false;
         }
 
+        $actions = isset($arr['actions']) ? $arr['actions'] : [];
+
         foreach ($arr['groups'] as $groupIdx => $group) {
             if (!isset($group['title'])) {
                 $error = "Group #{$groupIdx} is missing required attribute: title";
@@ -81,6 +89,22 @@ class Config
                     $error = "Step #{$stepIdx} in group '{$group['title']}' is missing required attribute: title";
 
                     return false;
+                }
+
+                if (isset($step['buttons'])) {
+                    foreach ($step['buttons'] as $buttonIdx => $button) {
+                        if (!isset($button['actionId'])) {
+                            $error = "Button #{$buttonIdx} in step #{$stepIdx} in group '{$group['title']}' is missing required attribute: actionId";
+
+                            return false;
+                        } else {
+                            if (!isset($actions[$button['actionId']])) {
+                                $error = "Button #{$buttonIdx} in step #{$stepIdx} in group '{$group['title']}' uses undefined action: {$button['actionId']}";
+
+                                return false;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -131,143 +155,13 @@ class Config
     private function replace($text)
     {
         $text = htmlspecialchars(strip_tags($text));
+        $currentUserName = \pm_Session::getClient()->getProperty('pname');
 
-        preg_match_all('/%%+(.*?)%%/', $text, $matches, PREG_SET_ORDER);
-
-        foreach ($matches as $match) {
-            $placeholder = $match[0];
-            $contents = $match[1];
-
-            if ($placeholder === '%%name%%') {
-                $userName = \pm_Session::getClient()->getProperty('pname');
-
-                if (empty($userName)) {
-                    $userName = \pm_Session::getClient()->getProperty('login');
-                }
-
-                $text = str_replace($placeholder, $userName, $text);
-            } else {
-                $segments = explode('|', $contents);
-                $action = $segments[0];
-
-                if ($action === 'install') {
-                    if (count($segments) !== 4) {
-                        throw new \Exception('Invalid number of parameters for action: ' . $action);
-                    }
-
-                    $extId = $segments[1];
-                    $installText = $segments[2];
-                    $openText = $segments[3];
-                    $isInstalled = (new Extension($extId))->isInstalled();
-                    $replacement = $isInstalled ? $openText : $installText;
-
-                    preg_match_all('/{{+(.*?)}}/', $replacement, $matches2, PREG_SET_ORDER);
-
-                    foreach ($matches2 as $match2) {
-                        $extLink = $isInstalled ? (new Extension($extId))->createOpenLink() : (new Extension($extId))->createInstallLink();
-
-                        if ($match2[1] === 'name') {
-                            $extName = (new Extension($extId))->getName();
-
-                            if ($extName === false)
-                            {
-                                $extName = '[Extension "' . $extId . '" does not exist]';
-                            }
-
-                            $replacement = str_replace($match2[0], '<a href="' . $extLink . '">' . $extName . '</a>', $replacement);
-                        } else {
-                            $replacement = str_replace($match2[0], '<a href="' . $extLink . '">' . $match2[1] . '</a>', $replacement);
-                        }
-                    }
-
-                    $text = str_replace($placeholder, $replacement, $text);
-                } elseif ($action === 'extlink') {
-                    if (count($segments) !== 2) {
-                        throw new \Exception('Invalid number of parameters for action: ' . $action);
-                    }
-
-                    $extId = $segments[1];
-                    $extName = (new Extension($extId))->getName();
-                    $extLink = (new Extension($extId))->createOpenLink();
-
-                    if ($extName === false)
-                    {
-                        $extName = '[Extension "' . $extId . '" does not exist]';
-                    }
-
-                    $text = str_replace($placeholder, '<a href="' . $extLink . '">' . $extName . '</a>', $text);
-                } elseif ($action === 'extname') {
-                    if (count($segments) !== 2) {
-                        throw new \Exception('Invalid number of parameters for action: ' . $action);
-                    }
-
-                    $extId = $segments[1];
-                    $extName = (new Extension($extId))->getName();
-
-                    if ($extName === false)
-                    {
-                        $extName = '[Extension "' . $extId . '" does not exist]';
-                    }
-
-                    $text = str_replace($placeholder, $extName, $text);
-                } elseif ($action === 'link') {
-                    if (count($segments) !== 4) {
-                        throw new \Exception('Invalid number of parameters for action: ' . $action);
-                    }
-
-                    $linkTitle = $segments[1];
-                    $linkUrl = $segments[2];
-                    $openInNewWindow = ($segments[3] == 'true') ? true : false;
-                    $linkParams = $openInNewWindow ? ' target="_blank"' : '';
-
-                    $text = str_replace($placeholder, '<a href="' . $linkUrl . '"' . $linkParams . '>' . $linkTitle . '</a>', $text);
-                } elseif ($action === 'image') {
-                    if (count($segments) < 2) {
-                        throw new \Exception('Invalid number of parameters for action: ' . $action);
-                    }
-
-                    $url = $segments[1];
-                    $style = '';
-
-                    if (isset($segments[2]) && in_array($segments[2], ['left', 'right'])) {
-                        $style = 'style="float: ' . $segments[2] . ';" ';
-                    }
-
-                    $text = str_replace($placeholder, '<img src="' . $url . '" ' . $style . '/>', $text);
-                } elseif ($action === 'format') {
-                    if (count($segments) !== 3) {
-                        throw new \Exception('Invalid number of parameters for action: ' . $action);
-                    }
-
-                    $type = $segments[1];
-                    $str = $segments[2];
-
-                    $formats = [
-                        'bold'      => [
-                            'before' => '<strong>',
-                            'after'  => '</strong>',
-                        ],
-                        'italic'    => [
-                            'before' => '<em>',
-                            'after'  => '</em>',
-                        ],
-                        'underline' => [
-                            'before' => '<u>',
-                            'after'  => '</u>',
-                        ],
-                    ];
-
-                    if (!isset($formats[$type])) {
-                        throw new \Exception('Unknown format type: ' . $type);
-                    }
-
-                    $text = str_replace($placeholder, $formats[$type]['before'] . $str . $formats[$type]['after'], $text);
-                } else {
-                    throw new \Exception('Invalid action: ' . $action);
-                }
-            }
+        if (empty($currentUserName)) {
+            $currentUserName = \pm_Session::getClient()->getProperty('login');
         }
 
+        $text = str_replace('%%current-user-name%%', $currentUserName, $text);
         $text = str_replace(["\r\n", "\r", "\n"], '<br />', $text);
 
         return $text;
@@ -288,6 +182,42 @@ class Config
     }
 
     /**
+     * @param string $actionId
+     * @param array $actions
+     *
+     * @return array
+     */
+    private function renderButton($actionId, array $actions)
+    {
+        $action = $actions[$actionId];
+
+        if ($action['taskId'] === 'install')
+        {
+            $extension = new Extension($action['extensionId']);
+            $isInstalled = $extension->isInstalled();
+            $langKey = $isInstalled ? 'library.config.button.title.open' : 'library.config.button.title.install';
+            $buttonTitle = \pm_Locale::lmsg($langKey);
+            $buttonUrl = $isInstalled ? $extension->createOpenLink() : $extension->createInstallLink();
+
+            return [$buttonTitle, $buttonUrl];
+        }
+        elseif ($action['taskId'] === 'extlink') {
+            $extension = new Extension($action['extensionId']);
+            $buttonTitle = $extension->getName();
+            $buttonUrl = $extension->createOpenLink();
+
+            if ($buttonTitle === false)
+            {
+                $buttonTitle = '[Extension "' . $action['extensionId'] . '" does not exist]';
+            }
+
+            return [$buttonTitle, $buttonUrl];
+        } else {
+            throw new \Exception('Invalid task ID: ' . $action['taskId']);
+        }
+    }
+
+    /**
      * @param bool $jsonEncode
      *
      * @return string|array
@@ -302,16 +232,30 @@ class Config
         $arr[$locale]['description'] = $this->replace($arr[$locale]['description']);
 
         foreach ($arr[$locale]['groups'] as $groupIdx => $group) {
+            $groupId = $groupIdx + 1;
+
             $arr[$locale]['groups'][$groupIdx]['title'] = $this->replace($group['title']);
 
             foreach ($group['steps'] as $stepIdx => $step) {
+                $stepId = $stepIdx + 1;
+
                 $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['title'] = $this->replace($step['title']);
                 $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['description'] = $this->replace($step['description']);
+
+                if (isset($step['buttons'])) {
+                    foreach ($step['buttons'] as $buttonIdx => $button) {
+                        list($buttonTitle, $buttonUrl) = $this->renderButton($button['actionId'], $arr[$locale]['actions']);
+
+                        $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['buttons'][$buttonIdx]['title'] = $buttonTitle;
+                        $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['buttons'][$buttonIdx]['url'] = $buttonUrl;
+                    }
+                }
+
+                $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['completed'] = $this->progress->isStepCompleted($groupId, $stepId);
             }
         }
 
-        if ($jsonEncode)
-        {
+        if ($jsonEncode) {
             return json_encode($arr[$locale]);
         }
 

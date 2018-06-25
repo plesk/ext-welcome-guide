@@ -38,4 +38,22 @@ class Progress
 
         $this->client->setSetting(self::PROGRESS_SETTING_KEY, json_encode($arr));
     }
+
+    /**
+     * @param int $groupId
+     * @param int $stepId
+     *
+     * @return bool
+     */
+    public function isStepCompleted($groupId, $stepId)
+    {
+        $arr = $this->getProgress();
+
+        if (!isset($arr[$groupId]))
+        {
+            return false;
+        }
+
+        return ($stepId > $arr[$groupId]) ? false : true;
+    }
 }
