@@ -322,6 +322,8 @@ class Config
                 }
 
                 $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['completed'] = $this->progress->isStepCompleted($groupIdx, $stepIdx);
+                $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['indexGroup'] = $groupIdx;
+                $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['index'] = $stepIdx;
             }
         }
 
