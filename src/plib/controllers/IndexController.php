@@ -126,4 +126,28 @@ class IndexController extends pm_Controller_Action
 
         $this->getResponse()->setBody(json_encode($result));
     }
+
+    public function disableAction()
+    {
+        $config = new ConfigClass;
+
+        $config->disableExtension();
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $this->getResponse()->setBody('success');
+    }
+
+    public function enableAction()
+    {
+        $config = new ConfigClass;
+
+        $config->enableExtension();
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $this->getResponse()->setBody('success');
+    }
 }
