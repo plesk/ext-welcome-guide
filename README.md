@@ -100,6 +100,8 @@ For installing or opening extension.
 
 Parameters:
 1. extensionId - Extension ID (required)
+2. titleInstall - Title of button for installation process (optional)
+3. titleOpen - Title of button for open process (optional)
 
 #### extlink
 
@@ -121,7 +123,8 @@ Parameters:
 
 Shortcut for adding a new domain name.
 
-Parameters: *none*
+Parameters:
+1. title  - Button text (optional)
 
 ## Command-line interface usage examples
 
