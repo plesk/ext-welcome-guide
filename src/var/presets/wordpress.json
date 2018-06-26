@@ -1,7 +1,7 @@
 {
     "default": {
         "title": "Welcome to your new Plesk WordPress Server",
-        "description": "Hello %%current-user-name%%,\n\ngreat to meet you! My name is Elvis Plesky, I will assist you in the beginning of your journey with Plesk.\n\nYou made the right decision with the WordPress Server if you want to use the best Open-Source CMS WordPress for your projects!\n\nLet me help you to get started. Don't worry, it's easy with Plesk - and my help!",
+        "description": "Hello %%username%%,\n\ngreat to meet you! My name is Elvis Plesky, I will assist you in the beginning of your journey with Plesk.\n\nYou made the right decision with the WordPress Server if you want to use the best Open-Source CMS WordPress for your projects!\n\nLet me help you to get started. Don't worry, it's easy with Plesk - and my help!",
         "image": "/modules/welcome/images/plesk_octopus_generic.png",
         "groups": [
             {
