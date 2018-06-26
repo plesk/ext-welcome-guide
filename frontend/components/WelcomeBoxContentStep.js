@@ -68,7 +68,7 @@ class WelcomeBoxContentStep extends Component {
         return (
             <div className={`${this.state.completed ? 'welcome-single-item completed' : 'welcome-single-item'}`}>
                 <Grid xs={3} gap="xs">
-                    <GridCol xs={9}>
+                    <GridCol xs={12} md={12} lg={9} xl={9}>
                         <Item
                             icon={{src: this.state.image, size: '64'}}
                             title={this.state.title}
@@ -76,7 +76,7 @@ class WelcomeBoxContentStep extends Component {
                             <div dangerouslySetInnerHTML={{__html: this.state.description}}/>
                         </Item>
                     </GridCol>
-                    <GridCol xs={2}>
+                    <GridCol xs={6} md={6} lg={2} xl={2}>
                         <div className="welcome-single-action-button">
                             {this.state.buttons.map(({...button}) => {
                                     return <Button component="a" href={button.url} intent="primary">{button.title}</Button>
@@ -84,7 +84,7 @@ class WelcomeBoxContentStep extends Component {
                             )}
                         </div>
                     </GridCol>
-                    <GridCol xs={1}>
+                    <GridCol xs={6} md={6} lg={1} xl={1}>
                         <div className="button-toggle-status">
                             <Button onClick={() => this.setStepToggleStatus()} intent={this.setToggleButtonIntent()}>
                                 <Icon name={this.state.completedIcon} size="16"/>
