@@ -30,7 +30,7 @@ const WelcomeBoxCss = () => (
                 float: right;
             }
 
-            #welcome-box .welcome-single-item .pul-item__title {
+            #welcome-box .welcome-single-item .pul-item__content > span {
                 font-weight: bold;
                 margin-bottom: 4px;
                 display: inline-block;
