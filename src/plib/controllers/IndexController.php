@@ -115,10 +115,15 @@ class IndexController extends pm_Controller_Action
         $steps = isset($data['groups'][$groupId]) ? $data['groups'][$groupId]['steps'] : [];
 
         if ($stepId === -1) {
-            return $steps;
+            $result = $steps;
         }
         else {
-            return isset($steps[$stepId]) ? $steps[$stepId] : [];
+            $result = isset($steps[$stepId]) ? $steps[$stepId] : [];
         }
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $this->getResponse()->setBody(json_encode($result));
     }
 }
