@@ -1,15 +1,36 @@
 {
     "default": {
-        "title": "Welcome to your new Plesk WordPress Server",
-        "description": "Hello %%username%%,\n\ngreat to meet you! My name is Elvis Plesky, I will assist you in the beginning of your journey with Plesk.\n\nYou made the right decision with the WordPress Server if you want to use the best Open-Source CMS WordPress for your projects!\n\nLet me help you to get started. Don't worry, it's easy with Plesk - and my help!",
-        "image": "/modules/welcome/images/plesk_octopus_generic.png",
+        "title": "Welcome to your new Plesk WordPress Edition ",
+        "description": "Hello %%username%%,\n\nnice to meet you! My name is Elvis Plesky and I will assist you during the start of your journey with Plesk.\n\nYou made the right decision with the Plesk WordPress Edition if you want to use the best Open-Source CMS WordPress for your projects!\n\nDon't worry, it's easy and simple with Plesk - and my help!",
+        "image": "/modules/welcome/images/presets/plesk_octopus_wp2.png",
         "groups": [
             {
-                "title": "Welcome",
+                "title": "Let's get started:",
                 "steps": [
                     {
-                        "title": "Create a WordPress website",
-                        "description": "With the WordPress Toolkit you create your WordPress website easily within minutes. The toolkit allows enabling a variety of development workflows for WordPress admins and developers of all skill levels, from beginners to pros. Install or import your first WordPress website now!",
+                        "title": "Add a Domain to your Server",
+                        "description": "Adding a Domain is the first step of our journey. The Domain is the address of your website in the internet.",
+                        "image": "/modules/welcome/images/presets/hosting-setup.png",
+                        "buttons": [
+                            {
+                                "actionId": "add-domain"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Secure your Domain with SSL",
+                        "description": "By activating a SSL certificate for your domain you protect your websites' visitors and ensure them an encrypted connection.",
+                        "image": "/modules/welcome/images/presets/letsencrypt_64.png",
+                        "buttons": [
+                            {
+                                "actionId": "open-letsencrypt"
+                            }
+                        ]
+                        
+                    },
+                    {
+                        "title": "Create a Website",
+                        "description": "Using WordPress Toolkit you can easily create your first Website based on the WordPress technology within minutes.",
                         "image": "/modules/welcome/images/presets/wptk-icon.png",
                         "buttons": [
                             {
@@ -18,35 +39,36 @@
                         ]
                     },
                     {
-                        "title": "Add an SSL certificate and secure your website",
-                        "description": "Create an SSL certificate with the help of the Security Advisor.",
-                        "image": "/modules/welcome/images/presets/security-advisor-icon.png",
+                        "title": "Design your Website",
+                        "description": "Transform your WordPress into a powerful and intuitive Drag-and-Drop editor thanks to BoldGrid with many useful features.",
+                        "image": "/modules/welcome/images/presets/boldgrid_64.png",
+                        "buttons":[
+                            {
+                                "actionId": "boldgrid"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Tune your Website",
+                        "description": "Improve your web performance and boost your websites’ speed by using our Speed Kit.",
+                        "image": "/modules/welcome/images/presets/speedkit_64.png",
+                        "buttons":[
+                            {
+                                "actionId": "speedkit"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Let me introduce Owl - our Advisor",
+                        "description": "Now that the first steps are done, let me introduce our Advisor Owl to you who will help you improving your server frequently.",
+                        "image": "/modules/welcome/images/presets/advisor-icon_64.png",
                         "buttons": [
                             {
                                 "actionId": "open-advisor"
                             }
                         ]
-                    },
-                    {
-                        "title": "Optimize your website with Google PageSpeed Insights",
-                        "description": "Check your business website with Google PageSpeed Insights and boost your website performance with Google PageSpeed for Apache.",
-                        "image": "/modules/welcome/images/presets/pagespeed-insights-icon.png",
-                        "buttons": [
-                            {
-                                "actionId": "open-pagespeed"
-                            }
-                        ]
-                    },
-                    {
-                        "title": "Maximize your search engine traffic with SEO Toolkit",
-                        "description": "Let the SEO Toolkit guide you towards maximizing your search engine traffic.",
-                        "image": "",
-                        "buttons": [
-                            {
-                                "actionId": "open-xovi"
-                            }
-                        ]
                     }
+
                 ]
             }
         ],
@@ -55,17 +77,129 @@
                 "taskId": "install",
                 "extensionId": "wp-toolkit"
             },
+            "add-domain": {
+                "taskId": "addDomain"
+            },
             "open-advisor": {
                 "taskId": "extlink",
                 "extensionId": "advisor"
             },
-            "open-pagespeed": {
+            "open-letsencrypt": {
                 "taskId": "extlink",
-                "extensionId": "pagespeed-insights"
+                "extensionId": "letsencrypt",
+                "title": "Secure"
             },
-            "open-xovi": {
+            "boldgrid": {
+                "taskId": "install",
+                "extensionId": "boldgrid"
+            },
+            "speedkit": {
+                "taskId": "install",
+                "extensionId": "baqend"
+            }
+        }
+    },
+    "de-DE": {
+        "title": "Herzlichen Willkommen in Ihrer Plesk WordPress Edition",
+        "description": "Hallo %%username%%,\n\nschön dich kennen zu lernen! Mein Name ist Elvis Plesky und ich werde Sie bei bei Ihrer Reise mit Plesk und WordPress unterstützen.\n\nSie haben die richtige Entscheidung mit Ihrer Plesk WordPress Edition gemacht, wenn Sie das beste Open-Source CMS für Ihre Projekte nutzen wollen.\n\nLassen Sie uns loslegen. Keine Angst: Es ist super einfach mit Plesk - und meiner Hilfe!",
+        "image": "/modules/welcome/images/presets/plesk_octopus_wp2.png",
+        "groups": [
+            {
+                "title": "Ihre ersten Schritte mit Plesk",
+                "steps": [
+                    {
+                        "title": "Eine Domain hinzufügen",
+                        "description": "Mit der Domain beginnt die ganze Reise. Eine Domain ist Ihre Adresse im Internet, damit ihre Webseite gefunden wird.",
+                        "image": "/modules/welcome/images/presets/hosting-setup.png",
+                        "buttons": [
+                            {
+                                "actionId": "add-domain"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Verschlüsselte Verbindungen (SSL) aktivieren",
+                        "description": "Fügen Sie ihrer Domain ein SSL Zertifikat hinzu, damit die Übertragung zwischen Ihren Kunden und der Webseite stehts sicher und verschlüsselt erfolgt.",
+                        "image": "/modules/welcome/images/presets/letsencrypt_64.png",
+                        "buttons": [
+                            {
+                                "actionId": "open-letsencrypt"
+                            }
+                        ]
+                        
+                    },
+                    {
+                        "title": "Webseite erstellen",
+                        "description": "Mit dem WordPress Toolkit können Sie einfach und schnell Ihre Webseite basierend auf WordPress erstellen.",
+                        "image": "/modules/welcome/images/presets/wptk-icon.png",
+                        "buttons": [
+                            {
+                                "actionId": "install-wordpress"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Webseite anpassen",
+                        "description": "Dank des Drang-and-Drop Editors BoldGrid können Sie in wenigen Schritten Ihre eigene Webseite erstellen und aus vielen Vorlagen und Design auswählen.",
+                        "image": "/modules/welcome/images/presets/boldgrid_64.png",
+                        "buttons":[
+                            {
+                                "actionId": "boldgrid"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Schnellere Ladezeiten dank Speed Kit",
+                        "description": "Reduzieren Sie die Ladezeiten Ihrer Webseite dank modernster Technologie und unserem Speed Kit.",
+                        "image": "/modules/welcome/images/presets/speedkit_64.png",
+                        "buttons":[
+                            {
+                                "actionId": "speedkit"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Weiter gehts im Advisor",
+                        "description": "Lassen Sie mich Ihnen unseren Advisor vorstellen. Dort finden Sie in regelmäßig Tipps und Tricks wie Sie Ihren Plesk Server weiter optimieren können. ",
+                        "image": "/modules/welcome/images/presets/advisor-icon_64.png",
+                        "buttons": [
+                            {
+                                "actionId": "open-advisor"
+                            }
+                        ]
+                    }
+
+                ]
+            }
+        ],
+        "actions": {
+            "install-wordpress": {
+                "taskId": "install",
+                "extensionId": "wp-toolkit"
+            },
+            "add-domain": {
+                "taskId": "addDomain"
+            },
+            "open-advisor": {
                 "taskId": "extlink",
-                "extensionId": "xovi"
+                "extensionId": "advisor"
+            },
+            "open-letsencrypt": {
+                "taskId": "extlink",
+                "extensionId": "letsencrypt",
+                "title": "SSL aktivieren"
+            },
+            "boldgrid": {
+                "taskId": "install",
+                "extensionId": "boldgrid",
+                "titleOpen": "Öffnen",
+                "titleInstall": "Installieren"
+            },
+            "speedkit": {
+                "taskId": "install",
+                "extensionId": "baqend",
+                "titleOpen": "Öffnen",
+                "titleInstall": "Installieren"
             }
         }
     }
