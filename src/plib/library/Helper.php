@@ -152,21 +152,6 @@ abstract class Helper
     }
 
     /**
-     * Gets the correct link to the new domain creation page
-     *
-     * @return string
-     * @throws \pm_Exception
-     */
-    public static function getLinkNewDomain()
-    {
-        if (self::isPleskVersion178()) {
-            return '/smb/web/add-domain';
-        }
-
-        return '/admin/subscription/create';
-    }
-
-    /**
      * Checks whether Plesk version is >= 17.8.10
      *
      * @return bool
@@ -181,5 +166,31 @@ abstract class Helper
         }
 
         return false;
+    }
+
+    /**
+     * Gets the correct link to the new domain creation page
+     *
+     * @return string
+     */
+    public static function getLinkNewDomain()
+    {
+        $pageLoaded = self::getRefererPage();
+
+        if (stripos($pageLoaded, '/admin/') !== false) {
+            return '/admin/domain/add-domain';
+        }
+
+        return '/smb/web/add-domain';
+    }
+
+    /**
+     * Gets the referer page using the global HTTP_REFERER variable
+     *
+     * @return mixed
+     */
+    public static function getRefererPage()
+    {
+        return $_SERVER['HTTP_REFERER'];
     }
 }

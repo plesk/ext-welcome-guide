@@ -183,7 +183,7 @@ class Config
 
     /**
      * @param string $actionId
-     * @param array $actions
+     * @param array  $actions
      *
      * @return array
      */
@@ -191,8 +191,7 @@ class Config
     {
         $action = $actions[$actionId];
 
-        if ($action['taskId'] === 'install')
-        {
+        if ($action['taskId'] === 'install') {
             $extension = new Extension($action['extensionId']);
             $isInstalled = $extension->isInstalled();
             $langKey = $isInstalled ? 'library.config.button.title.open' : 'library.config.button.title.install';
@@ -200,16 +199,19 @@ class Config
             $buttonUrl = $isInstalled ? $extension->createOpenLink() : $extension->createInstallLink();
 
             return [$buttonTitle, $buttonUrl];
-        }
-        elseif ($action['taskId'] === 'extlink') {
+        } elseif ($action['taskId'] === 'extlink') {
             $extension = new Extension($action['extensionId']);
             $buttonTitle = $extension->getName();
             $buttonUrl = $extension->createOpenLink();
 
-            if ($buttonTitle === false)
-            {
+            if ($buttonTitle === false) {
                 $buttonTitle = '[Extension "' . $action['extensionId'] . '" does not exist]';
             }
+
+            return [$buttonTitle, $buttonUrl];
+        } elseif ($action['taskId'] === 'addDomain') {
+            $buttonTitle = \pm_Locale::lmsg('library.config.button.title.adddomain');
+            $buttonUrl = Helper::getLinkNewDomain();
 
             return [$buttonTitle, $buttonUrl];
         } else {
