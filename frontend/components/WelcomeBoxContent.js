@@ -10,14 +10,6 @@ class WelcomeBoxContent extends Component {
 
         this.groups = props.data.groups;
         this.view = this.groups.length === 1 ? 'plain' : 'tabs';
-
-        this.state = {};
-    }
-
-    setStepToggleStatus = (step, index) => {
-        this.setState((step, index) => {
-            return {index: !step.completed}
-        });
     }
 
     renderOutputPlain = (group, indexGroup) => {
