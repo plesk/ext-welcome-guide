@@ -40,20 +40,20 @@ class Progress
     }
 
     /**
-     * @param int $groupId
-     * @param int $stepId
+     * @param int $groupIdx
+     * @param int $stepIdx
      *
      * @return bool
      */
-    public function isStepCompleted($groupId, $stepId)
+    public function isStepCompleted($groupIdx, $stepIdx)
     {
         $arr = $this->getProgress();
 
-        if (!isset($arr[$groupId]))
+        if (!isset($arr[$groupIdx]))
         {
             return false;
         }
 
-        return ($stepId > $arr[$groupId]) ? false : true;
+        return ($stepIdx > $arr[$groupIdx]) ? false : true;
     }
 }

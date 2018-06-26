@@ -232,13 +232,9 @@ class Config
         $arr[$locale]['description'] = $this->replace($arr[$locale]['description']);
 
         foreach ($arr[$locale]['groups'] as $groupIdx => $group) {
-            $groupId = $groupIdx + 1;
-
             $arr[$locale]['groups'][$groupIdx]['title'] = $this->replace($group['title']);
 
             foreach ($group['steps'] as $stepIdx => $step) {
-                $stepId = $stepIdx + 1;
-
                 $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['title'] = $this->replace($step['title']);
                 $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['description'] = $this->replace($step['description']);
 
@@ -251,7 +247,7 @@ class Config
                     }
                 }
 
-                $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['completed'] = $this->progress->isStepCompleted($groupId, $stepId);
+                $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['completed'] = $this->progress->isStepCompleted($groupIdx, $stepIdx);
             }
         }
 
