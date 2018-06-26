@@ -50,7 +50,7 @@ class WelcomeBoxContent extends Component {
     renderOutputWrapper = () => {
         if(this.view === 'plain')
         {
-            return this.renderOutputPlain(this.groups[0])
+            return this.renderOutputPlain(this.groups[0], 0)
         }
 
         return (

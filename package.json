@@ -3,6 +3,7 @@
   "description": "Extension Plesk App",
   "version": "1.0.0",
   "dependencies": {
+    "axios": "^0.18.0",
     "create-plesk-app": "^1.0.2"
   },
   "devDependencies": {

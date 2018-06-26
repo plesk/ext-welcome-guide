@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-max-depth */
 
 import {createElement, Component, Item, Grid, GridCol, Button, Icon} from '@plesk/ui-library';
+import axios from 'axios';
 
 class WelcomeBoxContentStep extends Component {
     constructor(props)
@@ -41,6 +42,7 @@ class WelcomeBoxContentStep extends Component {
     setStepToggleStatus = () => {
         this.setState({completed: !this.state.completed});
         this.setState({completedIcon: this.setCompletedButtonImage(!this.state.completed)});
+        axios.get('/modules/welcome/index.php/index/progress?group=' + this.indexGroup + '&step=' + this.index);
     }
 
     setToggleButtonIntent = () => {
