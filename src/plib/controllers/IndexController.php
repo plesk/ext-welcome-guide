@@ -105,4 +105,25 @@ class IndexController extends pm_Controller_Action
 
         $this->getResponse()->setBody('success');
     }
+
+    public function groupAction()
+    {
+        $groupId = (int)$this->getParam('group', 0);
+        $stepId = (int)$this->getParam('step', -1);
+        $config = new ConfigClass;
+        $data = $config->getProcessedConfigData();
+        $steps = isset($data['groups'][$groupId]) ? $data['groups'][$groupId]['steps'] : [];
+
+        if ($stepId === -1) {
+            $result = $steps;
+        }
+        else {
+            $result = isset($steps[$stepId]) ? $steps[$stepId] : [];
+        }
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $this->getResponse()->setBody(json_encode($result));
+    }
 }
