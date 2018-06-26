@@ -1,32 +1,34 @@
 /* eslint-disable react/jsx-max-depth */
 
-import {createElement, Component, Item, Grid, GridCol, Button, Icon} from '@plesk/ui-library';
+import {createElement, Component, Item, Grid, GridCol, Button, Icon, ContentLoader} from '@plesk/ui-library';
 import axios from 'axios';
 
 class WelcomeBoxContentStep extends Component {
     constructor(props)
     {
         super(props);
+        this.state = props;
 
-        this.step = props;
-
-        // TODO Indexes are required to store the completed state - add function with AJAX request
         this.indexGroup = props.indexGroup;
         this.index = props.index;
 
-        this.state = {completed: this.setCompletedStatus(Boolean(this.step.completed))};
-        this.state = {completedIcon: this.setCompletedButtonImage(Boolean(this.state.completed))};
+        this.state.response = undefined;
+        this.state.completed = this.setCompletedStatus(Boolean(this.state.completed));
+        this.state.completedIcon = this.setCompletedButtonImage(Boolean(this.state.completed));
+    }
+
+    componentDidMount()
+    {
+        axios.get('/modules/welcome/index.php/index/group?group=' + this.indexGroup + '&step=' + this.index)
+            .then(({data}) => {
+                data.response = true;
+                data.completed = this.setCompletedStatus(Boolean(data.completed));
+                data.completedIcon = this.setCompletedButtonImage(Boolean(data.completed));
+                this.setState(data)
+            })
     }
 
     setCompletedStatus = (completedStatus) => {
-        if(typeof this.state !== 'undefined')
-        {
-            if(typeof this.state.completed !== 'undefined')
-            {
-                return this.state.completed
-            }
-        }
-
         return (completedStatus === true)
     }
 
@@ -56,20 +58,27 @@ class WelcomeBoxContentStep extends Component {
 
     render()
     {
+        if(!this.state.response)
+        {
+            return (
+                <ContentLoader/>
+            )
+        }
+
         return (
             <div className={`${this.state.completed ? 'welcome-single-item completed' : 'welcome-single-item'}`}>
                 <Grid xs={3} gap="xs">
                     <GridCol xs={9}>
                         <Item
-                            icon={{src: this.step.image, size: '64'}}
-                            title={this.step.title}
+                            icon={{src: this.state.image, size: '64'}}
+                            title={this.state.title}
                         >
-                            <div dangerouslySetInnerHTML={{__html: this.step.description}}/>
+                            <div dangerouslySetInnerHTML={{__html: this.state.description}}/>
                         </Item>
                     </GridCol>
                     <GridCol xs={2}>
                         <div className="welcome-single-action-button">
-                            {this.step.buttons.map(({...button}) => {
+                            {this.state.buttons.map(({...button}) => {
                                     return <Button component="a" href={button.url} intent="primary">{button.title}</Button>
                                 }
                             )}
