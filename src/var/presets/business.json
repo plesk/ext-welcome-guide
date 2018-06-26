@@ -39,11 +39,14 @@
                     },
                     {
                         "title": "Create an Email Account",
-                        "description": "Let's activate advanced email and collaboration services with Plesk Premium Email.\nIt provides all the features associated with top tier collaboration servers, such as email, calendar, contacts, tasks, notes and files.",
+                        "description": "Let's install and activate advanced email and collaboration services with Plesk Premium Email.\nIt provides all the features associated with top tier collaboration servers, such as email, calendar, contacts, tasks, notes and files.",
                         "image": "/modules/welcome/images/presets/kolab_64.png",
                         "buttons":[
                             {
                                 "actionId": "kolab"
+                            },
+                            {
+                                "actionId": "newMail"
                             }
                         ]
                     },
@@ -88,10 +91,15 @@
                 "extensionId": "letsencrypt",
                 "title": "Secure"
             },
+            "newMail":{
+                "taskId": "link",
+                "title": "Create Mailbox",
+                "url": "/smb/email-address/create"
+            },
             "kolab": {
                 "taskId": "install",
-                "extensionId": "kolab",
-                "title": "Email & Collaboration Suite"
+                "extensionId": "kolab"
+                
             },
             "acronis-backup": {
                 "taskId": "install",
@@ -140,12 +148,16 @@
                     },
                     {
                         "title": "Email Account erstellen",
-                        "description": "Aktivieren Sie die professionellen Email und Collaboration Services mit Plesk Premium Email.\nProfitieren Sie von allen gängigen Collaborations-Funktionen wie Email, Kalender, Kontakte, Aufgaben, Notizen und Dateien.",
+                        "description": "Installieren undAktivieren Sie die professionellen Email und Collaboration Services mit Plesk Premium Email.\nProfitieren Sie von allen gängigen Collaborations-Funktionen wie Email, Kalender, Kontakte, Aufgaben, Notizen und Dateien.",
                         "image": "/modules/welcome/images/presets/kolab_64.png",
                         "buttons":[
                             {
                                 "actionId": "kolab"
+                            },
+                            {
+                                "actionId": "newMail"
                             }
+
                         ]
                     },
                     {
@@ -190,6 +202,11 @@
             "open-letsencrypt": {
                 "taskId": "extlink",
                 "extensionId": "letsencrypt"
+            },
+            "newMail":{
+                "taskId": "link",
+                "title": "Create Mailbox",
+                "url": "/smb/email-address/create"
             },
             "kolab": {
                 "taskId": "install",
