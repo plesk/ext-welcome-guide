@@ -1,13 +1,28 @@
 /* eslint-disable react/jsx-max-depth */
 
-import {Paragraph, Text, ItemList, Item, Button, CardList, Card, ToolbarGroup, createElement, Fragment, Carousel, Grid, GridCol, Panel, Media, MediaSection, Icon, Translate} from '@plesk/ui-library';
+import {createElement, Fragment, Card, PreviewPanel, Paragraph, Text} from '@plesk/ui-library';
+import WelcomeBoxContent from './WelcomeBoxContent';
+import WelcomeBoxCss from './WelcomeBoxCss';
 
 const WelcomeBox = ({...props}) => (
     <Fragment>
+        <WelcomeBoxCss/>
         <div id="welcome-box">
-            <Paragraph>
-                <Text>Plesk Welcome Extension</Text>
-            </Paragraph>
+            <Card
+                title={props.data.title}
+                sideHeader={
+                    <PreviewPanel image={props.data.image}></PreviewPanel>
+                }
+                sideContent={
+                    <Paragraph>
+                        <Text>
+                            <div dangerouslySetInnerHTML={{__html: props.data.description}}/>
+                        </Text>
+                    </Paragraph>
+                }
+            >
+                <WelcomeBoxContent {...props}/>
+            </Card>
         </div>
     </Fragment>
 );

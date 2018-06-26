@@ -2,6 +2,7 @@
 // Copyright 1999-2018. Plesk International GmbH. All rights reserved.
 
 use PleskExt\Welcome\Helper;
+use PleskExt\Welcome\Config;
 
 class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
 {
@@ -28,6 +29,7 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
             return 'require(["' . pm_Context::getBaseUrl() . 'js/main.js"], function (render) {
                         render(document.getElementById("ext-welcome-app"), ' . json_encode([
                     'locale' => \pm_Locale::getCode(),
+                    'data'   => (new Config())->getProcessedConfigData(),
                 ]) . ');
                 });
     
