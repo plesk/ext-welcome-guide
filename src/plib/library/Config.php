@@ -330,6 +330,28 @@ class Config
     }
 
     /**
+     * Sets a pre-defined name for the shipped presets
+     *
+     * @param $preset
+     *
+     * @return mixed
+     */
+    public function getPreparedPresetName($preset)
+    {
+        $presetNames = [
+            'wordpress' => 'WordPress',
+            'business'  => 'Business & Collaboration',
+            'default'   => 'Default'
+        ];
+
+        if (!empty($presetNames[$preset])) {
+            return $presetNames[$preset];
+        }
+
+        return $preset;
+    }
+
+    /**
      * @param string $preset
      *
      * @return string
