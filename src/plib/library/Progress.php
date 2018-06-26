@@ -34,26 +34,43 @@ class Progress
     {
         $arr = $this->getProgress();
 
-        $arr[$groupId] = $stepId;
+        if (!isset($arr[$groupId]))
+        {
+            $arr[$groupId] = [];
+        }
+
+        if (!isset($arr[$groupId][$stepId]))
+        {
+            $arr[$groupId][$stepId] = true;
+        }
+        else
+        {
+            $arr[$groupId][$stepId] = !$arr[$groupId][$stepId];
+        }
 
         $this->client->setSetting(self::PROGRESS_SETTING_KEY, json_encode($arr));
     }
 
     /**
-     * @param int $groupIdx
-     * @param int $stepIdx
+     * @param int $groupId
+     * @param int $stepId
      *
      * @return bool
      */
-    public function isStepCompleted($groupIdx, $stepIdx)
+    public function isStepCompleted($groupId, $stepId)
     {
         $arr = $this->getProgress();
 
-        if (!isset($arr[$groupIdx]))
+        if (!isset($arr[$groupId]))
         {
             return false;
         }
 
-        return ($stepIdx > $arr[$groupIdx]) ? false : true;
+        if (!isset($arr[$groupId][$stepId]))
+        {
+            return false;
+        }
+
+        return $arr[$groupId][$stepId];
     }
 }
