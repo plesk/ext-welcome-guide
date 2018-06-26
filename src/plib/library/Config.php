@@ -8,6 +8,7 @@ class Config
     const PRESET_DIR = '/usr/local/psa/var/modules/welcome/presets';
     const DEFAULT_LOCALE = 'en-US';
     const DEFAULT_LOCALE_KEY = 'default';
+    const EXTENSION_ENABLED_KEY = 'is_extension_enabled';
 
     /**
      * @var \pm_ServerFileManager
@@ -24,11 +25,17 @@ class Config
      */
     private $progress;
 
+    /**
+     * @var \pm_Client
+     */
+    private $client;
+
     public function __construct()
     {
         $this->serverFileManager = new \pm_ServerFileManager;
         $this->currentLocale = \pm_Locale::getCode();
         $this->progress = new Progress;
+        $this->client = \pm_Session::getClient();
     }
 
     /**
@@ -444,5 +451,25 @@ class Config
         }
 
         return '';
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExtensionEnabled()
+    {
+        $num = (int)$this->client->getSetting(self::EXTENSION_ENABLED_KEY, 1);
+
+        return ($num > 0) ? true : false;
+    }
+
+    public function disableExtension()
+    {
+        $this->client->setSetting(self::EXTENSION_ENABLED_KEY, 0);
+    }
+
+    public function enableExtension()
+    {
+        $this->client->setSetting(self::EXTENSION_ENABLED_KEY, 1);
     }
 }

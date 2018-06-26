@@ -48,7 +48,7 @@ class Progress
             $arr[$groupId][$stepId] = !$arr[$groupId][$stepId];
         }
 
-        $this->client->setSetting(self::PROGRESS_SETTING_KEY, json_encode($arr));
+        $this->client->setSetting(self::PROGRESS_SETTING_KEY, json_encode($arr, JSON_FORCE_OBJECT));
     }
 
     /**
