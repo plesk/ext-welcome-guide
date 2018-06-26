@@ -159,8 +159,7 @@ class Config
 
         preg_match_all('/%%+(.*?)%%/', $text, $matches, PREG_SET_ORDER);
 
-        foreach ($matches as $match)
-        {
+        foreach ($matches as $match) {
             $placeholder = $match[0];
             $segments = explode('|', $match[1]);
             $type = $segments[0];
@@ -181,8 +180,7 @@ class Config
                 $extensionId = $segments[1];
                 $extensionName = (new Extension($extensionId))->getName();
 
-                if ($extensionName === false)
-                {
+                if ($extensionName === false) {
                     $extensionName = '[Extension "' . $extensionId . '" does not exist]';
                 }
 
@@ -209,15 +207,15 @@ class Config
                 $str = $segments[2];
 
                 $formats = [
-                    'bold'       => [
+                    'bold'      => [
                         'before' => '<strong>',
                         'after'  => '</strong>',
                     ],
-                    'italic'     => [
+                    'italic'    => [
                         'before' => '<em>',
                         'after'  => '</em>',
                     ],
-                    'underline'  => [
+                    'underline' => [
                         'before' => '<u>',
                         'after'  => '</u>',
                     ],
@@ -271,6 +269,11 @@ class Config
         } elseif ($action['taskId'] === 'extlink') {
             $extension = new Extension($action['extensionId']);
             $buttonTitle = $extension->getName();
+
+            if (!empty($action['title'])) {
+                $buttonTitle = $action['title'];
+            }
+
             $buttonUrl = $extension->createOpenLink();
 
             if ($buttonTitle === false) {

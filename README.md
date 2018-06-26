@@ -73,6 +73,7 @@ Creates link to open specific extension using the official extension name.
 
 Parameters:
 1. Extension ID (required)
+2. Custom title (optional)
 
 ```
 %%extlink|wp-toolkit%% -> <a href="ext-open-link">WordPress Toolkit</a>
