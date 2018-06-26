@@ -155,14 +155,83 @@ class Config
     private function replace($text)
     {
         $text = htmlspecialchars(strip_tags($text));
-        $currentUserName = \pm_Session::getClient()->getProperty('pname');
-
-        if (empty($currentUserName)) {
-            $currentUserName = \pm_Session::getClient()->getProperty('login');
-        }
-
-        $text = str_replace('%%current-user-name%%', $currentUserName, $text);
         $text = str_replace(["\r\n", "\r", "\n"], '<br />', $text);
+
+        preg_match_all('/%%+(.*?)%%/', $text, $matches, PREG_SET_ORDER);
+
+        foreach ($matches as $match)
+        {
+            $placeholder = $match[0];
+            $segments = explode('|', $match[1]);
+            $type = $segments[0];
+
+            if ($type === 'current-user-name') {
+                $currentUserName = \pm_Session::getClient()->getProperty('pname');
+
+                if (empty($currentUserName)) {
+                    $currentUserName = \pm_Session::getClient()->getProperty('login');
+                }
+
+                $text = str_replace($placeholder, $currentUserName, $text);
+            } elseif ($type === 'extname') {
+                if (count($segments) !== 2) {
+                    throw new \Exception('Invalid number of parameters for type: ' . $type);
+                }
+
+                $extensionId = $segments[1];
+                $extensionName = (new Extension($extensionId))->getName();
+
+                if ($extensionName === false)
+                {
+                    $extensionName = '[Extension "' . $extensionId . '" does not exist]';
+                }
+
+                $text = str_replace($placeholder, $extensionName, $text);
+            } elseif ($type === 'image') {
+                if (count($segments) < 2) {
+                    throw new \Exception('Invalid number of parameters for type: ' . $type);
+                }
+
+                $url = $segments[1];
+                $style = '';
+
+                if (isset($segments[2]) && in_array($segments[2], ['left', 'right'])) {
+                    $style = 'style="float: ' . $segments[2] . ';" ';
+                }
+
+                $text = str_replace($placeholder, '<img src="' . $url . '" ' . $style . '/>', $text);
+            } elseif ($type === 'format') {
+                if (count($segments) !== 3) {
+                    throw new \Exception('Invalid number of parameters for type: ' . $type);
+                }
+
+                $format = $segments[1];
+                $str = $segments[2];
+
+                $formats = [
+                    'bold'       => [
+                        'before' => '<strong>',
+                        'after'  => '</strong>',
+                    ],
+                    'italic'     => [
+                        'before' => '<em>',
+                        'after'  => '</em>',
+                    ],
+                    'underline'  => [
+                        'before' => '<u>',
+                        'after'  => '</u>',
+                    ],
+                ];
+
+                if (!isset($formats[$format])) {
+                    throw new \Exception('Unknown format: ' . $format);
+                }
+
+                $text = str_replace($placeholder, $formats[$format]['before'] . $str . $formats[$format]['after'], $text);
+            } else {
+                throw new \Exception('Invalid type: ' . $type);
+            }
+        }
 
         return $text;
     }
