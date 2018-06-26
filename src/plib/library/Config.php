@@ -200,8 +200,7 @@ class Config
             $buttonUrl = $isInstalled ? $extension->createOpenLink() : $extension->createInstallLink();
 
             return [$buttonTitle, $buttonUrl];
-        }
-        elseif ($action['taskId'] === 'extlink') {
+        } elseif ($action['taskId'] === 'extlink') {
             $extension = new Extension($action['extensionId']);
             $buttonTitle = $extension->getName();
             $buttonUrl = $extension->createOpenLink();
@@ -210,6 +209,11 @@ class Config
             {
                 $buttonTitle = '[Extension "' . $action['extensionId'] . '" does not exist]';
             }
+
+            return [$buttonTitle, $buttonUrl];
+        } elseif ($action['taskId'] === 'link') {
+            $buttonTitle = $action['title'];
+            $buttonUrl = $action['url'];
 
             return [$buttonTitle, $buttonUrl];
         } else {
