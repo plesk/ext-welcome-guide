@@ -252,7 +252,7 @@ class Config
 
     /**
      * @param string $actionId
-     * @param array $actions
+     * @param array  $actions
      *
      * @return array
      */
@@ -260,8 +260,7 @@ class Config
     {
         $action = $actions[$actionId];
 
-        if ($action['taskId'] === 'install')
-        {
+        if ($action['taskId'] === 'install') {
             $extension = new Extension($action['extensionId']);
             $isInstalled = $extension->isInstalled();
             $langKey = $isInstalled ? 'library.config.button.title.open' : 'library.config.button.title.install';
@@ -274,8 +273,7 @@ class Config
             $buttonTitle = $extension->getName();
             $buttonUrl = $extension->createOpenLink();
 
-            if ($buttonTitle === false)
-            {
+            if ($buttonTitle === false) {
                 $buttonTitle = '[Extension "' . $action['extensionId'] . '" does not exist]';
             }
 
@@ -283,6 +281,11 @@ class Config
         } elseif ($action['taskId'] === 'link') {
             $buttonTitle = $action['title'];
             $buttonUrl = $action['url'];
+
+            return [$buttonTitle, $buttonUrl];
+        } elseif ($action['taskId'] === 'addDomain') {
+            $buttonTitle = \pm_Locale::lmsg('library.config.button.title.adddomain');
+            $buttonUrl = Helper::getLinkNewDomain();
 
             return [$buttonTitle, $buttonUrl];
         } else {
@@ -305,13 +308,9 @@ class Config
         $arr[$locale]['description'] = $this->replace($arr[$locale]['description']);
 
         foreach ($arr[$locale]['groups'] as $groupIdx => $group) {
-            $groupId = $groupIdx + 1;
-
             $arr[$locale]['groups'][$groupIdx]['title'] = $this->replace($group['title']);
 
             foreach ($group['steps'] as $stepIdx => $step) {
-                $stepId = $stepIdx + 1;
-
                 $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['title'] = $this->replace($step['title']);
                 $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['description'] = $this->replace($step['description']);
 
@@ -324,7 +323,7 @@ class Config
                     }
                 }
 
-                $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['completed'] = $this->progress->isStepCompleted($groupId, $stepId);
+                $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['completed'] = $this->progress->isStepCompleted($groupIdx, $stepIdx);
             }
         }
 
