@@ -1,6 +1,6 @@
 {
-  "name": "my-app",
-  "description": "Extension Plesk App",
+  "name": "welcome",
+  "description": "This extension helps you to get started with your new Plesk Server! The configuration is easy and simple via a machine readable JSON file or directly through the config page of the extension.",
   "version": "1.0.0",
   "dependencies": {
     "axios": "^0.18.0",

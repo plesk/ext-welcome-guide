@@ -106,6 +106,9 @@ class IndexController extends pm_Controller_Action
         $this->getResponse()->setBody('success');
     }
 
+    /**
+     * Get data via Ajax request for specific groups and steps
+     */
     public function groupAction()
     {
         $groupId = (int)$this->getParam('group', 0);
@@ -127,6 +130,9 @@ class IndexController extends pm_Controller_Action
         $this->getResponse()->setBody(json_encode($result));
     }
 
+    /**
+     * Action to disable the Welcome box for a specific user
+     */
     public function disableAction()
     {
         $config = new ConfigClass;
@@ -139,6 +145,9 @@ class IndexController extends pm_Controller_Action
         $this->getResponse()->setRedirect(Helper::getReturnUrl());
     }
 
+    /**
+     * Action to enable the Welcome box for a specific user
+     */
     public function enableAction()
     {
         $config = new ConfigClass;

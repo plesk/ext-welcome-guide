@@ -15,7 +15,7 @@ yarn build && cp dist/htdocs/bundle.js src/htdocs/bundle.js
 Before bundling the extension you need to build the bundle file above
 
 ```
-cd src/ && zip -9r ext-welcome.zip *
+cd src/ && zip -6r ext-welcome.zip *
 ```
 
 ## Placeholders in JSON configuration
