@@ -109,14 +109,16 @@ class IndexController extends pm_Controller_Action
     public function groupAction()
     {
         $groupId = (int)$this->getParam('group', 0);
+        $stepId = (int)$this->getParam('step', -1);
         $config = new ConfigClass;
         $data = $config->getProcessedConfigData();
+        $steps = isset($data['groups'][$groupId]) ? $data['groups'][$groupId]['steps'] : [];
 
-        if (!isset($data['groups'][$groupId]))
-        {
-            return [];
+        if ($stepId === -1) {
+            return $steps;
         }
-
-        return $data['groups'][$groupId]['steps'];
+        else {
+            return isset($steps[$stepId]) ? $steps[$stepId] : [];
+        }
     }
 }
