@@ -20,68 +20,23 @@ cd src/ && zip -9r ext-welcome.zip *
 
 ## Placeholders in JSON configuration
 
-It is possible to make JSON configuration dynamic by using placeholders in JSON strings. The syntax for all types of placeholders is **%%placeholder%%**.
+It is possible to make JSON configuration more flexible by using placeholders in JSON strings. The syntax is **%%placeholder%%**.
 
-### Predefined variables
+### Static placeholders
 
-Currently there is only one predefined variable **username**, which resolves to the current Plesk user name.
+Currently there is only one static placeholder **%%username%%**, which resolves to the current Plesk user name.
 
 ```
 Hallo, %%username%%!" -> "Hallo, Max Mustermann!
 ```
 
-### Actions
+### Dynamic placeholders
 
-An action consists of a name and at least one parameter. Parameters are separated by | (vertical pipe) character. The syntax for action placeholder is: **%%action-name|param1|param2|paramX%%**
+Dynamic placeholder consists of a name and at least one parameter. Parameters are separated by | (vertical pipe) character. The syntax for dynamic placeholders is: **%%name|param1|param2|paramX%%**
 
-#### Install - Link to specific extension.
+#### extname
 
-Depending on whether particular extension is installed or not, this action allows to install new or open existing extension.
-
-Parameters:
-1. Extension ID (required)
-2. Message when extension is not installed yet (required)
-3. Message when extension is already installed (required)
-
-```
-%%install|wp-toolkit|Install new WordPress website|Open your WordPress website%%
-```
-
-Depending on if you have the WordPress Toolkit installed, the output will be either:
-
-```
-<a href="ext-open-link">Open your WordPress website</a>
-```
-
-or:
-
-```
-<a href="ext-install-link">Install new WordPress website</a>
-```
-
-Is it *WordPress* or *Wordpress*? Is it *Joomla!* or *Joomla*? To make it easier by not having to remember correct names of extensions, the special variable *{{name}}* can be used inside of an *install* action. It resolves to the official name of an extension:
-
-```
-%%install|joomla-toolkit|Create a website using {{name}}|Configure your website with {{name}}%%
-->
-<a href="ext-install-link">Create a website using Joomla! Toolkit</a>
-```
-
-#### Extlink
-
-Creates link to open specific extension using the official extension name.
-
-Parameters:
-1. Extension ID (required)
-2. Custom title (optional)
-
-```
-%%extlink|wp-toolkit%% -> <a href="ext-open-link">WordPress Toolkit</a>
-```
-
-#### Extname
-
-Returns official extension name.
+Returns official name of an extension.
 
 Parameters:
 1. Extension ID (required)
@@ -90,20 +45,7 @@ Parameters:
 %%extname|advisor%% -> Security Advisor
 ```
 
-#### Link
-
-Creates a hyperlink.
-
-Parameters:
-1. Link text (required)
-2. URL (required)
-3. Open in new window (required) [true|false]
-
-```
-%%link|Google|https://www.google.de|true%% -> <a href="https://www.google.de" target="_blank">Google</a>
-```
-
-#### Image
+#### image
 
 Displays an image.
 
@@ -117,7 +59,7 @@ Parameters:
 <img src="https://www.plesk.com/wp-content/uploads/2017/05/elvis_plesky.png" />
 ```
 
-#### Format
+#### format
 
 Provides options for formatting text.
 
@@ -128,6 +70,58 @@ Parameters:
 ```
 This is %%format|bold|important%% -> This is <strong>important</strong>
 ```
+
+## Actions
+
+Actions are defined in separate `actions` block, calls some built-in task and is referenced by buttons.
+
+```
+"actions": {
+    "action1": {
+        "taskId": "install",
+        "extensionId": "wp-toolkit"
+    }
+}
+```
+
+```
+"buttons": [
+    {
+        "actionId": "action1"
+    }
+]
+```
+
+### Tasks
+
+#### install
+
+For installing or opening extension.
+
+Parameters:
+1. extensionId - Extension ID (required)
+
+#### extlink
+
+For opening extension.
+
+Parameters:
+1. extensionId - Extension ID (required)
+2. title - Button text, if not set then the official extension name will be used (optional)
+
+#### link
+
+For opening specific URL address.
+
+Parameters:
+1. title - Button text (required)
+2. url - URL address (required)
+
+#### addDomain
+
+Shortcut for adding a new domain name.
+
+Parameters: *none*
 
 ## Command-line interface usage examples
 
