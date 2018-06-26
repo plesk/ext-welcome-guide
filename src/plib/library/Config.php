@@ -165,7 +165,7 @@ class Config
             $segments = explode('|', $match[1]);
             $type = $segments[0];
 
-            if ($type === 'current-user-name') {
+            if ($type === 'username') {
                 $currentUserName = \pm_Session::getClient()->getProperty('pname');
 
                 if (empty($currentUserName)) {
