@@ -268,12 +268,7 @@ class Config
             return [$buttonTitle, $buttonUrl];
         } elseif ($action['taskId'] === 'extlink') {
             $extension = new Extension($action['extensionId']);
-            $buttonTitle = $extension->getName();
-
-            if (!empty($action['title'])) {
-                $buttonTitle = $action['title'];
-            }
-
+            $buttonTitle = isset($action['title']) ? $action['title'] : $extension->getName();
             $buttonUrl = $extension->createOpenLink();
 
             if ($buttonTitle === false) {
