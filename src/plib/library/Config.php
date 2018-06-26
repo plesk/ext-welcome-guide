@@ -261,7 +261,13 @@ class Config
         if ($action['taskId'] === 'install') {
             $extension = new Extension($action['extensionId']);
             $isInstalled = $extension->isInstalled();
-            $buttonTitle = $isInstalled ? (isset($action['titleOpen']) ? $action['titleOpen'] : \pm_Locale::lmsg('library.config.button.title.open')) : (isset($action['titleInstall']) ? $action['titleInstall'] : \pm_Locale::lmsg('library.config.button.title.install'));
+
+            $buttonTitle = isset($action['titleInstall']) ? $action['titleInstall'] : \pm_Locale::lmsg('library.config.button.title.install');
+
+            if ($isInstalled) {
+                $buttonTitle = isset($action['titleOpen']) ? $action['titleOpen'] : \pm_Locale::lmsg('library.config.button.title.open');
+            }
+
             $buttonUrl = $isInstalled ? $extension->createOpenLink() : $extension->createInstallLink();
 
             return [$buttonTitle, $buttonUrl];
