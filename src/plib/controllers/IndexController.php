@@ -40,13 +40,11 @@ class IndexController extends pm_Controller_Action
 
         $presetSelector = [];
 
-        foreach ($config->getPresets() as $preset)
-        {
+        foreach ($config->getPresets() as $preset) {
             $presetSelector[] = [
-                'title' => $preset,
-                'description' => $preset,
+                'title' => $config->getPreparedPresetName($preset),
                 'class' => 'sb-preset-select',
-                'link' => "javascript:welcomeLoadPreset('{$preset}')",
+                'link'  => "javascript:welcomeLoadPreset('{$preset}')",
             ];
         }
 
