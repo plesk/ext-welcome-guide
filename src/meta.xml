@@ -2,7 +2,8 @@
 <module>
   <id>welcome</id>
   <name>Plesk Welcome Extension</name>
-  <description>This extension helps you to get started with your new Plesk Server!</description>
+  <description>This extension helps you to get started with your new Plesk Server! The configuration is easy and simple via a machine readable JSON file or directly through the config page of the extension.</description>
+  <description xml:lang="de-DE">Diese Erweiterung hilft Ihnen beim Start mit ihrem neuen Plesk Server. Die Konfiguration erfolgt über eine Datei im JSON Format oder direkt auf der Konfigurationsseite der Erweiterung.</description>
   <category>help</category>
   <version>1.0.0</version>
   <release>1</release>
