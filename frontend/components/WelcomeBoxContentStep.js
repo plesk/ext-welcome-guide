@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-max-depth */
 
 import {createElement, Component, Item, Grid, GridCol, Button, Icon, ContentLoader} from '@plesk/ui-library';
+import WelcomeBoxHtml from '../containers/WelcomeBox/WelcomeBoxHtml';
 import axios from 'axios';
 
 class WelcomeBoxContentStep extends Component {
@@ -12,7 +13,6 @@ class WelcomeBoxContentStep extends Component {
         this.indexGroup = props.indexGroup;
         this.index = props.index;
 
-        this.state.response = undefined;
         this.state.completed = this.setCompletedStatus(Boolean(this.state.completed));
         this.state.completedIcon = this.setCompletedButtonImage(Boolean(this.state.completed));
     }
@@ -21,7 +21,6 @@ class WelcomeBoxContentStep extends Component {
     {
         axios.get('/modules/welcome/index.php/index/group?group=' + this.indexGroup + '&step=' + this.index)
             .then(({data}) => {
-                data.response = true;
                 data.completed = this.setCompletedStatus(Boolean(data.completed));
                 data.completedIcon = this.setCompletedButtonImage(Boolean(data.completed));
                 this.setState(data)
@@ -58,28 +57,23 @@ class WelcomeBoxContentStep extends Component {
 
     render()
     {
-        if(!this.state.response)
-        {
-            return (
-                <ContentLoader/>
-            )
-        }
-
         return (
             <div className={`${this.state.completed ? 'welcome-single-item completed' : 'welcome-single-item'}`}>
                 <Grid xs={3} gap="xs">
                     <GridCol xs={12} md={12} lg={9} xl={9}>
                         <Item
                             icon={{src: this.state.image, size: '64'}}
-                            title={this.state.title}
+                            title={<WelcomeBoxHtml string={this.state.title}/>}
                         >
-                            <div dangerouslySetInnerHTML={{__html: this.state.description}}/>
+                            <WelcomeBoxHtml string={this.state.description}/>
                         </Item>
                     </GridCol>
                     <GridCol xs={6} md={6} lg={2} xl={2}>
                         <div className="welcome-single-action-button">
                             {this.state.buttons.map(({...button}) => {
-                                    return <Button component="a" href={button.url} intent="primary">{button.title}</Button>
+                                    return <Button component="a" href={button.url} intent="primary">
+                                        <WelcomeBoxHtml string={button.title}/>
+                                    </Button>
                                 }
                             )}
                         </div>

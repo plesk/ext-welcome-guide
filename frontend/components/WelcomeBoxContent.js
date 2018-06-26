@@ -2,6 +2,7 @@
 
 import {createElement, Component, Text, Fragment, Paragraph, Tabs, Tab} from '@plesk/ui-library';
 import WelcomeBoxContentStep from './WelcomeBoxContentStep';
+import WelcomeBoxHtml from '../containers/WelcomeBox/WelcomeBoxHtml';
 
 class WelcomeBoxContent extends Component {
     constructor(props)
@@ -15,7 +16,9 @@ class WelcomeBoxContent extends Component {
     renderOutputPlain = (group, indexGroup) => {
         return (
             <Fragment>
-                <h2>{group.title}</h2>
+                <h2>
+                    {<WelcomeBoxHtml string={group.title}/>}
+                </h2>
                 <div className="welcome-single-page">
                     {group.steps.map(({...step}, index) => {
                             return <WelcomeBoxContentStep {...step} indexGroup={indexGroup} index={index}/>
@@ -28,7 +31,7 @@ class WelcomeBoxContent extends Component {
 
     renderOutputTab = (group, indexGroup) => {
         return (
-            <Tab title={group.title}>
+            <Tab title={<WelcomeBoxHtml string={group.title}/>}>
                 <div className="welcome-single-page">
                     {group.steps.map(({...step}, index) => {
                             return <WelcomeBoxContentStep {...step} indexGroup={indexGroup} index={index}/>
