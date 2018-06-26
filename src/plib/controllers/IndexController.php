@@ -4,6 +4,7 @@ use PleskExt\Welcome\Config as ConfigClass;
 use PleskExt\Welcome\Form\Config;
 use PleskExt\Welcome\Extension;
 use PleskExt\Welcome\Helper;
+use PleskExt\Welcome\Progress;
 
 class IndexController extends pm_Controller_Action
 {
@@ -86,5 +87,22 @@ class IndexController extends pm_Controller_Action
         }
 
         $this->redirect(Helper::getReturnUrl());
+    }
+
+    /**
+     * Ajax callback for step checkbox click
+     */
+    public function progressAction()
+    {
+        $groupId = (int)$this->getParam('group', 0);
+        $stepId = (int)$this->getParam('step', 0);
+        $progress = new Progress;
+
+        $progress->completeStep($groupId, $stepId);
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $this->getResponse()->setBody('success');
     }
 }

@@ -34,7 +34,11 @@ class Progress
     {
         $arr = $this->getProgress();
 
-        $arr[$groupId] = $stepId;
+        if ($stepId == -1) {
+            unset($arr[$groupId]);
+        } else {
+            $arr[$groupId] = $stepId;
+        }
 
         $this->client->setSetting(self::PROGRESS_SETTING_KEY, json_encode($arr));
     }
