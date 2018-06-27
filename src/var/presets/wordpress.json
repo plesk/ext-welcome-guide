@@ -26,7 +26,7 @@
                                 "actionId": "open-letsencrypt"
                             }
                         ]
-                        
+
                     },
                     {
                         "title": "Create a Website",
@@ -64,7 +64,7 @@
                         "image": "/modules/welcome/images/presets/advisor-icon_64.png",
                         "buttons": [
                             {
-                                "actionId": "open-advisor"
+                                "actionId": "install-advisor"
                             }
                         ]
                     }
@@ -80,8 +80,8 @@
             "add-domain": {
                 "taskId": "addDomain"
             },
-            "open-advisor": {
-                "taskId": "extlink",
+            "install-advisor": {
+                "taskId": "install",
                 "extensionId": "advisor"
             },
             "open-letsencrypt": {
@@ -126,7 +126,7 @@
                                 "actionId": "open-letsencrypt"
                             }
                         ]
-                        
+
                     },
                     {
                         "title": "Webseite erstellen",
@@ -164,7 +164,7 @@
                         "image": "/modules/welcome/images/presets/advisor-icon_64.png",
                         "buttons": [
                             {
-                                "actionId": "open-advisor"
+                                "actionId": "install-advisor"
                             }
                         ]
                     }
@@ -180,8 +180,8 @@
             "add-domain": {
                 "taskId": "addDomain"
             },
-            "open-advisor": {
-                "taskId": "extlink",
+            "install-advisor": {
+                "taskId": "install",
                 "extensionId": "advisor"
             },
             "open-letsencrypt": {
