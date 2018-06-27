@@ -139,10 +139,7 @@ class IndexController extends pm_Controller_Action
 
         $config->disableExtension();
 
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-
-        $this->getResponse()->setRedirect(Helper::getReturnUrl());
+        $this->redirect(Helper::getReturnUrl());
     }
 
     /**
@@ -154,9 +151,6 @@ class IndexController extends pm_Controller_Action
 
         $config->enableExtension();
 
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-
-        $this->getResponse()->setRedirect(Helper::getReturnUrl());
+        $this->redirect(Helper::getReturnUrl());
     }
 }
