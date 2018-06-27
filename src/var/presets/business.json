@@ -66,7 +66,7 @@
                         "image": "/modules/welcome/images/presets/advisor-icon_64.png",
                         "buttons": [
                             {
-                                "actionId": "open-advisor"
+                                "actionId": "install-advisor"
                             }
                         ]
                     }
@@ -82,8 +82,8 @@
             "add-domain": {
                 "taskId": "addDomain"
             },
-            "open-advisor": {
-                "taskId": "extlink",
+            "install-advisor": {
+                "taskId": "install",
                 "extensionId": "advisor"
             },
             "open-letsencrypt": {
@@ -99,7 +99,7 @@
             "kolab": {
                 "taskId": "install",
                 "extensionId": "kolab"
-                
+
             },
             "acronis-backup": {
                 "taskId": "install",
@@ -134,7 +134,7 @@
                                 "actionId": "open-letsencrypt"
                             }
                         ]
-                       
+
                     },
                     {
                         "title": "Webseite erstellen",
@@ -176,11 +176,11 @@
                         "image": "/modules/welcome/images/presets/advisor-icon_64.png",
                         "buttons": [
                             {
-                                "actionId": "open-advisor"
+                                "actionId": "install-advisor"
                             }
                         ]
                     }
- 
+
                 ]
             }
         ],
@@ -195,8 +195,8 @@
                 "taskId": "addDomain",
                 "title": "Domain hinzufügen"
             },
-            "open-advisor": {
-                "taskId": "extlink",
+            "install-advisor": {
+                "taskId": "install",
                 "extensionId": "advisor"
             },
             "open-letsencrypt": {
