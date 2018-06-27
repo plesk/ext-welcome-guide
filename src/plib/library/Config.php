@@ -8,7 +8,8 @@ class Config
     const PRESET_DIR = '/usr/local/psa/var/modules/welcome/presets';
     const DEFAULT_LOCALE = 'en-US';
     const DEFAULT_LOCALE_KEY = 'default';
-    const EXTENSION_ENABLED_KEY = 'is_extension_enabled';
+    const EXTENSION_ENABLED_KEY = 'isExtensionEnabled';
+    const PRESET_FILE_PATH_KEY = 'configPresetFilePath';
 
     /**
      * @var \pm_ServerFileManager
@@ -246,7 +247,7 @@ class Config
      */
     public function load()
     {
-        $configPresetFilePath = \pm_Settings::get('configPresetFilePath');
+        $configPresetFilePath = \pm_Settings::get(self::PRESET_FILE_PATH_KEY);
 
         if (!empty($configPresetFilePath) && $this->serverFileManager->fileExists($configPresetFilePath)) {
             return $this->serverFileManager->fileGetContents($configPresetFilePath);
@@ -358,7 +359,9 @@ class Config
         }
 
         $this->serverFileManager->filePutContents(self::CONFIG_FILE, $json);
-        \pm_Settings::set('configPresetFilePath', self::CONFIG_FILE);
+        $this->progress->clearProgress();
+
+        \pm_Settings::set(self::PRESET_FILE_PATH_KEY, self::CONFIG_FILE);
     }
 
     /**
@@ -379,7 +382,9 @@ class Config
         }
 
         $this->serverFileManager->copyFile($presetFile, self::CONFIG_FILE);
-        \pm_Settings::set('configPresetFilePath', $presetFile);
+        $this->progress->clearProgress();
+
+        \pm_Settings::set(self::PRESET_FILE_PATH_KEY, $presetFile);
     }
 
     /**
