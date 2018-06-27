@@ -76,6 +76,9 @@ class Progress
 
     public function clearProgress()
     {
-        $this->client->setSetting(self::PROGRESS_SETTING_KEY, null);
+        foreach ($this->client->getAll() as $client)
+        {
+            $client->setSetting(self::PROGRESS_SETTING_KEY, null);
+        }
     }
 }
