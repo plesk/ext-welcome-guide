@@ -73,4 +73,12 @@ class Progress
 
         return $arr[$groupId][$stepId];
     }
+
+    public function clearProgress()
+    {
+        foreach ($this->client->getAll() as $client)
+        {
+            $client->setSetting(self::PROGRESS_SETTING_KEY, null);
+        }
+    }
 }
