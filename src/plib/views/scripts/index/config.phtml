@@ -7,6 +7,9 @@
     <div class="welcome-preset-buttons">
         <?php echo $this->renderSmallTools($this->presetSelector); ?>
     </div>
+    <div class="help-popup-link">
+        <a href="javascript:openHelpPopup()"><?php echo pm_Locale::lmsg('index.config.help.link'); ?></a>
+    </div>
     <?php echo $this->form; ?>
 </div>
 
@@ -26,6 +29,23 @@
             onFailure: function() {
                 alert('ERROR: Unable to get configuration preset contents');
             }
+        });
+    }
+
+    function openHelpPopup()
+    {
+        new Jsw.Popup({
+            title: '<?php echo pm_Locale::lmsg('index.config.help.popup.title'); ?>',
+            popupCls: 'popup-panel u-popup',
+            content: `<?php echo $this->help; ?>`,
+            buttons: [
+                {
+                    title: '<?php echo pm_Locale::lmsg('index.config.help.popup.close'); ?>',
+                    class: 'u-popup-btn',
+                    handler: function(event, popup) {
+                        popup.hide();
+                    }
+                }]
         });
     }
 </script>
