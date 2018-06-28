@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-max-depth */
 
-import {createElement, Fragment, Card, PreviewPanel, Paragraph, Text, Label} from '@plesk/ui-library';
+import {createElement, Fragment, Card, PreviewPanel, Paragraph, Text} from '@plesk/ui-library';
 import WelcomeBoxContent from '../../components/WelcomeBoxContent';
 import WelcomeBoxCss from './WelcomeBoxCss';
 import WelcomeBoxHtml from './WelcomeBoxHtml';
