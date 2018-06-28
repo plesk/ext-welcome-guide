@@ -5,3 +5,8 @@
 #welcome .welcome-preset-buttons {
     min-height: 60px;
 }
+
+#welcome textarea#json {
+    min-height: 300px;
+    min-width: 300px;
+}
