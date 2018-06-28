@@ -119,37 +119,13 @@ class Extension
      */
     public function installExtension()
     {
-        $extensionUuid = $this->getUuid($this->extensionId);
-
-        if (!empty($extensionUuid)) {
-            $extensionDownloadUrl = 'https://ext.plesk.com/packages/' . $extensionUuid . '-' . $this->extensionId . '/download';
-
-            try {
-                $this->installExtensionApi($extensionDownloadUrl);
-            }
-            catch (\pm_Exception $e) {
-                return $e->getMessage();
-            }
+        try {
+            \pm_ApiCli::call('extension', ['--install', $this->extensionId]);
+        }
+        catch (\pm_Exception_ResultException $e) {
+            return $e->getMessage();
         }
 
         return true;
-    }
-
-    /**
-     * Executes the API-RPC call to install the selected extension
-     *
-     * @param $url
-     *
-     * @throws \pm_Exception
-     */
-    private function installExtensionApi($url)
-    {
-        $request = "<server><install-module><url>{$url}</url></install-module></server>";
-        $response = \pm_ApiRpc::getService('1.6.7.0')->call($request);
-        $result = $response->server->{'install-module'}->result;
-
-        if ($result->status != 'ok') {
-            throw new \pm_Exception($result->errtext);
-        }
     }
 }
