@@ -116,6 +116,7 @@ class Extension
      * Installs an extension from the catalog whitelist
      *
      * @return bool|string
+     * @throws \pm_Exception
      */
     public function installExtension()
     {
