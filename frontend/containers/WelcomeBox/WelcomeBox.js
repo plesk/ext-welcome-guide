@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-max-depth */
 
-import {createElement, Fragment, Card, PreviewPanel, Paragraph, Text} from '@plesk/ui-library';
+import {createElement, Fragment, Card, PreviewPanel, Paragraph, Text, Label} from '@plesk/ui-library';
 import WelcomeBoxContent from '../../components/WelcomeBoxContent';
 import WelcomeBoxCss from './WelcomeBoxCss';
 import WelcomeBoxHtml from './WelcomeBoxHtml';
@@ -14,6 +14,13 @@ const WelcomeBox = ({...props}) => (
                 sideHeader={
                     <PreviewPanel image={props.data.image} padding={[5, 5]}/>
                 }
+                buttons={[
+                    {
+                        icon: 'clean',
+                        onClick: () => window.open('/modules/welcome/index.php/index/disable', '_self'),
+                        tooltip: props.locale['tooltip.disable.box']
+                    },
+                ]}
                 sideContent={
                     <Paragraph>
                         <Text>

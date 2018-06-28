@@ -94,8 +94,8 @@ class IndexController extends pm_Controller_Action
      */
     public function progressAction()
     {
-        $groupId = (int)$this->getParam('group', 0);
-        $stepId = (int)$this->getParam('step', 0);
+        $groupId = (int) $this->getParam('group', 0);
+        $stepId = (int) $this->getParam('step', 0);
         $progress = new Progress;
 
         $progress->completeStep($groupId, $stepId);
@@ -111,16 +111,15 @@ class IndexController extends pm_Controller_Action
      */
     public function groupAction()
     {
-        $groupId = (int)$this->getParam('group', 0);
-        $stepId = (int)$this->getParam('step', -1);
+        $groupId = (int) $this->getParam('group', 0);
+        $stepId = (int) $this->getParam('step', -1);
         $config = new ConfigClass;
         $data = $config->getProcessedConfigData();
         $steps = isset($data['groups'][$groupId]) ? $data['groups'][$groupId]['steps'] : [];
 
         if ($stepId === -1) {
             $result = $steps;
-        }
-        else {
+        } else {
             $result = isset($steps[$stepId]) ? $steps[$stepId] : [];
         }
 
@@ -136,7 +135,6 @@ class IndexController extends pm_Controller_Action
     public function disableAction()
     {
         $config = new ConfigClass;
-
         $config->disableExtension();
 
         $this->redirect(Helper::getReturnUrl());
@@ -148,7 +146,6 @@ class IndexController extends pm_Controller_Action
     public function enableAction()
     {
         $config = new ConfigClass;
-
         $config->enableExtension();
 
         $this->redirect(Helper::getReturnUrl());
