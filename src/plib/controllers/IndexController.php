@@ -80,8 +80,8 @@ class IndexController extends pm_Controller_Action
             $result = (new Extension($extension))->installExtension();
 
             if (is_string($result)) {
-                $this->_status->addMessage('warning', $this->lmsg('message_error_install', [
-                    'error' => $result
+                $this->_status->addMessage('warning', $this->lmsg('index.install.message.failure', [
+                    'error' => $result,
                 ]));
             }
         }
