@@ -28,7 +28,7 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
         if ($this->loadContentCode()) {
             return 'require(["' . pm_Context::getBaseUrl() . 'js/main.js"], function (render) {
                         render(document.getElementById("ext-welcome-app"), ' . json_encode([
-                    'locale' => \pm_Locale::getCode(),
+                    'locale' => \pm_Locale::getSection('welcomebox'),
                     'data'   => (new Config())->getProcessedConfigData(),
                 ]) . ');
                 });
@@ -46,15 +46,22 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
      */
     private function loadContentCode()
     {
-        if (pm_Session::getClient()->isAdmin()) {
-            $pageLoaded = $_SERVER['REQUEST_URI'];
-            $whiteList = Helper::getWhiteListPages();
-
-            if (in_array($pageLoaded, $whiteList)) {
-                return true;
-            }
+        if (!pm_Session::getClient()->isAdmin()) {
+            return false;
         }
 
-        return false;
+        $pageLoaded = $_SERVER['REQUEST_URI'];
+        $whiteList = Helper::getWhiteListPages();
+
+        if (!in_array($pageLoaded, $whiteList)) {
+
+            return false;
+        }
+
+        if (!(new Config())->isExtensionEnabled()) {
+            return false;
+        }
+
+        return true;
     }
 }
