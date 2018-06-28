@@ -8,5 +8,8 @@ $messages = [
     'library.config.button.title.open'      => 'Open',
     'library.config.button.title.install'   => 'Install',
     'library.config.button.title.adddomain' => 'Add Domain',
-    'welcomebox.tooltip.disable.box'        => 'Disable the Welcome Box completely'
+    'welcomebox.tooltip.disable'            => 'Disable the Welcome Box completely',
+    'welcomebox.dialog.disable.title'       => 'Disable the Welcome Box',
+    'welcomebox.dialog.disable.content'     => 'You can disable the Welcome Box completely. Attention: Once disabled, you will not be able to enable it again!',
+    'welcomebox.dialog.disable.button'      => 'Yes, disable the Welcome Box',
 ];
