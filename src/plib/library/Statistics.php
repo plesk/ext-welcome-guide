@@ -56,7 +56,7 @@ class Statistics
 
         foreach ($configFileContent as $langKey => $langValue) {
             foreach ($langValue['actions'] as $value) {
-                $actions[$langKey][] = $value['taskId'] . (isset($value['extensionId']) ? ':' . $value['extensionId'] : '');
+                $actions[$langKey][] = $this->createButtonId($value);
             }
         }
 
@@ -90,6 +90,65 @@ class Statistics
     }
 
     /**
+     * @return array
+     */
+    public function setButtonClickList()
+    {
+        $configFileContent = json_decode((new Config())->load(), true);
+        $buttonClicks = [];
+
+        foreach ($configFileContent as $langKey => $langValue) {
+            $buttonClicks[$langKey] = [];
+
+            foreach ($langValue['actions'] as $value) {
+                $buttonId = $this->createButtonId($value);
+                $buttonClicks[$langKey][$buttonId] = 0;
+            }
+        }
+
+        $this->set('buttonClicks', $buttonClicks);
+
+        return $buttonClicks;
+    }
+
+    /**
+     * @param int $groupId
+     * @param int $stepId
+     */
+    public function increaseButtonClickCount($groupId, $stepId)
+    {
+        $buttonClicks = $this->get('buttonClicks');
+        $configFileContent = json_decode((new Config())->load(), true);
+
+        if ($buttonClicks === null) {
+            $buttonClicks = $this->setButtonClickList();
+        }
+
+        $locale = (\pm_Locale::getCode() === Config::DEFAULT_LOCALE) ? Config::DEFAULT_LOCALE_KEY : \pm_Locale::getCode();
+
+        if (isset($configFileContent[$locale])) {
+            $lang = $configFileContent[$locale];
+
+            if (isset($lang['groups'][$groupId])) {
+                $group = $lang['groups'][$groupId];
+
+                if (isset($group['steps'][$stepId])) {
+                    $step = $group['steps'][$stepId];
+                    $actionId = $step['buttons'][0]['actionId'];
+                    $action = $lang['actions'][$actionId];
+                    $buttonId = $this->createButtonId($action);
+
+                    if (isset($buttonClicks[$locale]) && isset($buttonClicks[$locale][$buttonId])) {
+                        $buttonClicks[$locale][$buttonId]++;
+                    }
+                }
+            }
+        }
+
+        $this->set('buttonClicks', $buttonClicks);
+    }
+
+    /**
      * Gets the statistics value for a specific name
      *
      * @param $name
@@ -104,7 +163,7 @@ class Statistics
             return $statistics[$name];
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -132,7 +191,7 @@ class Statistics
     {
         $increaseValue = $this->get($name);
 
-        if (empty($increaseValue)) {
+        if ($increaseValue === null) {
             $increaseValue = 0;
         }
 
@@ -154,7 +213,7 @@ class Statistics
     {
         $decreaseValue = $this->get($name);
 
-        if (empty($decreaseValue)) {
+        if ($decreaseValue === null) {
             $decreaseValue = 0;
         }
 
@@ -195,5 +254,16 @@ class Statistics
     private function clearSettings()
     {
         \pm_Settings::set(self::SETTINGS_NAME, null);
+    }
+
+    private function createButtonId(array $action)
+    {
+        $buttonId = $action['taskId'];
+
+        if (isset($action['extensionId'])) {
+            $buttonId .= ':' . $action['extensionId'];
+        }
+
+        return $buttonId;
     }
 }
