@@ -23,21 +23,26 @@ class WelcomeBoxContentStep extends Component {
             .then(({data}) => {
                 data.completed = this.setCompletedStatus(Boolean(data.completed));
                 data.completedIcon = this.setCompletedButtonImage(Boolean(data.completed));
-                this.setState(data)
+                this.setState(data);
             })
     }
 
     setCompletedStatus = (completedStatus) => {
-        return (completedStatus === true)
+        return (completedStatus === true);
     }
 
     setCompletedButtonImage = (completedStatus) => {
         if(completedStatus === true)
         {
-            return 'check-mark'
+            return 'check-mark';
         }
 
-        return ''
+        return '';
+    }
+
+    redirectClick = (url, target) => {
+        axios.get('/modules/welcome/index.php/index/click?group=' + this.indexGroup + '&step=' + this.index);
+        window.open(url, target);
     }
 
     setStepToggleStatus = () => {
@@ -49,10 +54,10 @@ class WelcomeBoxContentStep extends Component {
     setToggleButtonIntent = () => {
         if(this.state.completed)
         {
-            return 'success'
+            return 'success';
         }
 
-        return 'secondary'
+        return 'secondary';
     }
 
     render()
@@ -71,7 +76,7 @@ class WelcomeBoxContentStep extends Component {
                     <GridCol xs={6} md={6} lg={2} xl={2}>
                         <div className="welcome-single-action-button">
                             {this.state.buttons.map(({...button}) => {
-                                    return <Button component="a" href={button.url} target={button.target} intent="primary">
+                                    return <Button onClick={() => this.redirectClick(button.url, button.target)} intent="primary">
                                         <WelcomeBoxHtml string={button.title}/>
                                     </Button>
                                 }
