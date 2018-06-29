@@ -1,5 +1,5 @@
 
-# Plesk Welcome Extension
+# Plesk Welcome Guide
 
 This extension helps you to get started with your new Plesk Server!
 
