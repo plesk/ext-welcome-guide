@@ -51,6 +51,7 @@ class IndexController extends pm_Controller_Action
 
         $this->view->presetSelector = $presetSelector;
         $this->view->form = $form;
+        $this->view->help = (new \Zend_View(['scriptPath' => \pm_Context::getPlibDir() . 'views']))->render('partials/help.phtml');
 
         $this->view->headLink()->appendStylesheet(pm_Context::getBaseUrl() . 'css/ext-welcome.css');
     }

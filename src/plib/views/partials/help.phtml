@@ -1,0 +1,95 @@
+<?php
+// Copyright 1999-2018. Plesk International GmbH. All rights reserved.
+?>
+
+<h2>Placeholders in JSON configuration</h2>
+<p>It is possible to make JSON configuration more flexible by using placeholders in JSON strings. The syntax is <strong>%%placeholder%%</strong>.</p>
+<h3>Static placeholders</h3>
+<p>Currently there is only one static placeholder <strong>%%username%%</strong>, which resolves to the current Plesk user name.</p>
+<pre><code>Hallo, %%username%%!&quot; -&gt; &quot;Hallo, Max Mustermann!
+</code></pre>
+<h3>Dynamic placeholders</h3>
+<p>Dynamic placeholder consists of a name and at least one parameter. Parameters are separated by | (vertical pipe) character. The syntax for dynamic placeholders is: <strong>%%name|param1|param2|paramX%%</strong></p>
+<h4>extname</h4>
+<p>Returns official name of an extension.</p>
+<p>Parameters:</p>
+<ol>
+    <li>Extension ID (required)</li>
+</ol>
+<pre><code>%%extname|advisor%% -&gt; Security Advisor
+</code></pre>
+<h4>image</h4>
+<p>Displays an image.</p>
+<p>Parameters:</p>
+<ol>
+    <li>URL (required)</li>
+    <li>Position (optional) [left|right]</li>
+</ol>
+<pre><code>%%image|https://www.plesk.com/wp-content/uploads/2017/05/elvis_plesky.png%%
+-&gt;
+&lt;img src=&quot;https://www.plesk.com/wp-content/uploads/2017/05/elvis_plesky.png&quot; /&gt;
+</code></pre>
+<h4>format</h4>
+<p>Provides options for formatting text.</p>
+<p>Parameters:</p>
+<ol>
+    <li>Format type (required) [bold|italic|underline]</li>
+    <li>Text to format (required)</li>
+</ol>
+<pre><code>This is %%format|bold|important%% -&gt; This is &lt;strong&gt;important&lt;/strong&gt;
+</code></pre>
+<h2>Actions</h2>
+<p>Actions are defined in separate <code>actions</code> block, calls some built-in task and is referenced by buttons.</p>
+<pre><code>&quot;actions&quot;: {
+    &quot;action1&quot;: {
+        &quot;taskId&quot;: &quot;install&quot;,
+        &quot;extensionId&quot;: &quot;wp-toolkit&quot;
+    }
+}
+</code></pre>
+<pre><code>&quot;buttons&quot;: [
+    {
+        &quot;actionId&quot;: &quot;action1&quot;
+    }
+]
+</code></pre>
+<h3>Tasks</h3>
+<h4>install</h4>
+<p>For installing or opening extension.</p>
+<p>Parameters:</p>
+<ol>
+    <li>extensionId - Extension ID (required)</li>
+    <li>titleInstall - Title of button for installation process (optional)</li>
+    <li>titleOpen - Title of button for open process (optional)</li>
+</ol>
+<h4>extlink</h4>
+<p>For opening extension.</p>
+<p>Parameters:</p>
+<ol>
+    <li>extensionId - Extension ID (required)</li>
+    <li>title - Button text, if not set then the official extension name will be used (optional)</li>
+</ol>
+<h4>link</h4>
+<p>For opening specific URL address.</p>
+<p>Parameters:</p>
+<ol>
+    <li>title - Button text (required)</li>
+    <li>url - URL address (required)</li>
+</ol>
+<h4>addDomain</h4>
+<p>Shortcut for adding a new domain name.</p>
+<p>Parameters:</p>
+<ol>
+    <li>title  - Button text (optional)</li>
+</ol>
+<h2>Command-line interface usage examples</h2>
+<p>Get a list of available presets</p>
+<pre><code>plesk ext welcome --list/code></code></pre>
+<p>Show current configuration</p>
+<pre><code>plesk ext welcome --show</code></pre>
+<p>Show preset configuration</p>
+<pre><code>plesk ext welcome --show -preset wordpress</code></pre>
+<p>Update current configuration from preset</p>
+<pre><code>plesk ext welcome --select -preset business</code></pre>
+<p>Update current configuration from URL</p>
+<pre><code>plesk ext welcome --input -url <a href="http://example.com/config.json">http://example.com/config.json</a></code></pre>
