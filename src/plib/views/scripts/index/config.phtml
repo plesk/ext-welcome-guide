@@ -13,19 +13,41 @@
 <script>
     function welcomeLoadPreset(preset)
     {
-        new Ajax.Request('/modules/welcome/index.php/index/preset', {
-            method: 'get',
-            parameters: {
-                'preset': preset
-            },
-            onSuccess: function(transport) {
-                var ta = document.getElementById('json');
+        new Jsw.Popup({
+            title: '<?php echo \pm_Locale::lmsg('index.config.confirm.popup.title'); ?>',
+            popupCls: 'popup-panel u-popup',
+            content: '<?php echo \pm_Locale::lmsg('index.config.confirm.popup.content'); ?>',
+            buttons: [
+                {
+                    title: '<?php echo \pm_Locale::lmsg('index.config.confirm.popup.cancel'); ?>',
+                    class: 'u-popup-btn',
+                    handler: function(event, popup) {
+                        popup.hide();
+                    }
+                },
+                {
+                    title: '<?php echo \pm_Locale::lmsg('index.config.confirm.popup.replace'); ?>',
+                    class: 'u-popup-btn action',
+                    handler: function(event, popup) {
+                        new Ajax.Request('/modules/welcome/index.php/index/preset', {
+                            method: 'get',
+                            parameters: {
+                                'preset': preset
+                            },
+                            onSuccess: function(transport) {
+                                popup.hide();
 
-                ta.value = transport.responseText;
-            },
-            onFailure: function() {
-                alert('ERROR: Unable to get configuration preset contents');
-            }
+                                var ta = document.getElementById('json');
+
+                                ta.value = transport.responseText;
+                            },
+                            onFailure: function() {
+                                alert('ERROR: Unable to get configuration preset contents');
+                            }
+                        });
+                    }
+                }
+            ]
         });
     }
 </script>
