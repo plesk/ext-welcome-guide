@@ -46,7 +46,7 @@ class Progress
 
         $this->client->setSetting(self::PROGRESS_SETTING_KEY, json_encode($arr, JSON_FORCE_OBJECT));
 
-        ($arr[$groupId][$stepId]) ? (new Statistics())->increaseCheckedStepsValue() : (new Statistics())->decreaseCheckedStepsValue();
+        ($arr[$groupId][$stepId]) ? (new Statistics())->increaseCompletedStepsValue() : (new Statistics())->decreaseCompletedStepsValue();
     }
 
     /**
