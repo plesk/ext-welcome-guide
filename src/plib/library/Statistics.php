@@ -92,17 +92,17 @@ class Statistics
     /**
      * Increases checked steps value - triggered if step is checked by user
      */
-    public function increaseCheckedStepsValue()
+    public function increaseCompletedStepsValue()
     {
-        $this->increase('checkedSteps', 1);
+        $this->increase('completedSteps', 1);
     }
 
     /**
      * Decreases checked steps value
      */
-    public function decreaseCheckedStepsValue()
+    public function decreaseCompletedStepsValue()
     {
-        $this->decrease('checkedSteps', 1);
+        $this->decrease('completedSteps', 1);
     }
 
     /**
