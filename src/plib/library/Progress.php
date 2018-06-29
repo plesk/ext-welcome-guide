@@ -34,21 +34,19 @@ class Progress
     {
         $arr = $this->getProgress();
 
-        if (!isset($arr[$groupId]))
-        {
+        if (!isset($arr[$groupId])) {
             $arr[$groupId] = [];
         }
 
-        if (!isset($arr[$groupId][$stepId]))
-        {
+        if (!isset($arr[$groupId][$stepId])) {
             $arr[$groupId][$stepId] = true;
-        }
-        else
-        {
+        } else {
             $arr[$groupId][$stepId] = !$arr[$groupId][$stepId];
         }
 
         $this->client->setSetting(self::PROGRESS_SETTING_KEY, json_encode($arr, JSON_FORCE_OBJECT));
+
+        ($arr[$groupId][$stepId]) ? (new Statistics())->increaseCheckedStepsValue() : (new Statistics())->decreaseCheckedStepsValue();
     }
 
     /**
@@ -61,13 +59,11 @@ class Progress
     {
         $arr = $this->getProgress();
 
-        if (!isset($arr[$groupId]))
-        {
+        if (!isset($arr[$groupId])) {
             return false;
         }
 
-        if (!isset($arr[$groupId][$stepId]))
-        {
+        if (!isset($arr[$groupId][$stepId])) {
             return false;
         }
 
@@ -76,8 +72,7 @@ class Progress
 
     public function clearProgress()
     {
-        foreach ($this->client->getAll() as $client)
-        {
+        foreach ($this->client->getAll() as $client) {
             $client->setSetting(self::PROGRESS_SETTING_KEY, null);
         }
     }
