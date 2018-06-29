@@ -90,6 +90,28 @@ class Statistics
     }
 
     /**
+     * @return array
+     */
+    public function setButtonClickList()
+    {
+        $configFileContent = json_decode((new Config())->load(), true);
+        $buttonClicks = [];
+
+        foreach ($configFileContent as $langKey => $langValue) {
+            $buttonClicks[$langKey] = [];
+
+            foreach ($langValue['actions'] as $value) {
+                $buttonId = $this->createButtonId($value);
+                $buttonClicks[$langKey][$buttonId] = 0;
+            }
+        }
+
+        $this->set('buttonClicks', $buttonClicks);
+
+        return $buttonClicks;
+    }
+
+    /**
      * @param int $groupId
      * @param int $stepId
      */
@@ -99,16 +121,7 @@ class Statistics
         $configFileContent = json_decode((new Config())->load(), true);
 
         if ($buttonClicks === null) {
-            $buttonClicks = [];
-
-            foreach ($configFileContent as $langKey => $langValue) {
-                $buttonClicks[$langKey] = [];
-
-                foreach ($langValue['actions'] as $value) {
-                    $buttonId = $this->createButtonId($value);
-                    $buttonClicks[$langKey][$buttonId] = 0;
-                }
-            }
+            $buttonClicks = $this->setButtonClickList();
         }
 
         $locale = (\pm_Locale::getCode() === Config::DEFAULT_LOCALE) ? Config::DEFAULT_LOCALE_KEY : \pm_Locale::getCode();

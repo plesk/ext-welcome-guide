@@ -378,6 +378,7 @@ class Config
         \pm_Settings::set(self::PRESET_FILE_PATH_KEY, self::CONFIG_FILE);
         (new Statistics())->setPresetValue();
         (new Statistics())->setActionList();
+        (new Statistics())->setButtonClickList();
     }
 
     /**
@@ -403,6 +404,7 @@ class Config
         \pm_Settings::set(self::PRESET_FILE_PATH_KEY, $presetFile);
         (new Statistics())->setPresetValue();
         (new Statistics())->setActionList();
+        (new Statistics())->setButtonClickList();
     }
 
     /**
