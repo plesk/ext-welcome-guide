@@ -362,6 +362,8 @@ class Config
         $this->progress->clearProgress();
 
         \pm_Settings::set(self::PRESET_FILE_PATH_KEY, self::CONFIG_FILE);
+        (new Statistics())->setPresetValue();
+        (new Statistics())->setActionList();
     }
 
     /**
@@ -385,6 +387,8 @@ class Config
         $this->progress->clearProgress();
 
         \pm_Settings::set(self::PRESET_FILE_PATH_KEY, $presetFile);
+        (new Statistics())->setPresetValue();
+        (new Statistics())->setActionList();
     }
 
     /**
@@ -463,7 +467,7 @@ class Config
      */
     public function isExtensionEnabled()
     {
-        $num = (int)$this->client->getSetting(self::EXTENSION_ENABLED_KEY, 1);
+        $num = (int) $this->client->getSetting(self::EXTENSION_ENABLED_KEY, 1);
 
         return ($num > 0) ? true : false;
     }
@@ -471,10 +475,17 @@ class Config
     public function disableExtension()
     {
         $this->client->setSetting(self::EXTENSION_ENABLED_KEY, 0);
+        (new Statistics())->increaseHiddenByUserValue();
     }
 
     public function enableExtension()
     {
         $this->client->setSetting(self::EXTENSION_ENABLED_KEY, 1);
+        (new Statistics())->decreaseHiddenByUserValue();
+    }
+
+    public function getConfigFilePath()
+    {
+        return \pm_Settings::get(self::PRESET_FILE_PATH_KEY);
     }
 }
