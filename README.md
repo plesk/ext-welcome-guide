@@ -1,6 +1,6 @@
-# Welcome Extension
+# Plesk Welcome Guide
 
-This is the internal repo for the new Welcome Extension.
+This is the internal repo for the new Plesk Welcome Guide.
 
 ## Setup instructions
 
