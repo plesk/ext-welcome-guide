@@ -2,7 +2,7 @@
 
 namespace PleskExt\Welcome\Form;
 
-use \PleskExt\Welcome\Config as ConfigClass;
+use PleskExt\Welcome\Config as ConfigClass;
 
 class Config extends \pm_Form_Simple
 {
@@ -14,10 +14,10 @@ class Config extends \pm_Form_Simple
 
         $this->addElement('textarea', 'json', [
             'label' => $this->lmsg('index.config.label.json'),
-            'value' => $config->load(),
+            'value' => $config->getJsonFromSession(),
             'required' => true,
             'style' => 'width: 90%;',
-            'rows' => 35,
+            'rows' => 33,
         ]);
 
         $this->addControlButtons(['cancelLink' => \pm_Context::getModulesListUrl()]);
@@ -27,6 +27,8 @@ class Config extends \pm_Form_Simple
     {
         $config = new ConfigClass;
         $json = $this->getValue('json');
+
+        $config->setJsonInSession($json);
 
         $config->save($json);
     }

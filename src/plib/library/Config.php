@@ -2,6 +2,8 @@
 
 namespace PleskExt\Welcome;
 
+use PleskExt\Welcome\Session;
+
 class Config
 {
     const CONFIG_FILE = '/usr/local/psa/var/modules/welcome/config.json';
@@ -10,6 +12,7 @@ class Config
     const DEFAULT_LOCALE_KEY = 'default';
     const EXTENSION_ENABLED_KEY = 'isExtensionEnabled';
     const PRESET_FILE_PATH_KEY = 'configPresetFilePath';
+    const FORM_JSON_KEY = 'formJson';
 
     /**
      * @var \pm_ServerFileManager
@@ -31,12 +34,18 @@ class Config
      */
     private $client;
 
+    /**
+     * @var Session
+     */
+    private $session;
+
     public function __construct()
     {
         $this->serverFileManager = new \pm_ServerFileManager;
         $this->currentLocale = \pm_Locale::getCode();
         $this->progress = new Progress;
         $this->client = \pm_Session::getClient();
+        $this->session = new Session;
     }
 
     /**
@@ -364,6 +373,7 @@ class Config
 
         $this->serverFileManager->filePutContents(self::CONFIG_FILE, $json);
         $this->progress->clearProgress();
+        $this->session->set(self::FORM_JSON_KEY, null);
 
         \pm_Settings::set(self::PRESET_FILE_PATH_KEY, self::CONFIG_FILE);
     }
@@ -480,5 +490,29 @@ class Config
     public function enableExtension()
     {
         $this->client->setSetting(self::EXTENSION_ENABLED_KEY, 1);
+    }
+
+    /**
+     * @return string
+     */
+    public function getJsonFromSession()
+    {
+        $json = $this->session->get(self::FORM_JSON_KEY);
+
+        if ($json === null) {
+            $json = $this->load();
+        }
+
+        $this->session->set(self::FORM_JSON_KEY, null);
+
+        return $json;
+    }
+
+    /**
+     * @param string $json
+     */
+    public function setJsonInSession($json)
+    {
+        $this->session->set(self::FORM_JSON_KEY, $json);
     }
 }

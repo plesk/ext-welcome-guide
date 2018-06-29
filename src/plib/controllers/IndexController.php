@@ -36,7 +36,7 @@ class IndexController extends pm_Controller_Action
                 $this->_status->addError($e->getMessage());
             }
 
-            $this->_helper->json(array('redirect' => \pm_Context::getBaseUrl()));
+            $this->redirect(\pm_Context::getBaseUrl());
         }
 
         $presetSelector = [];
