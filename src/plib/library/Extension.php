@@ -127,6 +127,8 @@ class Extension
             return $e->getMessage();
         }
 
+        (new Statistics())->increaseExtensionsInstalledValue();
+
         return true;
     }
 }
