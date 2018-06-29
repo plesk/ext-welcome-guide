@@ -1,1 +1,1 @@
-export default from './WelcomeBox';
+export default from '../../components/WelcomeBox';

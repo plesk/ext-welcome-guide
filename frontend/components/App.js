@@ -1,5 +1,5 @@
 import {createElement} from '@plesk/ui-library';
-import WelcomeBox from '../containers/WelcomeBox';
+import WelcomeBox from './WelcomeBox';
 
 const App = ({locales, ...props}) => (
     <WelcomeBox {...props}/>
