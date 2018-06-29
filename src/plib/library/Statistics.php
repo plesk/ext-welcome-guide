@@ -90,6 +90,22 @@ class Statistics
     }
 
     /**
+     * Increases checked steps value - triggered if step is checked by user
+     */
+    public function increaseCheckedStepsValue()
+    {
+        $this->increase('checkedSteps', 1);
+    }
+
+    /**
+     * Decreases checked steps value
+     */
+    public function decreaseCheckedStepsValue()
+    {
+        $this->decrease('checkedSteps', 1);
+    }
+
+    /**
      * @return array
      */
     public function setButtonClickList()
