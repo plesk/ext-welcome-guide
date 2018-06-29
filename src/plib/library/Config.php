@@ -261,10 +261,12 @@ class Config
      * @param array  $actions
      *
      * @return array
+     * @throws \Exception
      */
     private function renderButton($actionId, array $actions)
     {
         $action = $actions[$actionId];
+        $buttonTarget = '_self';
 
         if ($action['taskId'] === 'install') {
             $extension = new Extension($action['extensionId']);
@@ -278,7 +280,7 @@ class Config
 
             $buttonUrl = $isInstalled ? $extension->createOpenLink() : $extension->createInstallLink();
 
-            return [$buttonTitle, $buttonUrl];
+            return [$buttonTitle, $buttonUrl, $buttonTarget];
         } elseif ($action['taskId'] === 'extlink') {
             $extension = new Extension($action['extensionId']);
             $buttonTitle = isset($action['title']) ? $action['title'] : $extension->getName();
@@ -288,17 +290,18 @@ class Config
                 $buttonTitle = '[Extension "' . $action['extensionId'] . '" does not exist]';
             }
 
-            return [$buttonTitle, $buttonUrl];
+            return [$buttonTitle, $buttonUrl, $buttonTarget];
         } elseif ($action['taskId'] === 'link') {
             $buttonTitle = $action['title'];
             $buttonUrl = $action['url'];
+            $buttonTarget = isset($action['newWindow']) ? '_blank' : '_self';
 
-            return [$buttonTitle, $buttonUrl];
+            return [$buttonTitle, $buttonUrl, $buttonTarget];
         } elseif ($action['taskId'] === 'addDomain') {
             $buttonTitle = isset($action['title']) ? $action['title'] : \pm_Locale::lmsg('library.config.button.title.adddomain');
             $buttonUrl = Helper::getLinkNewDomain();
 
-            return [$buttonTitle, $buttonUrl];
+            return [$buttonTitle, $buttonUrl, $buttonTarget];
         } else {
             throw new \Exception('Invalid task ID: ' . $action['taskId']);
         }
@@ -327,10 +330,11 @@ class Config
 
                 if (isset($step['buttons'])) {
                     foreach ($step['buttons'] as $buttonIdx => $button) {
-                        list($buttonTitle, $buttonUrl) = $this->renderButton($button['actionId'], $arr[$locale]['actions']);
+                        list($buttonTitle, $buttonUrl, $buttonTarget) = $this->renderButton($button['actionId'], $arr[$locale]['actions']);
 
                         $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['buttons'][$buttonIdx]['title'] = $buttonTitle;
                         $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['buttons'][$buttonIdx]['url'] = $buttonUrl;
+                        $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['buttons'][$buttonIdx]['target'] = $buttonTarget;
                     }
                 }
 
@@ -463,7 +467,7 @@ class Config
      */
     public function isExtensionEnabled()
     {
-        $num = (int)$this->client->getSetting(self::EXTENSION_ENABLED_KEY, 1);
+        $num = (int) $this->client->getSetting(self::EXTENSION_ENABLED_KEY, 1);
 
         return ($num > 0) ? true : false;
     }

@@ -71,7 +71,7 @@ class WelcomeBoxContentStep extends Component {
                     <GridCol xs={6} md={6} lg={2} xl={2}>
                         <div className="welcome-single-action-button">
                             {this.state.buttons.map(({...button}) => {
-                                    return <Button component="a" href={button.url} intent="primary">
+                                    return <Button component="a" href={button.url} target={button.target} intent="primary">
                                         <WelcomeBoxHtml string={button.title}/>
                                     </Button>
                                 }
