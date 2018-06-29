@@ -118,6 +118,7 @@ For opening specific URL address.
 Parameters:
 1. title - Button text (required)
 2. url - URL address (required)
+3. newWindow - Open in new window (optional)
 
 #### addDomain
 
