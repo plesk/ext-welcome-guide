@@ -5,6 +5,7 @@ use PleskExt\Welcome\Form\Config;
 use PleskExt\Welcome\Extension;
 use PleskExt\Welcome\Helper;
 use PleskExt\Welcome\Progress;
+use PleskExt\Welcome\Statistics;
 
 class IndexController extends pm_Controller_Action
 {
@@ -157,8 +158,10 @@ class IndexController extends pm_Controller_Action
      */
     public function clickAction()
     {
-        // TODO Store the clicks properly into the statistics settings using Statistics()
-        \pm_Log::debug('clickAction');
+        $groupId = (int) $this->getParam('group', 0);
+        $stepId = (int) $this->getParam('step', 0);
+
+        (new Statistics())->increaseButtonClickCount($groupId, $stepId);
 
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
