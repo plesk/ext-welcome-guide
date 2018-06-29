@@ -151,4 +151,18 @@ class IndexController extends pm_Controller_Action
 
         $this->redirect(Helper::getReturnUrl());
     }
+
+    /**
+     * Action to register the action button clicks
+     */
+    public function clickAction()
+    {
+        // TODO Store the clicks properly into the statistics settings using Statistics()
+        \pm_Log::debug('clickAction');
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $this->getResponse()->setBody('success');
+    }
 }

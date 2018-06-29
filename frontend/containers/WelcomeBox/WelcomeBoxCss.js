@@ -50,11 +50,11 @@ const WelcomeBoxCss = () => (
                 text-align: center;
             }
 
-            #welcome-box .welcome-single-action-button a.pul-button--primary:first-child {
+            #welcome-box .welcome-single-action-button .pul-button--primary:first-child {
                 margin: 0 0 2px 0;
             }
 
-            #welcome-box .welcome-single-action-button a.pul-button--primary {
+            #welcome-box .welcome-single-action-button .pul-button--primary {
                 margin: 0 0 2px 2px;
             }
         `}
