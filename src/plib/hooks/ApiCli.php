@@ -9,15 +9,9 @@ class Modules_Welcome_ApiCli extends \pm_Hook_ApiCli
      */
     private $config;
 
-    /**
-     * @var \pm_ServerFileManager
-     */
-    private $serverFileManager;
-
     public function __construct()
     {
         $this->config = new Config;
-        $this->serverFileManager = new \pm_ServerFileManager;
     }
 
     /**
@@ -57,8 +51,7 @@ class Modules_Welcome_ApiCli extends \pm_Hook_ApiCli
 
     public function listCommand()
     {
-        foreach ($this->config->getPresets() as $preset)
-        {
+        foreach ($this->config->getPresets() as $preset) {
             $this->writeLine('  ' . $preset);
         }
     }
@@ -71,15 +64,15 @@ class Modules_Welcome_ApiCli extends \pm_Hook_ApiCli
         $preset = trim($preset);
 
         if ($preset === '') {
-            $this->writeLine($this->serverFileManager->fileGetContents($this->config::CONFIG_FILE));
+            $this->writeLine(file_get_contents(\pm_Context::getVarDir() . $this->config::CONFIG_FILE));
         } else {
-            $file = $this->config::PRESET_DIR . '/' . $preset . '.json';
+            $file = \pm_Context::getVarDir() . $this->config::PRESET_DIR . '/' . $preset . '.json';
 
-            if (!$this->serverFileManager->fileExists($file)) {
+            if (!file_exists($file)) {
                 $this->error('Unknown configuration preset: ' . $preset);
             }
 
-            $this->writeLine($this->serverFileManager->fileGetContents($file));
+            $this->writeLine(file_get_contents($file));
         }
     }
 

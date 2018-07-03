@@ -5,12 +5,7 @@ namespace PleskExt\Welcome;
 
 class Extension
 {
-    const EXTENSIONS_FILE = '/usr/local/psa/var/modules/welcome/extensions.json';
-
-    /**
-     * @var \pm_ServerFileManager
-     */
-    private $fileManager;
+    const EXTENSIONS_FILE = 'extensions.json';
 
     /**
      * @var $extensionId
@@ -19,7 +14,6 @@ class Extension
 
     public function __construct($extensionId)
     {
-        $this->fileManager = new \pm_ServerFileManager();
         $this->extensionId = $extensionId;
     }
 
@@ -71,8 +65,8 @@ class Extension
     {
         $extenionsData = [];
 
-        if ($this->fileManager->fileExists(self::EXTENSIONS_FILE)) {
-            $extenionsDataJson = $this->fileManager->fileGetContents(self::EXTENSIONS_FILE);
+        if (file_exists(\pm_Context::getVarDir() . self::EXTENSIONS_FILE)) {
+            $extenionsDataJson = file_get_contents(\pm_Context::getVarDir() . self::EXTENSIONS_FILE);
 
             if (!empty($extenionsDataJson)) {
                 $extenionsData = json_decode($extenionsDataJson, true);

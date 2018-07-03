@@ -5,22 +5,9 @@ namespace PleskExt\Welcome;
 
 class ExtensionApi
 {
-    const EXTENSIONS_FILE = '/usr/local/psa/var/modules/welcome/extensions.json';
-    const EXTENSIONS_FILE_DEFAULT = '/usr/local/psa/var/modules/welcome/default/extensions.json';
+    const EXTENSIONS_FILE = 'extensions.json';
+    const EXTENSIONS_FILE_DEFAULT = 'default/extensions.json';
     const EXTENSIONS_API = 'https://ext.plesk.com/api/v4/packages';
-
-    /**
-     * @var \pm_ServerFileManager
-     */
-    private $fileManager;
-
-    /**
-     * ExtensionApi constructor.
-     */
-    public function __construct()
-    {
-        $this->fileManager = new \pm_ServerFileManager();
-    }
 
     /**
      * Creates the extension JSON file from the API or from the default file
@@ -99,7 +86,7 @@ class ExtensionApi
             return false;
         }
 
-        $this->fileManager->filePutContents(self::EXTENSIONS_FILE, $extensionsDataApiProcessed);
+        file_put_contents(\pm_Context::getVarDir() . self::EXTENSIONS_FILE, $extensionsDataApiProcessed);
     }
 
     /**
@@ -107,10 +94,10 @@ class ExtensionApi
      */
     private function createExtensionFileFromDefault()
     {
-        if ($this->fileManager->fileExists(self::EXTENSIONS_FILE)) {
-            $this->fileManager->removeFile(self::EXTENSIONS_FILE);
+        if (file_exists(\pm_Context::getVarDir() . self::EXTENSIONS_FILE)) {
+            unlink(\pm_Context::getVarDir() . self::EXTENSIONS_FILE);
         }
 
-        $this->fileManager->copyFile(self::EXTENSIONS_FILE_DEFAULT, self::EXTENSIONS_FILE);
+        copy(\pm_Context::getVarDir() . self::EXTENSIONS_FILE_DEFAULT, \pm_Context::getVarDir() . self::EXTENSIONS_FILE);
     }
 }
