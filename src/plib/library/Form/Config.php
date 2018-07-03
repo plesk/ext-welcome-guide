@@ -12,6 +12,16 @@ class Config extends \pm_Form_Simple
 
         $config = new ConfigClass;
 
+        $this->setEnctype('multipart/form-data');
+
+        $this->addElement('file', 'fileUpload', [
+            'label' => $this->lmsg('index.config.label.upload'),
+            'description' => '*.json',
+            'validators' => [
+                ['Extension', true, ['json']],
+            ],
+        ]);
+
         $this->addElement('textarea', 'json', [
             'label' => $this->lmsg('index.config.label.json'),
             'value' => $config->getJsonFromSession(),
@@ -25,11 +35,19 @@ class Config extends \pm_Form_Simple
 
     public function process()
     {
+        $this->fileUpload->receive();
+
+        $file = $this->fileUpload->getFileName();
+
+        if (is_string($file)) {
+            $json = file_get_contents($file);
+        } else {
+            $json = $this->getValue('json');
+        }
+
         $config = new ConfigClass;
-        $json = $this->getValue('json');
 
         $config->setJsonInSession($json);
-
         $config->save($json);
     }
 }
