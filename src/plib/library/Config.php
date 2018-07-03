@@ -6,18 +6,13 @@ use PleskExt\Welcome\Session;
 
 class Config
 {
-    const CONFIG_FILE = '/usr/local/psa/var/modules/welcome/config.json';
-    const PRESET_DIR = '/usr/local/psa/var/modules/welcome/presets';
+    const CONFIG_FILE = 'config.json';
+    const PRESET_DIR = 'presets';
     const DEFAULT_LOCALE = 'en-US';
     const DEFAULT_LOCALE_KEY = 'default';
     const EXTENSION_ENABLED_KEY = 'isExtensionEnabled';
     const PRESET_FILE_PATH_KEY = 'configPresetFilePath';
     const FORM_JSON_KEY = 'formJson';
-
-    /**
-     * @var \pm_ServerFileManager
-     */
-    private $serverFileManager;
 
     /**
      * @var string
@@ -41,7 +36,6 @@ class Config
 
     public function __construct()
     {
-        $this->serverFileManager = new \pm_ServerFileManager;
         $this->currentLocale = \pm_Locale::getCode();
         $this->progress = new Progress;
         $this->client = \pm_Session::getClient();
@@ -258,11 +252,11 @@ class Config
     {
         $configPresetFilePath = \pm_Settings::get(self::PRESET_FILE_PATH_KEY);
 
-        if (!empty($configPresetFilePath) && $this->serverFileManager->fileExists($configPresetFilePath)) {
-            return $this->serverFileManager->fileGetContents($configPresetFilePath);
+        if (!empty($configPresetFilePath) && file_exists($configPresetFilePath)) {
+            return file_get_contents($configPresetFilePath);
         }
 
-        return $this->serverFileManager->fileGetContents(self::CONFIG_FILE);
+        return file_get_contents(\pm_Context::getVarDir() . self::CONFIG_FILE);
     }
 
     /**
@@ -371,11 +365,11 @@ class Config
             throw new \InvalidArgumentException('JSON validation failed: ' . $error);
         }
 
-        $this->serverFileManager->filePutContents(self::CONFIG_FILE, $json);
+        file_put_contents(\pm_Context::getVarDir() . self::CONFIG_FILE, $json);
         $this->progress->clearProgress();
         $this->session->set(self::FORM_JSON_KEY, null);
 
-        \pm_Settings::set(self::PRESET_FILE_PATH_KEY, self::CONFIG_FILE);
+        \pm_Settings::set(self::PRESET_FILE_PATH_KEY, \pm_Context::getVarDir() . self::CONFIG_FILE);
         (new Statistics())->setPresetValue();
         (new Statistics())->setActionList();
         (new Statistics())->setButtonClickList();
@@ -388,17 +382,17 @@ class Config
      */
     public function updateDefaultConfigFromPreset($name)
     {
-        $presetFile = self::PRESET_DIR . '/' . $name . '.json';
+        $presetFile = \pm_Context::getVarDir() . self::PRESET_DIR . '/' . $name . '.json';
 
-        if (!$this->serverFileManager->fileExists($presetFile)) {
+        if (!file_exists($presetFile)) {
             throw new \InvalidArgumentException('Unknown configuration preset: ' . $name);
         }
 
-        if ($this->serverFileManager->fileExists(self::CONFIG_FILE)) {
-            $this->serverFileManager->removeFile(self::CONFIG_FILE);
+        if (file_exists(\pm_Context::getVarDir() . self::CONFIG_FILE)) {
+            unlink(\pm_Context::getVarDir() . self::CONFIG_FILE);
         }
 
-        $this->serverFileManager->copyFile($presetFile, self::CONFIG_FILE);
+        copy($presetFile, \pm_Context::getVarDir() . self::CONFIG_FILE);
         $this->progress->clearProgress();
 
         \pm_Settings::set(self::PRESET_FILE_PATH_KEY, $presetFile);
@@ -414,7 +408,7 @@ class Config
      */
     public function createDefaultConfigFromPreset($name)
     {
-        if ($this->serverFileManager->fileExists(self::CONFIG_FILE)) {
+        if (file_exists(\pm_Context::getVarDir() . self::CONFIG_FILE)) {
             return;
         }
 
@@ -426,11 +420,11 @@ class Config
      */
     public function getPresets()
     {
-        $paths = glob(self::PRESET_DIR . '/*.json');
+        $paths = glob(\pm_Context::getVarDir() . self::PRESET_DIR . '/*.json');
         $presets = [];
 
         foreach ($paths as $path) {
-            if (!$this->serverFileManager->fileExists($path)) {
+            if (!file_exists($path)) {
                 continue;
             }
 
@@ -469,10 +463,10 @@ class Config
      */
     public function getPresetConfig($preset)
     {
-        $file = self::PRESET_DIR . '/' . $preset . '.json';
+        $file = \pm_Context::getVarDir() . self::PRESET_DIR . '/' . $preset . '.json';
 
-        if ($this->serverFileManager->fileExists($file)) {
-            return $this->serverFileManager->fileGetContents($file);
+        if (file_exists($file)) {
+            return file_get_contents($file);
         }
 
         return '';

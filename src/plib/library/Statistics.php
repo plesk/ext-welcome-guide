@@ -5,7 +5,6 @@ namespace PleskExt\Welcome;
 
 class Statistics
 {
-    const SETTINGS_NAME = 'statistics';
     const STATISTICS_FILE = 'default/statistics.json';
 
     /**
