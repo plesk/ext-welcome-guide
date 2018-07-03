@@ -6,6 +6,17 @@ namespace PleskExt\Welcome;
 class Statistics
 {
     const SETTINGS_NAME = 'statistics';
+    const STATISTICS_FILE = '/usr/local/psa/var/modules/welcome/default/statistics.json';
+
+    /**
+     * @var \pm_ServerFileManager
+     */
+    private $fileManager;
+
+    public function __construct()
+    {
+        $this->fileManager = new \pm_ServerFileManager();
+    }
 
     /**
      * Gets all statistics values
@@ -251,7 +262,17 @@ class Statistics
      */
     private function getSettings()
     {
-        return json_decode(\pm_Settings::get(self::SETTINGS_NAME, ''), true);
+        $statisticsData = [];
+
+        if ($this->fileManager->fileExists(self::STATISTICS_FILE)) {
+            $statisticsDataJson = $this->fileManager->fileGetContents(self::STATISTICS_FILE);
+
+            if (!empty($statisticsDataJson)) {
+                $statisticsData = json_decode($statisticsDataJson, true);
+            }
+        }
+
+        return $statisticsData;
     }
 
     /**
@@ -261,7 +282,7 @@ class Statistics
      */
     private function setSettings($statistics)
     {
-        \pm_Settings::set(self::SETTINGS_NAME, json_encode($statistics));
+        $this->fileManager->filePutContents(self::STATISTICS_FILE, json_encode($statistics));
     }
 
     /**
@@ -269,7 +290,7 @@ class Statistics
      */
     private function clearSettings()
     {
-        \pm_Settings::set(self::SETTINGS_NAME, null);
+        $this->fileManager->removeFile(self::STATISTICS_FILE);
     }
 
     private function createButtonId(array $action)
