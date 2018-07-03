@@ -6,6 +6,7 @@ $messages = [
     'index.config.confirm.popup.replace'    => 'Replace',
     'index.config.confirm.popup.title'      => 'Confirm configuration change',
     'index.config.label.upload'             => 'Upload JSON file (optional):',
+    'index.config.label.upload.description' => 'You may also upload a JSON file directly using the upload button below.',
     'index.config.label.json'               => 'Current JSON configuration:',
     'index.config.label.preset'             => 'Load configuration from a preset:',
     'index.config.message.success'          => 'JSON configuration saved successfully',

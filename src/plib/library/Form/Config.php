@@ -14,20 +14,25 @@ class Config extends \pm_Form_Simple
 
         $this->setEnctype('multipart/form-data');
 
-        $this->addElement('file', 'fileUpload', [
-            'label' => $this->lmsg('index.config.label.upload'),
-            'description' => '*.json',
-            'validators' => [
-                ['Extension', true, ['json']],
-            ],
+        $this->addElement('textarea', 'json', [
+            'label'    => $this->lmsg('index.config.label.json'),
+            'value'    => $config->getJsonFromSession(),
+            'required' => true,
+            'style'    => 'width: 90%; margin-bottom: 40px;',
+            'rows'     => 33,
         ]);
 
-        $this->addElement('textarea', 'json', [
-            'label' => $this->lmsg('index.config.label.json'),
-            'value' => $config->getJsonFromSession(),
-            'required' => true,
-            'style' => 'width: 90%;',
-            'rows' => 33,
+        $this->addElement('description', 'fileUpoadDescription', [
+            'description' => $this->lmsg('index.config.label.upload.description'),
+            'escape'      => false,
+        ]);
+
+        $this->addElement('file', 'fileUpload', [
+            'label'       => $this->lmsg('index.config.label.upload'),
+            'description' => '*.json',
+            'validators'  => [
+                ['Extension', true, ['json']],
+            ],
         ]);
 
         $this->addControlButtons(['cancelLink' => \pm_Context::getModulesListUrl()]);
