@@ -6,17 +6,7 @@ namespace PleskExt\Welcome;
 class Statistics
 {
     const SETTINGS_NAME = 'statistics';
-    const STATISTICS_FILE = '/usr/local/psa/var/modules/welcome/default/statistics.json';
-
-    /**
-     * @var \pm_ServerFileManager
-     */
-    private $fileManager;
-
-    public function __construct()
-    {
-        $this->fileManager = new \pm_ServerFileManager();
-    }
+    const STATISTICS_FILE = 'default/statistics.json';
 
     /**
      * Gets all statistics values
@@ -264,8 +254,8 @@ class Statistics
     {
         $statisticsData = [];
 
-        if ($this->fileManager->fileExists(self::STATISTICS_FILE)) {
-            $statisticsDataJson = $this->fileManager->fileGetContents(self::STATISTICS_FILE);
+        if (file_exists(\pm_Context::getVarDir() . self::STATISTICS_FILE)) {
+            $statisticsDataJson = file_get_contents(\pm_Context::getVarDir() . self::STATISTICS_FILE);
 
             if (!empty($statisticsDataJson)) {
                 $statisticsData = json_decode($statisticsDataJson, true);
@@ -282,7 +272,7 @@ class Statistics
      */
     private function setSettings($statistics)
     {
-        $this->fileManager->filePutContents(self::STATISTICS_FILE, json_encode($statistics));
+        file_put_contents(\pm_Context::getVarDir() . self::STATISTICS_FILE, json_encode($statistics));
     }
 
     /**
@@ -290,7 +280,7 @@ class Statistics
      */
     private function clearSettings()
     {
-        $this->fileManager->removeFile(self::STATISTICS_FILE);
+        unlink(\pm_Context::getVarDir() . self::STATISTICS_FILE);
     }
 
     private function createButtonId(array $action)
