@@ -43,16 +43,16 @@ class Config extends \pm_Form_Simple
         $this->fileUpload->receive();
 
         $file = $this->fileUpload->getFileName();
+        $config = new ConfigClass;
 
         if (is_string($file)) {
             $json = file_get_contents($file);
         } else {
             $json = $this->getValue('json');
+
+            $config->setJsonInSession($json);
         }
 
-        $config = new ConfigClass;
-
-        $config->setJsonInSession($json);
         $config->save($json);
     }
 }
