@@ -12,12 +12,27 @@ class Config extends \pm_Form_Simple
 
         $config = new ConfigClass;
 
+        $this->setEnctype('multipart/form-data');
+
         $this->addElement('textarea', 'json', [
-            'label' => $this->lmsg('index.config.label.json'),
-            'value' => $config->getJsonFromSession(),
+            'label'    => $this->lmsg('index.config.label.json'),
+            'value'    => $config->getJsonFromSession(),
             'required' => true,
-            'style' => 'width: 90%;',
-            'rows' => 33,
+            'style'    => 'width: 90%; margin-bottom: 40px;',
+            'rows'     => 33,
+        ]);
+
+        $this->addElement('description', 'fileUpoadDescription', [
+            'description' => $this->lmsg('index.config.label.upload.description'),
+            'escape'      => false,
+        ]);
+
+        $this->addElement('file', 'fileUpload', [
+            'label'       => $this->lmsg('index.config.label.upload'),
+            'description' => '*.json',
+            'validators'  => [
+                ['Extension', true, ['json']],
+            ],
         ]);
 
         $this->addControlButtons(['cancelLink' => \pm_Context::getModulesListUrl()]);
@@ -25,10 +40,18 @@ class Config extends \pm_Form_Simple
 
     public function process()
     {
-        $config = new ConfigClass;
-        $json = $this->getValue('json');
+        $this->fileUpload->receive();
 
-        $config->setJsonInSession($json);
+        $file = $this->fileUpload->getFileName();
+        $config = new ConfigClass;
+
+        if (is_string($file)) {
+            $json = file_get_contents($file);
+        } else {
+            $json = $this->getValue('json');
+
+            $config->setJsonInSession($json);
+        }
 
         $config->save($json);
     }
