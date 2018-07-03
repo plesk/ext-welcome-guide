@@ -19,21 +19,31 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
     }
 
     /**
-     * Loads the required JavaScript code to the head section after the DOMReady event was fired
+     * Loads the required JavaScript code to the head section
+     *
+     * @return string
+     */
+    public function getJsContent()
+    {
+        if ($this->loadContentCode()) {
+            return 'require(["' . \pm_Context::getBaseUrl() . 'js/main.js"], function (render) {
+                        render(document.getElementById("ext-welcome-app"), ' . json_encode([
+                    'locale' => \pm_Locale::getSection('welcomebox'),
+                    'data'   => (new Config())->getProcessedConfigData(),
+                ]) . ');
+                });';
+        }
+    }
+
+    /**
+     * Loads the required JavaScript code to include the Welcome box after the DOMReady event was fired
      *
      * @return string
      */
     public function getJsOnReadyContent()
     {
         if ($this->loadContentCode()) {
-            return 'require(["' . pm_Context::getBaseUrl() . 'js/main.js"], function (render) {
-                        render(document.getElementById("ext-welcome-app"), ' . json_encode([
-                    'locale' => \pm_Locale::getSection('welcomebox'),
-                    'data'   => (new Config())->getProcessedConfigData(),
-                ]) . ');
-                });
-    
-                var extensionBox = document.getElementById("ext-welcome-app");
+            return 'var extensionBox = document.getElementById("ext-welcome-app");
                 var body = document.getElementById("content-body");
                 body.insertBefore(extensionBox, body.firstChild);';
         }
@@ -46,7 +56,7 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
      */
     private function loadContentCode()
     {
-        if (!pm_Session::getClient()->isAdmin()) {
+        if (!\pm_Session::getClient()->isAdmin()) {
             return false;
         }
 
