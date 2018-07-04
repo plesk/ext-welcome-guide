@@ -44,8 +44,8 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
     {
         if ($this->loadContentCode()) {
             return 'var extensionBox = document.getElementById("ext-welcome-app");
-                var body = document.getElementById("content-body");
-                body.insertBefore(extensionBox, body.firstChild);
+                var main = document.getElementById("main");
+                main.insertBefore(extensionBox, main.firstChild);
                 
                 var messages = document.getElementsByClassName("msg-box");
                 
