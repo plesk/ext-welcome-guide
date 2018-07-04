@@ -356,13 +356,16 @@ class Config
 
     /**
      * @param string $json
+     * @param bool $isUploadedFile
      *
      * @throws \InvalidArgumentException if the JSON is not valid
      */
-    public function save($json)
+    public function save($json, $isUploadedFile = false)
     {
         if (!$this->validate($json, $error)) {
-            throw new \InvalidArgumentException('JSON validation failed: ' . $error);
+            $prefix = $isUploadedFile ? 'File upload error' : 'JSON validation failed';
+
+            throw new \InvalidArgumentException($prefix . ': ' . $error);
         }
 
         file_put_contents(\pm_Context::getVarDir() . self::CONFIG_FILE, $json);

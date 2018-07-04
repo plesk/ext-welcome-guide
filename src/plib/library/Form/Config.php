@@ -27,12 +27,14 @@ class Config extends \pm_Form_Simple
             'escape'      => false,
         ]);
 
+        $this->addElement('hidden', 'MAX_FILE_SIZE', [
+            'value'       => '2097152',
+        ]);
+
         $this->addElement('file', 'fileUpload', [
             'label'       => $this->lmsg('index.config.label.upload'),
-            'description' => '*.json',
-            'validators'  => [
-                ['Extension', true, ['json']],
-            ],
+            'description' => '*.json, <= 2MB',
+            'accept'      => '.json',
         ]);
 
         $this->addControlButtons(['cancelLink' => \pm_Context::getModulesListUrl()]);
@@ -44,8 +46,10 @@ class Config extends \pm_Form_Simple
 
         $file = $this->fileUpload->getFileName();
         $config = new ConfigClass;
+        $isUploadedFile = false;
 
         if (is_string($file)) {
+            $isUploadedFile = true;
             $json = file_get_contents($file);
         } else {
             $json = $this->getValue('json');
@@ -53,6 +57,6 @@ class Config extends \pm_Form_Simple
             $config->setJsonInSession($json);
         }
 
-        $config->save($json);
+        $config->save($json, $isUploadedFile);
     }
 }
