@@ -48,8 +48,10 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
                 body.insertBefore(extensionBox, body.firstChild);
                 
                 var messages = document.getElementsByClassName("msg-box");
-                for (i = 0; i < messages.length; i++) {
-                    body.insertBefore(messages[i], body.firstChild);
+                
+                if (messages.length > 0) {
+                    var messageLast = messages[messages.length-1];
+                    messageLast.parentNode.insertBefore(extensionBox, messageLast.nextSibling);
                 }';
         }
     }
