@@ -23,7 +23,7 @@
                         "image": "/modules/welcome/images/presets/letsencrypt_64.png",
                         "buttons": [
                             {
-                                "actionId": "open-letsencrypt"
+                                "actionId": "install-letsencrypt"
                             }
                         ]
                     },
@@ -86,10 +86,10 @@
                 "taskId": "install",
                 "extensionId": "advisor"
             },
-            "open-letsencrypt": {
-                "taskId": "extlink",
+            "install-letsencrypt": {
+                "taskId": "install",
                 "extensionId": "letsencrypt",
-                "title": "Secure"
+                "titleOpen": "Secure"
             },
             "newMail":{
                 "taskId": "link",
@@ -131,7 +131,7 @@
                         "image": "/modules/welcome/images/presets/letsencrypt_64.png",
                         "buttons": [
                             {
-                                "actionId": "open-letsencrypt"
+                                "actionId": "install-letsencrypt"
                             }
                         ]
 
@@ -199,9 +199,10 @@
                 "taskId": "install",
                 "extensionId": "advisor"
             },
-            "open-letsencrypt": {
-                "taskId": "extlink",
-                "extensionId": "letsencrypt"
+            "install-letsencrypt": {
+                "taskId": "install",
+                "extensionId": "letsencrypt",
+                "titleOpen": "SSL aktivieren"
             },
             "newMail":{
                 "taskId": "link",
