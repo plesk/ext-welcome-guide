@@ -7,6 +7,7 @@
     <version>1.0.0</version>
     <release>{{RELEASE}}</release>
     <vendor>Plesk</vendor>
+    <url>https://www.plesk.com</url>
     <plesk_min_version>17.8</plesk_min_version>
     <os>unix</os>
     <description xml:lang="de-DE">Diese Erweiterung hilft Ihnen beim Start mit ihrem neuen Plesk Server. Die Konfiguration erfolgt über eine Datei im JSON Format oder direkt auf der Konfigurationsseite der Erweiterung.</description>
