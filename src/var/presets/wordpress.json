@@ -101,7 +101,7 @@
     },
     "de-DE": {
         "title": "Herzlichen Willkommen in Ihrer Plesk WordPress Edition",
-        "description": "Hallo %%username%%,\n\nschön dich kennenzulernen! Mein Name ist Elvis Plesky und ich werde Sie bei bei Ihrer Reise mit Plesk und WordPress unterstützen.\n\nSie haben die richtige Entscheidung mit Ihrer Plesk WordPress Edition gemacht, wenn Sie das beste Open-Source CMS für Ihre Projekte nutzen wollen.\n\nLassen Sie uns loslegen. Keine Angst: Es ist super einfach mit Plesk - und meiner Hilfe!",
+        "description": "Hallo %%username%%,\n\nschön Sie kennenzulernen! Mein Name ist Elvis Plesky und ich werde Sie bei bei Ihrer Reise mit Plesk und WordPress unterstützen.\n\nSie haben die richtige Entscheidung mit Ihrer Plesk WordPress Edition gemacht, wenn Sie das beste Open-Source CMS für Ihre Projekte nutzen wollen.\n\nLassen Sie uns loslegen. Keine Angst: Es ist super einfach mit Plesk - und meiner Hilfe!",
         "image": "/modules/welcome/images/presets/plesk_octopus_wp2.png",
         "groups": [
             {
