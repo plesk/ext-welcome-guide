@@ -73,7 +73,7 @@
     },
     "de-DE": {
         "title": "Herzlichen Willkommen in Plesk",
-        "description": "Hallo %%username%%,\n\nschön dich kennen zu lernen! Mein Name ist Elvis Plesky und ich werde Sie bei bei Ihrer Reise mit Plesk unterstützen.\n\nMit Plesk haben sie bereits eine vorkonfigurierte All-In-One Lösung für Ihre Projekte.\n\nLassen Sie uns loslegen. Keine Angst: Es ist super einfach mit Plesk - und meiner Hilfe!",
+        "description": "Hallo %%username%%,\n\nschön Sie kennenzulernen! Mein Name ist Elvis Plesky und ich werde Sie bei bei Ihrer Reise mit Plesk unterstützen.\n\nMit Plesk haben sie bereits eine vorkonfigurierte All-In-One Lösung für Ihre Projekte.\n\nLassen Sie uns loslegen. Keine Angst: Es ist super einfach mit Plesk - und meiner Hilfe!",
         "image": "/modules/welcome/images/plesk_octopus_generic.png",
         "groups": [
             {
