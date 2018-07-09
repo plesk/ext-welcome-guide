@@ -25,7 +25,7 @@ Use the _update_ command to get the latest version of the dependencies.
 Add required packages by running the command (only required once!): 
 
 ```
-> yarn add --dev webpack webpack-cli babel-core babel-loader babel-plugin-transform-react-jsx babel-preset-env
+> yarn install
 ```
 
 The configuration files are already pre-configured, thus you just need to run the following command to create the proper JavaScript file with the the React UI library included:
