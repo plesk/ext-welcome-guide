@@ -4,18 +4,44 @@ This is the internal repo for the new Plesk Welcome Guide.
 
 ## Setup instructions
 
-### Build the React Bundle
+To be able to build your own package, you must have installed in your development environment:
+
+* [Composer](https://getcomposer.org/)
+* [Node.js](https://nodejs.org/en/)
+* [Yarn](https://yarnpkg.com/en/)
+
+### Run Composer
+
+Run Composer to build the required autoload files
 
 ```
-yarn build && cp dist/htdocs/bundle.js src/htdocs/bundle.js
+> composer install --no-dev
 ```
+
+Use the _update_ command to get the latest version of the dependencies.
+
+### Build the React Bundle
+
+Add required packages by running the command: 
+
+```
+> yarn install
+```
+
+The configuration files are already pre-configured, thus you just need to run the following command to create the proper JavaScript file with the the React UI library included:
+
+```
+> yarn build
+```
+
+This command will update the file _main.js_ in _src/htdocs/js/_.
 
 ### Bundle the extension
 
-Before bundling the extension you need to build the bundle file above
+Before bundling the extension you need to build the bundle file (see section above). If the JavaScript file was created properly, you may create the ready-to-install package with the command:
 
 ```
-cd src/ && zip -6r ext-welcome.zip *
+> cd src/ && zip -6r ext-welcome-guide.zip * && cd ..
 ```
 
 ## Placeholders in JSON configuration
@@ -130,16 +156,31 @@ Parameters:
 ## Command-line interface usage examples
 
 Get a list of available presets
+
+```
 > plesk ext welcome --list
+```
 
 Show current configuration
+
+```
 > plesk ext welcome --show
+```
 
 Show preset configuration
+
+```
 > plesk ext welcome --show -preset wordpress
+```
 
 Update current configuration from preset
+
+```
 > plesk ext welcome --select -preset business
+```
 
 Update current configuration from URL
+
+```
 > plesk ext welcome --input -url http://example.com/config.json
+```
