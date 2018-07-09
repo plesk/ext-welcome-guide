@@ -22,7 +22,7 @@ Use the _update_ command to get the latest version of the dependencies.
 
 ### Build the React Bundle
 
-Add required packages by running the command (only required once!): 
+Add required packages by running the command: 
 
 ```
 > yarn install
