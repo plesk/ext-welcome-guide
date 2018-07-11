@@ -50,7 +50,7 @@
                     },
                     {
                         "title": "Tune your Website",
-                        "description": "Improve your web performance and boost your websites’ speed by using our Speed Kit.",
+                        "description": "Improve your web performance and boost your websites’ speed by using our Speed Kit, a globally distributed CDN and caching system.",
                         "image": "/modules/welcome/images/presets/speedkit_64.png",
                         "buttons":[
                             {
