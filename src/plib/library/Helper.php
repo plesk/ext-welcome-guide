@@ -91,6 +91,7 @@ abstract class Helper
             '/admin/home?context=home',
             '/smb/',
             '/smb/web/view',
+            '/smb/web/setup',
         );
 
         return $whiteList;
