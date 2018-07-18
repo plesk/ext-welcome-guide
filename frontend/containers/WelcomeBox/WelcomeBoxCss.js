@@ -22,6 +22,23 @@ const WelcomeBoxCss = () => (
                 pointer-events: none;
                 opacity: 0.4;
                 background: #EAEAEA;
+            padding: 10px 15px;
+            }
+
+            #welcome-box .welcome-single-item.completed .pul-item__icon .pul-icon
+            {
+                width: 32px;
+                height: 32px;
+            }
+
+            #welcome-box .welcome-single-item.completed .pul-item__body
+            {
+                display:none
+            }
+
+            #welcome-box .welcome-single-item.completed .pul-button--primary
+            {
+                display:none
             }
 
             #welcome-box .welcome-single-item .button-toggle-status
