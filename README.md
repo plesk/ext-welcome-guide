@@ -1,6 +1,6 @@
 # Plesk Welcome Guide
 
-This is the internal repo for the new Plesk Welcome Guide.
+This is the public repo for the new Plesk Welcome Guide.
 
 ## Setup instructions
 
@@ -184,3 +184,8 @@ Update current configuration from URL
 ```
 > plesk ext welcome --input -url http://example.com/config.json
 ```
+
+
+## Bugs and issues
+
+Found a bug or had an issue? Feel free to simply open an issue on Github for us. 
