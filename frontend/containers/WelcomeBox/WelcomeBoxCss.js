@@ -22,7 +22,7 @@ const WelcomeBoxCss = () => (
                 pointer-events: none;
                 opacity: 0.4;
                 background: #EAEAEA;
-            padding: 10px 15px;
+                padding: 10px 15px;
             }
 
             #welcome-box .welcome-single-item.completed .pul-item__icon .pul-icon
