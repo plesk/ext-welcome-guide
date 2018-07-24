@@ -22,7 +22,7 @@ Use the _update_ command to get the latest version of the dependencies.
 
 ### Build the React Bundle
 
-Add required packages by running the command: 
+Add required packages by running the command:
 
 ```
 > yarn install
@@ -167,6 +167,12 @@ Show current configuration
 > plesk ext welcome --show
 ```
 
+Show current preset name
+
+```
+> plesk ext welcome --get-preset
+```
+
 Show preset configuration
 
 ```
@@ -188,4 +194,4 @@ Update current configuration from URL
 
 ## Bugs and issues
 
-Found a bug or had an issue? Feel free to simply open an issue on Github for us. 
+Found a bug or had an issue? Feel free to simply open an issue on Github for us.
