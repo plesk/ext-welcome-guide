@@ -153,6 +153,33 @@ Shortcut for adding a new domain name.
 Parameters:
 1. title  - Button text (optional)
 
+## Group related steps into tabs
+
+If more than one group is defined then tabs will appear automatically - one for each group.
+
+```
+"groups": [
+    {
+        "title": "First things first",
+        "steps": [
+            ...
+        ]
+    },
+    {
+        "title": "Secure",
+        "steps": [
+            ...
+        ]
+    },
+    {
+        "title": "Optimize",
+        "steps": [
+            ...
+        ]
+    }
+]
+```
+
 ## Command-line interface usage examples
 
 Get a list of available presets
@@ -190,7 +217,6 @@ Update current configuration from URL
 ```
 > plesk ext welcome --input -url http://example.com/config.json
 ```
-
 
 ## Bugs and issues
 
