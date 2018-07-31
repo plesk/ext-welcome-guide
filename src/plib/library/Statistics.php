@@ -56,7 +56,7 @@ class Statistics
 
         foreach ($configFileContent as $langKey => $langValue) {
             foreach ($langValue['actions'] as $value) {
-                $actions[$langKey][] = $this->createButtonId($value);
+                $actions[$langKey][$this->createButtonId($value)] = 1;
             }
         }
 
