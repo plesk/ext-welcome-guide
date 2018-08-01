@@ -4,7 +4,7 @@
     <name>Plesk Welcome Guide</name>
     <description>This extension helps you to get started with your new Plesk Server! The configuration is easy and simple via a machine readable JSON file or directly through the config page of the extension.</description>
     <category>help</category>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <release>{{RELEASE}}</release>
     <vendor>Plesk</vendor>
     <url>https://www.plesk.com</url>
