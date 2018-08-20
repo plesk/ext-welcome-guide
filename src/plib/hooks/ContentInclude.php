@@ -46,9 +46,9 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
             return 'var extensionBox = document.getElementById("ext-welcome-app");
                 var main = document.getElementById("main");
                 main.insertBefore(extensionBox, main.firstChild);
-                
+
                 var messages = document.getElementsByClassName("msg-box");
-                
+
                 if (messages.length > 0) {
                     var messageLast = messages[messages.length-1];
                     messageLast.parentNode.insertBefore(extensionBox, messageLast.nextSibling);
@@ -63,10 +63,6 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
      */
     private function loadContentCode()
     {
-        if (!\pm_Session::getClient()->isAdmin()) {
-            return false;
-        }
-
         $pageLoaded = $_SERVER['REQUEST_URI'];
         $whiteList = Helper::getWhiteListPages();
 

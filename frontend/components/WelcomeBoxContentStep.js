@@ -19,7 +19,7 @@ class WelcomeBoxContentStep extends Component {
 
     componentDidMount()
     {
-        axios.get('/modules/welcome/index.php/index/group?group=' + this.indexGroup + '&step=' + this.index)
+        axios.get('/modules/welcome/index.php/frontend/group?group=' + this.indexGroup + '&step=' + this.index)
             .then(({data}) => {
                 data.completed = this.setCompletedStatus(Boolean(data.completed));
                 data.completedIcon = this.setCompletedButtonImage(Boolean(data.completed));
@@ -41,14 +41,14 @@ class WelcomeBoxContentStep extends Component {
     }
 
     redirectClick = (url, target) => {
-        axios.get('/modules/welcome/index.php/index/click?group=' + this.indexGroup + '&step=' + this.index);
+        axios.get('/modules/welcome/index.php/frontend/click?group=' + this.indexGroup + '&step=' + this.index);
         window.open(url, target);
     }
 
     setStepToggleStatus = () => {
         this.setState({completed: !this.state.completed});
         this.setState({completedIcon: this.setCompletedButtonImage(!this.state.completed)});
-        axios.get('/modules/welcome/index.php/index/progress?group=' + this.indexGroup + '&step=' + this.index);
+        axios.get('/modules/welcome/index.php/frontend/progress?group=' + this.indexGroup + '&step=' + this.index);
     }
 
     setToggleButtonIntent = () => {
