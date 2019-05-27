@@ -16,7 +16,7 @@ class Statistics
      */
     public function getStatistics($json = false)
     {
-        $statistics = $this->getSettings();
+        $statistics = $this->fixNumericIndexes($this->getSettings());
 
         if (!$json) {
             return $statistics;
@@ -291,5 +291,30 @@ class Statistics
         }
 
         return $buttonId;
+    }
+
+    private function hasStringKeys(array $array) {
+        return count(array_filter(array_keys($array), 'is_string')) > 0;
+    }
+
+    /**
+     * @param mixed: $data
+     * @return mixed
+     */
+    private function fixNumericIndexes($data)
+    {
+        if (!is_array($data)) {
+            return $data;
+        }
+        $dataToReturn = [];
+        if ($this->hasStringKeys($data)) {
+            foreach ($data as $key => $value) {
+                $key  = is_numeric($key) ? 's'.(string)$key : $key;
+                $dataToReturn[$key] = $this->fixNumericIndexes($value);
+            }
+        } else {
+            $dataToReturn = ['TYPE' => 'array', 'VALUE' => [array_map('$this->fixNumericIndexes', $data)]];
+        }
+        return $dataToReturn;
     }
 }
