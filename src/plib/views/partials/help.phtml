@@ -83,11 +83,35 @@
 <ol>
     <li>title  - Button text (optional)</li>
 </ol>
+<h2>Group related steps into tabs</h2>
+<p>If more than one group is defined then tabs will appear automatically - one for each group.</p>
+<pre><code>&quot;groups&quot;: [
+    {
+        &quot;title&quot;: &quot;First things first&quot;,
+        &quot;steps&quot;: [
+            ...
+        ]
+    },
+    {
+        &quot;title&quot;: &quot;Secure&quot;,
+        &quot;steps&quot;: [
+            ...
+        ]
+    },
+    {
+        &quot;title&quot;: &quot;Optimize&quot;,
+        &quot;steps&quot;: [
+            ...
+        ]
+    }
+]</code></pre>
 <h2>Command-line interface usage examples</h2>
 <p>Get a list of available presets</p>
 <pre><code>plesk ext welcome --list</code></pre>
 <p>Show current configuration</p>
 <pre><code>plesk ext welcome --show</code></pre>
+<p>Show current preset name</p>
+<pre><code>plesk ext welcome --get-preset</code></pre>
 <p>Show preset configuration</p>
 <pre><code>plesk ext welcome --show -preset wordpress</code></pre>
 <p>Update current configuration from preset</p>

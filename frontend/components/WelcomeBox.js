@@ -47,7 +47,7 @@ class WelcomeBox extends Component {
                         isOpen={this.state.show === 1}
                         title={this.props.locale['dialog.disable.title']}
                         buttons={
-                            <Button intent="primary" component="a" href="/modules/welcome/index.php/index/disable">{this.props.locale['dialog.disable.button']}</Button>}
+                            <Button intent="primary" component="a" href="/modules/welcome/index.php/frontend/disable">{this.props.locale['dialog.disable.button']}</Button>}
                         size="md"
                         onClose={this.state.show = false}
                     >
