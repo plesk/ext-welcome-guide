@@ -1,44 +1,43 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "5be2971733e37fc7a8e22ffcbfaaf8d5",
     "content-hash": "0dc54a254f23b4123fcb25209fb02684",
     "packages": [
         {
             "name": "plesk/api-php-lib",
-            "version": "dev-dns-template",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/plesk/api-php-lib.git",
-                "reference": "6fbccc88e52ab8157880581543b1052f4852311b"
+                "reference": "10fb37aa73fdb7bd59f4c4d5f2da573f17263656"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/plesk/api-php-lib/zipball/6fbccc88e52ab8157880581543b1052f4852311b",
-                "reference": "6fbccc88e52ab8157880581543b1052f4852311b",
+                "url": "https://api.github.com/repos/plesk/api-php-lib/zipball/10fb37aa73fdb7bd59f4c4d5f2da573f17263656",
+                "reference": "10fb37aa73fdb7bd59f4c4d5f2da573f17263656",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6.0"
+                "ext-curl": "*",
+                "ext-simplexml": "*",
+                "ext-xml": "*",
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "phpunit/dbunit": ">=1.2",
-                "phpunit/php-invoker": "*",
-                "phpunit/phpunit": "5.7.*",
-                "sebastian/environment": "^2.0"
+                "phpunit/phpunit": "^7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "PleskX\\": "src/PleskX/"
+                    "PleskX\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -49,25 +48,29 @@
                 {
                     "name": "Alexei Yuzhakov",
                     "email": "sibprogrammer@gmail.com"
+                },
+                {
+                    "name": "Plesk International GmbH.",
+                    "email": "plesk-dev-leads@plesk.com"
                 }
             ],
             "description": "PHP object-oriented library for Plesk XML-RPC API",
-            "time": "2018-06-12 13:21:43"
+            "time": "2019-03-13T10:00:34+00:00"
         }
     ],
     "packages-dev": [
         {
             "name": "plesk/pm-api-stubs",
-            "version": "17.8.11",
+            "version": "17.9.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/plesk/pm-api-stubs.git",
-                "reference": "89427a7e75a702c5d03458e17150c66fd3658c3a"
+                "reference": "c989f4bc5efeda27e47a54bc52d08a8424f83b73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/plesk/pm-api-stubs/zipball/89427a7e75a702c5d03458e17150c66fd3658c3a",
-                "reference": "89427a7e75a702c5d03458e17150c66fd3658c3a",
+                "url": "https://api.github.com/repos/plesk/pm-api-stubs/zipball/c989f4bc5efeda27e47a54bc52d08a8424f83b73",
+                "reference": "c989f4bc5efeda27e47a54bc52d08a8424f83b73",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +90,7 @@
                 "Apache-2.0"
             ],
             "description": "Plesk Extensions API PHP files stubs for IDE.",
-            "time": "2018-04-14 19:12:56"
+            "time": "2019-01-22T05:55:23+00:00"
         },
         {
             "name": "plesk/zf1",
@@ -134,7 +137,7 @@
                 "ZF1",
                 "framework"
             ],
-            "time": "2018-04-02 10:17:27"
+            "time": "2018-04-02T10:17:27+00:00"
         }
     ],
     "aliases": [],
