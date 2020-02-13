@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2018. Plesk International GmbH. All rights reserved.
+// Copyright 1999-2020. Plesk International GmbH. All rights reserved.
 
 namespace PleskExt\Welcome;
 
@@ -20,7 +20,6 @@ abstract class Helper
         $urlGlobalGeneric = self::getGlobalUrl();
 
         if (!empty($_SERVER['HTTP_REFERER'])) {
-
             $urlGlobalReturn = $_SERVER['HTTP_REFERER'];
             $whiteList = self::getWhiteListPages();
 
@@ -86,13 +85,13 @@ abstract class Helper
      */
     public static function getWhiteListPages()
     {
-        $whiteList = array(
+        $whiteList = [
             '/admin/',
             '/admin/home?context=home',
             '/smb/',
             '/smb/web/view',
             '/smb/web/setup',
-        );
+        ];
 
         return $whiteList;
     }
@@ -122,7 +121,7 @@ abstract class Helper
      */
     public static function addMessage()
     {
-        $executed = (int) \pm_Settings::get('executed', 0);
+        $executed = (int)\pm_Settings::get('executed', 0);
 
         if (empty($executed)) {
             return true;
@@ -193,5 +192,13 @@ abstract class Helper
     public static function getRefererPage()
     {
         return $_SERVER['HTTP_REFERER'];
+    }
+
+    /**
+     * @return bool
+     */
+    public static function canUserInstallExtensions()
+    {
+        return \pm_Session::getClient()->hasCorePermission('manage_server_modules');
     }
 }

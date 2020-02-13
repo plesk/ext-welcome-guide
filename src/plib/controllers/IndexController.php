@@ -1,4 +1,5 @@
 <?php
+// Copyright 1999-2020. Plesk International GmbH. All rights reserved.
 
 use PleskExt\Welcome\Config as ConfigClass;
 use PleskExt\Welcome\Form\Config;
@@ -30,8 +31,7 @@ class IndexController extends pm_Controller_Action
                 $form->process();
 
                 $this->_status->addInfo($this->lmsg('index.config.message.success'));
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
                 $this->_status->addError($e->getMessage());
             }
 
@@ -80,9 +80,15 @@ class IndexController extends pm_Controller_Action
             $result = (new Extension($extension))->installExtension();
 
             if (is_string($result)) {
-                $this->_status->addMessage('warning', $this->lmsg('index.install.message.failure', [
-                    'error' => $result,
-                ]));
+                $this->_status->addMessage(
+                    'warning',
+                    $this->lmsg(
+                        'index.install.message.failure',
+                        [
+                            'error' => $result,
+                        ]
+                    )
+                );
             }
         }
 

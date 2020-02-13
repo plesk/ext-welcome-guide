@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2018. Plesk International GmbH. All rights reserved.
+// Copyright 1999-2020. Plesk International GmbH. All rights reserved.
 
 namespace PleskExt\Welcome;
 
@@ -293,12 +293,14 @@ class Statistics
         return $buttonId;
     }
 
-    private function hasStringKeys(array $array) {
+    private function hasStringKeys(array $array)
+    {
         return count(array_filter(array_keys($array), 'is_string')) > 0;
     }
 
     /**
      * @param mixed: $data
+     *
      * @return mixed
      */
     private function fixNumericIndexes($data)
@@ -309,12 +311,13 @@ class Statistics
         $dataToReturn = [];
         if ($this->hasStringKeys($data)) {
             foreach ($data as $key => $value) {
-                $key  = is_numeric($key) ? 's'.(string)$key : $key;
+                $key = is_numeric($key) ? 's' . (string)$key : $key;
                 $dataToReturn[$key] = $this->fixNumericIndexes($value);
             }
         } else {
             $dataToReturn = ['TYPE' => 'array', 'VALUE' => [array_map('$this->fixNumericIndexes', $data)]];
         }
+
         return $dataToReturn;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+// Copyright 1999-2020. Plesk International GmbH. All rights reserved.
 
 use PleskExt\Welcome\Config as ConfigClass;
 use PleskExt\Welcome\Helper;
@@ -12,8 +13,8 @@ class FrontendController extends pm_Controller_Action
      */
     public function progressAction()
     {
-        $groupId = (int) $this->getParam('group', 0);
-        $stepId = (int) $this->getParam('step', 0);
+        $groupId = (int)$this->getParam('group', 0);
+        $stepId = (int)$this->getParam('step', 0);
         $progress = new Progress;
 
         $progress->completeStep($groupId, $stepId);
@@ -29,8 +30,8 @@ class FrontendController extends pm_Controller_Action
      */
     public function groupAction()
     {
-        $groupId = (int) $this->getParam('group', 0);
-        $stepId = (int) $this->getParam('step', -1);
+        $groupId = (int)$this->getParam('group', 0);
+        $stepId = (int)$this->getParam('step', -1);
         $config = new ConfigClass;
         $data = $config->getProcessedConfigData();
         $steps = isset($data['groups'][$groupId]) ? $data['groups'][$groupId]['steps'] : [];
@@ -74,8 +75,8 @@ class FrontendController extends pm_Controller_Action
      */
     public function clickAction()
     {
-        $groupId = (int) $this->getParam('group', 0);
-        $stepId = (int) $this->getParam('step', 0);
+        $groupId = (int)$this->getParam('group', 0);
+        $stepId = (int)$this->getParam('step', 0);
 
         (new Statistics())->increaseButtonClickCount($groupId, $stepId);
 

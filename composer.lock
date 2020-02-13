@@ -12,27 +12,28 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/plesk/api-php-lib.git",
-                "reference": "10fb37aa73fdb7bd59f4c4d5f2da573f17263656"
+                "reference": "22eb44dc3995388ac5a00a954034e4dadc48402b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/plesk/api-php-lib/zipball/10fb37aa73fdb7bd59f4c4d5f2da573f17263656",
-                "reference": "10fb37aa73fdb7bd59f4c4d5f2da573f17263656",
+                "url": "https://api.github.com/repos/plesk/api-php-lib/zipball/22eb44dc3995388ac5a00a954034e4dadc48402b",
+                "reference": "22eb44dc3995388ac5a00a954034e4dadc48402b",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-simplexml": "*",
                 "ext-xml": "*",
-                "php": "^5.6 || ^7.0"
+                "php": "^7.3"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7.0"
+                "phpunit/phpunit": "^8",
+                "spatie/phpunit-watcher": "^1.22"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -55,7 +56,7 @@
                 }
             ],
             "description": "PHP object-oriented library for Plesk XML-RPC API",
-            "time": "2019-03-13T10:00:34+00:00"
+            "time": "2020-01-05T02:08:20+00:00"
         }
     ],
     "packages-dev": [

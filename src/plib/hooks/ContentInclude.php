@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2018. Plesk International GmbH. All rights reserved.
+// Copyright 1999-2020. Plesk International GmbH. All rights reserved.
 
 use PleskExt\Welcome\Helper;
 use PleskExt\Welcome\Config;
@@ -27,10 +27,13 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
     {
         if ($this->loadContentCode()) {
             return 'require(["' . \pm_Context::getBaseUrl() . 'js/main.js"], function (render) {
-                        render(document.getElementById("ext-welcome-app"), ' . json_encode([
-                    'locale' => \pm_Locale::getSection('welcomebox'),
-                    'data'   => (new Config())->getProcessedConfigData(),
-                ]) . ');
+                        render(document.getElementById("ext-welcome-app"), ' . json_encode(
+                    [
+                        'locale'     => \pm_Locale::getSection('welcomebox'),
+                        'data'       => (new Config())->getProcessedConfigData(),
+                        'canInstall' => (Helper::canUserInstallExtensions()),
+                    ]
+                ) . ');
                 });';
         }
     }
@@ -67,7 +70,6 @@ class Modules_Welcome_ContentInclude extends pm_Hook_ContentInclude
         $whiteList = Helper::getWhiteListPages();
 
         if (!in_array($pageLoaded, $whiteList)) {
-
             return false;
         }
 
