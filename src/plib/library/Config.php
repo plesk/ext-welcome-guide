@@ -1,4 +1,5 @@
 <?php
+// Copyright 1999-2020. Plesk International GmbH. All rights reserved.
 
 namespace PleskExt\Welcome;
 
@@ -161,7 +162,8 @@ class Config
     /**
      * @param string $text
      *
-     * @return string
+     * @return string|string[]
+     * @throws \Exception
      */
     private function replace($text)
     {
@@ -276,14 +278,16 @@ class Config
             $isInstalled = $extension->isInstalled();
 
             $buttonTitle = isset($action['titleInstall']) ? $action['titleInstall'] : \pm_Locale::lmsg('library.config.button.title.install');
+            $taskId = $action['taskId'];
 
             if ($isInstalled) {
                 $buttonTitle = isset($action['titleOpen']) ? $action['titleOpen'] : \pm_Locale::lmsg('library.config.button.title.open');
+                $taskId = 'open';
             }
 
             $buttonUrl = $isInstalled ? $extension->createOpenLink() : $extension->createInstallLink();
 
-            return [$buttonTitle, $buttonUrl, $buttonTarget];
+            return [$buttonTitle, $buttonUrl, $buttonTarget, $taskId,];
         } elseif ($action['taskId'] === 'extlink') {
             $extension = new Extension($action['extensionId']);
             $buttonTitle = isset($action['title']) ? $action['title'] : $extension->getName();
@@ -293,7 +297,7 @@ class Config
                 $buttonTitle = '[Extension "' . $action['extensionId'] . '" does not exist]';
             }
 
-            return [$buttonTitle, $buttonUrl, $buttonTarget];
+            return [$buttonTitle, $buttonUrl, $buttonTarget, $action['taskId']];
         } elseif ($action['taskId'] === 'link') {
             $buttonTitle = $action['title'];
             $buttonUrl = $action['url'];
@@ -304,7 +308,7 @@ class Config
             $buttonTitle = isset($action['title']) ? $action['title'] : \pm_Locale::lmsg('library.config.button.title.adddomain');
             $buttonUrl = Helper::getLinkNewDomain();
 
-            return [$buttonTitle, $buttonUrl, $buttonTarget];
+            return [$buttonTitle, $buttonUrl, $buttonTarget, $action['taskId']];
         } else {
             throw new \Exception('Invalid task ID: ' . $action['taskId']);
         }
@@ -313,7 +317,8 @@ class Config
     /**
      * @param bool $jsonEncode
      *
-     * @return string|array
+     * @return false|string
+     * @throws \Exception
      */
     public function getProcessedConfigData($jsonEncode = false)
     {
@@ -333,11 +338,12 @@ class Config
 
                 if (isset($step['buttons'])) {
                     foreach ($step['buttons'] as $buttonIdx => $button) {
-                        list($buttonTitle, $buttonUrl, $buttonTarget) = $this->renderButton($button['actionId'], $arr[$locale]['actions']);
+                        list($buttonTitle, $buttonUrl, $buttonTarget, $taskId) = $this->renderButton($button['actionId'], $arr[$locale]['actions']);
 
                         $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['buttons'][$buttonIdx]['title'] = $buttonTitle;
                         $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['buttons'][$buttonIdx]['url'] = $buttonUrl;
                         $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['buttons'][$buttonIdx]['target'] = $buttonTarget;
+                        $arr[$locale]['groups'][$groupIdx]['steps'][$stepIdx]['buttons'][$buttonIdx]['taskId'] = $taskId;
                     }
                 }
 
@@ -356,9 +362,11 @@ class Config
 
     /**
      * @param string $json
-     * @param bool $isUploadedFile
+     * @param bool   $isUploadedFile
      *
-     * @throws \InvalidArgumentException if the JSON is not valid
+     * @throws \Zend_Db_Table_Exception
+     * @throws \Zend_Db_Table_Row_Exception
+     * @throws \pm_Exception_InvalidArgumentException
      */
     public function save($json, $isUploadedFile = false)
     {
@@ -381,7 +389,9 @@ class Config
     /**
      * @param string $name
      *
-     * @throws \InvalidArgumentException if preset does not exist
+     * @throws \Zend_Db_Table_Exception
+     * @throws \Zend_Db_Table_Row_Exception
+     * @throws \pm_Exception_InvalidArgumentException
      */
     public function updateDefaultConfigFromPreset($name)
     {
@@ -407,7 +417,9 @@ class Config
     /**
      * @param string $name
      *
-     * @throws \InvalidArgumentException if preset does not exist
+     * @throws \Zend_Db_Table_Exception
+     * @throws \Zend_Db_Table_Row_Exception
+     * @throws \pm_Exception_InvalidArgumentException
      */
     public function createDefaultConfigFromPreset($name)
     {
@@ -449,7 +461,7 @@ class Config
         $presetNames = [
             'wordpress' => 'WordPress',
             'business'  => 'Business & Collaboration',
-            'default'   => 'Default'
+            'default'   => 'Default',
         ];
 
         if (!empty($presetNames[$preset])) {
@@ -480,7 +492,7 @@ class Config
      */
     public function isExtensionEnabled()
     {
-        $num = (int) $this->client->getSetting(self::EXTENSION_ENABLED_KEY, 1);
+        $num = (int)$this->client->getSetting(self::EXTENSION_ENABLED_KEY, 1);
 
         return ($num > 0) ? true : false;
     }

@@ -1,4 +1,5 @@
 <?php
+// Copyright 1999-2020. Plesk International GmbH. All rights reserved.
 
 $messages = [
     'index.config.confirm.popup.cancel'     => 'Cancel',
@@ -21,4 +22,5 @@ $messages = [
     'welcomebox.dialog.disable.title'       => 'Disable the Welcome Box',
     'welcomebox.dialog.disable.content'     => 'You can disable the Welcome Box completely. Attention: Once disabled, you will not be able to enable it again!',
     'welcomebox.dialog.disable.button'      => 'Yes, disable the Welcome Box',
+    'welcomebox.tooltip.step.toggle'        => 'Toggle the status of this step!',
 ];

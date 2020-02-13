@@ -1,4 +1,5 @@
 <?php
+// Copyright 1999-2020. Plesk International GmbH. All rights reserved.
 
 use \PleskExt\Welcome\Config;
 
@@ -94,8 +95,7 @@ class Modules_Welcome_ApiCli extends \pm_Hook_ApiCli
     {
         try {
             $this->config->updateDefaultConfigFromPreset($preset);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
     }
@@ -117,8 +117,7 @@ class Modules_Welcome_ApiCli extends \pm_Hook_ApiCli
             $json = $response->getBody();
 
             $this->config->save($json);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $this->error($e->getMessage());
         }
     }

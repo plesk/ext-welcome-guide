@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2018. Plesk International GmbH. All rights reserved.
+// Copyright 1999-2020. Plesk International GmbH. All rights reserved.
 
 namespace PleskExt\Welcome;
 
@@ -114,10 +114,13 @@ class Extension
      */
     public function installExtension()
     {
+        if (!Helper::canUserInstallExtensions()) {
+            throw new \pm_Exception('You don\'t have the permission to install extensions!');
+        }
+
         try {
             \pm_ApiCli::call('extension', ['--install', $this->extensionId]);
-        }
-        catch (\pm_Exception_ResultException $e) {
+        } catch (\pm_Exception_ResultException $e) {
             return $e->getMessage();
         }
 

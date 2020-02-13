@@ -1,9 +1,7 @@
 import path from 'path';
-import merge from 'webpack-merge';
-import baseConfig from 'create-plesk-app/lib/webpack/config';
 
-module.exports = (env = {}) => merge(baseConfig(env), {
-    mode: env.dev ? 'development' : 'production',
+export default {
+    mode: 'production',
     context: path.resolve(__dirname, 'frontend'),
     entry: './main',
     output: {
@@ -30,6 +28,6 @@ module.exports = (env = {}) => merge(baseConfig(env), {
         ],
     },
     externals: {
-        '@plesk/ui-library': { amd: 'plesk-ui-library' },
+        '@plesk/ui-library': {amd: 'plesk-ui-library'},
     },
-});
+};

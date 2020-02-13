@@ -21,7 +21,7 @@ class WelcomeBoxContent extends Component {
                 </h2>
                 <div className="welcome-single-page">
                     {group.steps.map(({...step}, index) => {
-                            return <WelcomeBoxContentStep {...step} indexGroup={indexGroup} index={index}/>
+                            return <WelcomeBoxContentStep {...step} indexGroup={indexGroup} index={index} locale={this.props.locale} canInstall={this.props.canInstall}/>
                         }
                     )}
                 </div>
@@ -34,7 +34,7 @@ class WelcomeBoxContent extends Component {
             <Tab title={<WelcomeBoxHtml string={group.title}/>}>
                 <div className="welcome-single-page">
                     {group.steps.map(({...step}, index) => {
-                            return <WelcomeBoxContentStep {...step} indexGroup={indexGroup} index={index}/>
+                            return <WelcomeBoxContentStep {...step} indexGroup={indexGroup} index={index} locale={this.props.locale} canInstall={this.props.canInstall}/>
                         }
                     )}
                 </div>

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-max-depth */
 
-import {createElement, Component, Item, Grid, GridCol, Button, Icon, ContentLoader} from '@plesk/ui-library';
+import {createElement, Component, Item, Grid, GridCol, Button, Icon, ContentLoader, Switch} from '@plesk/ui-library';
 import WelcomeBoxHtml from '../containers/WelcomeBox/WelcomeBoxHtml';
 import axios from 'axios';
 
@@ -8,10 +8,12 @@ class WelcomeBoxContentStep extends Component {
     constructor(props)
     {
         super(props);
-        this.state = props;
 
+        this.state = props;
         this.indexGroup = props.indexGroup;
         this.index = props.index;
+        this.locale = props.locale;
+        this.canInstall = props.canInstall;
 
         this.state.completed = this.setCompletedStatus(Boolean(this.state.completed));
         this.state.completedIcon = this.setCompletedButtonImage(Boolean(this.state.completed));
@@ -60,6 +62,23 @@ class WelcomeBoxContentStep extends Component {
         return 'secondary';
     }
 
+    addActionButton = (button) => {
+        if(button.taskId !== 'install')
+        {
+            return (
+                <Button onClick={() => this.redirectClick(button.url, button.target)} intent="primary">
+                    <WelcomeBoxHtml string={button.title}/>
+                </Button>
+            );
+        }
+
+        return (
+            <Button onClick={() => this.redirectClick(button.url, button.target)} intent="primary" disabled={!this.canInstall}>
+                <WelcomeBoxHtml string={button.title}/>
+            </Button>
+        );
+    }
+
     render()
     {
         return (
@@ -76,18 +95,18 @@ class WelcomeBoxContentStep extends Component {
                     <GridCol xs={6} md={6} lg={2} xl={2}>
                         <div className="welcome-single-action-button">
                             {this.state.buttons.map(({...button}) => {
-                                    return <Button onClick={() => this.redirectClick(button.url, button.target)} intent="primary">
-                                        <WelcomeBoxHtml string={button.title}/>
-                                    </Button>
+                                    return this.addActionButton(button);
                                 }
                             )}
                         </div>
                     </GridCol>
                     <GridCol xs={6} md={6} lg={1} xl={1}>
                         <div className="button-toggle-status">
-                            <Button onClick={() => this.setStepToggleStatus()} intent={this.setToggleButtonIntent()}>
-                                <Icon name={this.state.completedIcon} size="16"/>
-                            </Button>
+                            <Switch
+                                tooltip={this.locale['tooltip.step.toggle']}
+                                checked={!this.state.completed}
+                                onChange={() => this.setStepToggleStatus()}
+                            />
                         </div>
                     </GridCol>
                 </Grid>

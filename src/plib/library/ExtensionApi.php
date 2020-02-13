@@ -1,5 +1,5 @@
 <?php
-// Copyright 1999-2018. Plesk International GmbH. All rights reserved.
+// Copyright 1999-2020. Plesk International GmbH. All rights reserved.
 
 namespace PleskExt\Welcome;
 
@@ -38,8 +38,7 @@ class ExtensionApi
 
         try {
             $extensionsApiResult = $client->request(\Zend_Http_Client::GET);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
 

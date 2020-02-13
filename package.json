@@ -2,27 +2,22 @@
   "name": "welcome",
   "description": "This extension helps you to get started with your new Plesk Server! The configuration is easy and simple via a machine readable JSON file or directly through the config page of the extension.",
   "version": "1.0.0",
-  "dependencies": {
-    "axios": "^0.19.0",
-    "create-plesk-app": "^1.0.5"
-  },
   "devDependencies": {
-    "webpack": "^4.6.0"
+    "@babel/core": "^7.4.5",
+    "axios": "^0.19.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "7",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "create-plesk-app": "^1.0.5",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2"
   },
   "scripts": {
-    "build": "create-plesk-app build",
-    "start": "create-plesk-app start",
-    "lint": "create-plesk-app lint",
-    "zip": "create-plesk-app extension zip",
-    "predeploy": "create-plesk-app build && create-plesk-app extension zip",
-    "deploy": "create-plesk-app extension deploy",
-    "test": "create-plesk-app test"
-  },
-  "jest": {
-    "rootDir": "src",
-    "moduleNameMapper": {
-      "\\.(jpg|png)$": "<rootDir>/test/fileMock.js"
-    }
+    "dev": "webpack --watch --mode development",
+    "build": "webpack",
+    "lint": "eslint frontend"
   },
   "license": "MIT"
 }
