@@ -1,4 +1,4 @@
-# 1.1.0 (14 Feb 2020)
+# 1.1.0 (13 May 2020)
 
 * [+] Refactoring for Plesk Obsidian
 * [+] Increased requirement to 18.0.23
@@ -8,6 +8,6 @@
 * [*] Updated copyright year
 * [*] PSR-12
 
-# 1.0.0
+# 1.0.0 (09 Jul 2018)
 
 * [+] First release of Plesk Welcome Guide - see README.md for more information
