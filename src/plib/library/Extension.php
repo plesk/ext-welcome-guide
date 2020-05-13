@@ -97,7 +97,7 @@ class Extension
             return '/modules/wp-toolkit/index.php/domain/list';
         }
 
-        if($this->extensionId === 'sslit' && \pm_Session::getClient()->isClient()) {
+        if ($this->extensionId === 'sslit' && \pm_Session::getClient()->isClient()) {
             return '/modules/sslit/index.php/index/certificate/';
         }
 
