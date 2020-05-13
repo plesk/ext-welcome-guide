@@ -93,6 +93,10 @@ class Extension
      */
     public function createOpenLink()
     {
+        if ($this->extensionId === 'wp-toolkit') {
+            return '/modules/wp-toolkit/index.php/domain/list';
+        }
+
         return '/modules/' . $this->extensionId;
     }
 
