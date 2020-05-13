@@ -315,7 +315,7 @@ class Statistics
                 $dataToReturn[$key] = $this->fixNumericIndexes($value);
             }
         } else {
-            $dataToReturn = ['TYPE' => 'array', 'VALUE' => [array_map('$this->fixNumericIndexes', $data)]];
+            $dataToReturn = ['TYPE' => 'array', 'VALUE' => [array_map([$this, 'fixNumericIndexes'], $data)]];
         }
 
         return $dataToReturn;
