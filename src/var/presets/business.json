@@ -38,16 +38,6 @@
             ]
           },
           {
-            "title": "Create a Joomla! Website",
-            "description": "Joomla! Toolkit is a powerful Joomla! security and management tool that allows you to mass manage and secure your Joomla! instances, extensions and templates running on a server managed by Plesk.",
-            "image": "/modules/welcome/images/presets/joomla-icon.png",
-            "buttons": [
-              {
-                "actionId": "install-joomla"
-              }
-            ]
-          },
-          {
             "title": "Create an Email Account",
             "description": "Let's install and activate advanced email and collaboration services with Plesk Premium Email.\nIt provides all the features associated with top tier collaboration servers, such as email, calendar, contacts, tasks, notes and files.",
             "image": "/modules/welcome/images/presets/kolab_64.png",
@@ -97,12 +87,6 @@
       "install-wordpress": {
         "taskId": "install",
         "extensionId": "wp-toolkit",
-        "titleOpen": "Open",
-        "titleInstall": "Install"
-      },
-      "install-joomla": {
-        "taskId": "install",
-        "extensionId": "joomla-toolkit",
         "titleOpen": "Open",
         "titleInstall": "Install"
       },
@@ -178,16 +162,6 @@
             ]
           },
           {
-            "title": "Joomla! Website erstellen",
-            "description": "Joomla! Toolkit ist ein leistungsstarkes Sicherheits- und Verwaltungstool, mit dem Sie Joomla! Instanzen gesammelt verwalten und schützen können.",
-            "image": "/modules/welcome/images/presets/joomla-icon.png",
-            "buttons": [
-              {
-                "actionId": "install-joomla"
-              }
-            ]
-          },
-          {
             "title": "E-Mail Account erstellen",
             "description": "Installieren und aktivieren Sie die professionellen Email und Collaboration Services mit Plesk Premium Email.\nProfitieren Sie von allen Funktionen wie Email, Kalender, Kontakte, Aufgaben, Notizen und Dateien.",
             "image": "/modules/welcome/images/presets/kolab_64.png",
@@ -237,12 +211,6 @@
       "install-wordpress": {
         "taskId": "install",
         "extensionId": "wp-toolkit",
-        "titleOpen": "Öffnen",
-        "titleInstall": "Installieren"
-      },
-      "install-joomla": {
-        "taskId": "install",
-        "extensionId": "joomla-toolkit",
         "titleOpen": "Öffnen",
         "titleInstall": "Installieren"
       },
