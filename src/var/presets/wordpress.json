@@ -20,10 +20,10 @@
           {
             "title": "Secure your Domain with SSL",
             "description": "By activating a SSL certificate for your domain you protect your websites' visitors and ensure them an encrypted connection.",
-            "image": "/modules/welcome/images/presets/letsencrypt_64.png",
+            "image": "/modules/welcome/images/presets/sslit_64.png",
             "buttons": [
               {
-                "actionId": "install-letsencrypt"
+                "actionId": "install-sslit"
               }
             ]
           },
@@ -82,9 +82,9 @@
         "taskId": "install",
         "extensionId": "advisor"
       },
-      "install-letsencrypt": {
+      "install-sslit": {
         "taskId": "install",
-        "extensionId": "letsencrypt",
+        "extensionId": "sslit",
         "titleOpen": "Secure"
       },
       "boldgrid": {
@@ -118,10 +118,10 @@
           {
             "title": "Verschlüsselte Verbindungen (SSL) aktivieren",
             "description": "Fügen Sie ihrer Domain ein SSL Zertifikat hinzu, damit die Übertragung zwischen Ihren Kunden und der Webseite stehts sicher und verschlüsselt erfolgt.",
-            "image": "/modules/welcome/images/presets/letsencrypt_64.png",
+            "image": "/modules/welcome/images/presets/sslit_64.png",
             "buttons": [
               {
-                "actionId": "install-letsencrypt"
+                "actionId": "install-sslit"
               }
             ]
           },
@@ -180,9 +180,9 @@
         "taskId": "install",
         "extensionId": "advisor"
       },
-      "install-letsencrypt": {
+      "install-sslit": {
         "taskId": "install",
-        "extensionId": "letsencrypt",
+        "extensionId": "sslit",
         "titleOpen": "SSL aktivieren"
       },
       "boldgrid": {
